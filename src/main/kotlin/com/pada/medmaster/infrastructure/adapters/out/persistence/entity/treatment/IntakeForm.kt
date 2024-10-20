@@ -5,5 +5,4 @@ enum class IntakeForm {
     SHOT,
     LIQUID,
     OINTMENT
-
 }

@@ -1,4 +1,4 @@
-package com.pada.medmaster.domain.treatment
+package com.pada.medmaster.domain.model.treatment
 
 enum class IntakeFrequency {
     HOURLY,
