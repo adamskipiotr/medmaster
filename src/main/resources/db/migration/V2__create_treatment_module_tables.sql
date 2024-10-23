@@ -23,6 +23,7 @@ CREATE TABLE IF NOT EXISTS treatment
 (
     id BIGINT NOT NULL PRIMARY KEY DEFAULT nextval('treatment_id_seq'),
     disease VARCHAR(255),
+    code VARCHAR(255),
     description VARCHAR(255),
     begin_date TIMESTAMP(6),
     end_date TIMESTAMP(6)
@@ -32,7 +33,6 @@ CREATE TABLE IF NOT EXISTS medicament
 (
     id BIGINT NOT NULL PRIMARY KEY DEFAULT nextval('medicament_id_seq'),
     name VARCHAR(255)
-
 );
 
 CREATE TABLE IF NOT EXISTS medical_procedure

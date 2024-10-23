@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor
 
 @Entity
 @AllArgsConstructor
+@Table(name = "intake")
 class IntakeEntity(
     @Id
     @SequenceGenerator(name = "intake_id_sequence", sequenceName = "intake_id_seq", allocationSize = 1)
@@ -41,14 +42,14 @@ class IntakeEntity(
 
     fun asDomain(): Intake {
         return Intake(
-            id = id,
-            form = form,
-            dosage = dosage,
-            intakeFrequency = intakeFrequency,
-            intakeLimit = intakeLimit,
-            medicament = medicament.asDomain(),
-            intakeDates = intakeDates.map { it.asDomain() },
-            treatment = treatment.asDomain()
+            id,
+            medicament.asDomain(),
+            form,
+            dosage,
+            intakeFrequency,
+            intakeDates.map { it.asDomain() },
+            intakeLimit,
+            treatment.asDomain()
         )
     }
 }

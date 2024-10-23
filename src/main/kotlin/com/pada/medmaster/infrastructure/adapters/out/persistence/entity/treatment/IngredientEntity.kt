@@ -33,12 +33,8 @@ class IngredientEntity(
 
     fun asDomain(): Ingredient {
         return Ingredient(
-            id = id,
-            name = name,
-            medicament = medicament.asDomain(),
-            parent = null,
-            mutuallyExclusive = emptyList(),
-            prohibitingCountries = prohibitingCountries.map { it.asDomain() }
+            id, name, medicament.asDomain(),
+            null, emptyList(), prohibitingCountries.map { it.asDomain() }
         )
     }
 }

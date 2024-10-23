@@ -14,6 +14,7 @@ data class TreatmentEntity(
     @SequenceGenerator(name = "treatment_id_sequence", sequenceName = "treatment_id_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "treatment_id_sequence")
     var id: Long = 0,
+    val code: String,
     val disease: String,
     val description: String,
     val beginDate: LocalDateTime,
@@ -34,19 +35,22 @@ data class TreatmentEntity(
     @Builder.Default
     val intakes: List<IntakeEntity> = ArrayList()
 
-    fun asDomain(): Treatment {  // to learn: Extension function
-        return Treatment(
-            id = id,
-            disease = disease,
-            description = description,
-            beginDate = beginDate,
-            endDate = endDate,
-            medicalProcedures = this.medicalProcedures.map { it.asDomain() },
-            intakes = intakes
+    fun asDomain() =
+        Treatment(
+            id, disease, description, code,
+            this.medicalProcedures.map { it.asDomain() },
+            intakes.map { it.asDomain() }, beginDate, endDate
         )
+
+    companion object {
+        fun of(treatment: Treatment) =
+            TreatmentEntity(
+                treatment.id ?: 0,
+                treatment.disease,
+                treatment.description,
+                treatment.code,
+                treatment.beginDate,
+                treatment.endDate
+            )
     }
-
 }
-
-
-

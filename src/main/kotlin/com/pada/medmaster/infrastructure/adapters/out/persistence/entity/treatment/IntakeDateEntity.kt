@@ -5,6 +5,7 @@ import jakarta.persistence.*
 import java.time.LocalDateTime
 
 @Entity
+@Table(name = "intake_date")
 class IntakeDateEntity(
     @Id
     @SequenceGenerator(name = "intake_date_id_sequence", sequenceName = "intake_date_id_seq", allocationSize = 1)
@@ -12,15 +13,14 @@ class IntakeDateEntity(
     var id: Long = 0,
     val date: LocalDateTime,
 
-){ // learn: internal in Kotlin vs package-in Java
+    ) { // learn: internal in Kotlin vs package-in Java
     @ManyToOne
     lateinit var intake: IntakeEntity
 
     fun asDomain(): IntakeDate { // why  fun asDomain(): MedicalProcedure { doesnt work here
-        return IntakeDate(       // to learn: what is Local Extension
-            id = id,
-            date = date,
-            intake = intake.asDomain(),
+        return IntakeDate(
+            // to learn: what is Local Extension
+            id, date, intake.asDomain(),
         )
     }
 }

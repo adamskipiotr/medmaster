@@ -2,10 +2,15 @@ package com.pada.medmaster.infrastructure.adapters.out.persistence.entity.treatm
 
 import com.pada.medmaster.domain.model.treatment.Country
 import jakarta.persistence.*
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import lombok.Builder
 import lombok.EqualsAndHashCode
 
 @Entity
+@Table(name = "country")
 class CountryEntity(
     @Id
     @SequenceGenerator(name = "country_id_sequence", sequenceName = "country_id_seq", allocationSize = 1)
@@ -23,11 +28,7 @@ class CountryEntity(
 
     fun asDomain(): Country {
         return Country(
-            id = id,
-            name = name,
-            prohibitedIngredients = prohibitedIngredients.map { it.asDomain() }.toSet()
+            id, name, prohibitedIngredients.map { it.asDomain() }.toSet()
         )
     }
 }
-
-

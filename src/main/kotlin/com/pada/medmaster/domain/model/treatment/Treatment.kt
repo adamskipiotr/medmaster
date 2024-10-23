@@ -1,14 +1,14 @@
 package com.pada.medmaster.domain.model.treatment
 
-import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.treatment.IntakeEntity
 import java.time.LocalDateTime
 
 class Treatment(
-    var id: Long = 0,
+    val id: Long? = null,
     val disease: String,
     val description: String,
+    val code: String,
     val medicalProcedures: List<MedicalProcedure>,
-    val intakes: List<IntakeEntity>,
+    val intakes: List<Intake>,
     val beginDate: LocalDateTime,
     val endDate: LocalDateTime
 )

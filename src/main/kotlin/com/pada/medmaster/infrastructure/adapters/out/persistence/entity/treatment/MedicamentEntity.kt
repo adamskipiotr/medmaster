@@ -11,7 +11,7 @@ class MedicamentEntity(
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "medicament_id_sequence")
     var id: Long = 0,
     val name: String,
-    ) {
+) {
     @OneToMany(
         mappedBy = "medicament", cascade = [CascadeType.ALL],
         fetch = FetchType.LAZY, orphanRemoval = true
@@ -20,9 +20,8 @@ class MedicamentEntity(
 
     fun asDomain(): Medicament {
         return Medicament(
-            id = id,
-            name = name,
-            ingredients = ingredients.map { it.asDomain() }
+            id, name,
+            ingredients.map { it.asDomain() }
         )
     }
 }
