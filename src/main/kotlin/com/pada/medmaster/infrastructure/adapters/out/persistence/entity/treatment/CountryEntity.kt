@@ -1,6 +1,7 @@
 package com.pada.medmaster.infrastructure.adapters.out.persistence.entity.treatment
 
 import com.pada.medmaster.domain.model.treatment.Country
+import com.pada.medmaster.domain.model.treatment.Ingredient
 import jakarta.persistence.*
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
@@ -30,5 +31,16 @@ class CountryEntity(
         return Country(
             id, name, prohibitedIngredients.map { it.asDomain() }.toSet()
         )
+    }
+
+    companion object {
+        fun of(country: Country): CountryEntity {
+            val countryEntity = CountryEntity(
+                country.id ?: 0,
+                country.name
+            )
+
+            return countryEntity
+        }
     }
 }
