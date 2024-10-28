@@ -7,3 +7,4 @@
 - 6.Higher order functions
 - 7.Companion object
 - 8.Open Method
+- 9.run, let, apply, also, with

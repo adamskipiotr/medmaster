@@ -1,12 +1,15 @@
 package com.pada.medmaster.infrastructure.adapters.out.persistence.entity.treatment
 
 import com.pada.medmaster.domain.model.treatment.MedicalProcedure
+import com.pada.medmaster.domain.model.treatment.Treatment
 import jakarta.persistence.*
 import java.time.LocalDateTime
 
+
+// Important see: https://stackoverflow.com/questions/45642181/kotlin-jpa-encapsulate-onetomany
 @Entity
 @Table(name = "medical_procedure")
-class MedicalProcedureEntity(
+data class MedicalProcedureEntity(
     @Id
     @SequenceGenerator(
         name = "medical_procedure_id_sequence",
@@ -19,11 +22,9 @@ class MedicalProcedureEntity(
     val description: String,
     val procedureDate: LocalDateTime,
     val minimalRecoveryDate: LocalDateTime,
-
-    ) {
-
     @ManyToOne
-    lateinit var treatment: TreatmentEntity
+    var treatment: TreatmentEntity? = null
+    ) {
     fun asDomain(): MedicalProcedure { // why  fun asDomain(): MedicalProcedure { doesnt work here
         return MedicalProcedure(       // to learn: what is Local Extension
             id,                   // TODO: move it to extension file
@@ -31,7 +32,19 @@ class MedicalProcedureEntity(
             description,
             procedureDate,
             minimalRecoveryDate,
-            treatment.asDomain()
+            treatment?.asDomain()
         )
+    }
+
+    companion object {
+        fun of(medicalProcedure: MedicalProcedure) =
+            MedicalProcedureEntity(
+                medicalProcedure.id ?: 0,
+                medicalProcedure.name,
+                medicalProcedure.description,
+                medicalProcedure.procedureDate,
+                medicalProcedure.minimalRecoveryDate
+
+            )
     }
 }

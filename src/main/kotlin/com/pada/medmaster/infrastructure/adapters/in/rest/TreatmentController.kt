@@ -1,5 +1,6 @@
 package com.pada.medmaster.infrastructure.adapters.`in`.rest
 
+import com.pada.medmaster.application.dto.request.IntakeDateRequestDTO
 import com.pada.medmaster.application.dto.request.TreatmentRequestDTO
 import com.pada.medmaster.application.ports.`in`.CreateTreatmentUseCase
 import com.pada.medmaster.application.ports.`in`.GetTreatmentUseCase
@@ -29,6 +30,10 @@ class TreatmentController(private val getTreatmentUseCase: GetTreatmentUseCase,
     @PostMapping
     fun createTreatment(@RequestBody treatmentRequestDTO: TreatmentRequestDTO) {
         createTreatmentUseCase.createTreatment(treatmentRequestDTO)
+    }
+
+    @PostMapping("/test")
+    fun createTreatmentooo(@RequestBody intakeDateRequestDTO: IntakeDateRequestDTO) {
     }
     @PatchMapping("/{code}")
     fun getTreatmentByCode(@PathVariable code: String): Treatment {

@@ -1,14 +1,8 @@
 package com.pada.medmaster.infrastructure.adapters.out.persistence.entity.treatment
 
 import com.pada.medmaster.domain.model.treatment.Country
-import com.pada.medmaster.domain.model.treatment.Ingredient
+
 import jakarta.persistence.*
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
-import lombok.Builder
-import lombok.EqualsAndHashCode
 
 @Entity
 @Table(name = "country")
@@ -18,14 +12,12 @@ class CountryEntity(
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "country_id_sequence")
     var id: Long = 0,
     val name: String,
-) {
-    @Builder.Default
-    @EqualsAndHashCode.Exclude
     @ManyToMany(
         mappedBy = "prohibitingCountries",
         fetch = FetchType.LAZY
     )
-    val prohibitedIngredients: Set<IngredientEntity> = emptySet()
+    val prohibitedIngredients: Set<IngredientEntity>,
+) {
 
     fun asDomain(): Country {
         return Country(
@@ -35,12 +27,11 @@ class CountryEntity(
 
     companion object {
         fun of(country: Country): CountryEntity {
-            val countryEntity = CountryEntity(
+           return CountryEntity(
                 country.id ?: 0,
-                country.name
+                country.name,
+               country.prohibitedIngredients?.map { IngredientEntity.of(it) }?.toSet() ?: emptySet()
             )
-
-            return countryEntity
         }
     }
 }

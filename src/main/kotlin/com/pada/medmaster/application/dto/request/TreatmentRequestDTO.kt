@@ -2,7 +2,7 @@ package com.pada.medmaster.application.dto.request
 
 import java.time.LocalDateTime
 
-class TreatmentRequestDTO(
+data class TreatmentRequestDTO(
     val disease: String,
     val description: String,
     val code: String,

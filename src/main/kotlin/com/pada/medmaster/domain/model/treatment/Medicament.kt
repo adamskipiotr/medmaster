@@ -1,7 +1,14 @@
 package com.pada.medmaster.domain.model.treatment
 
+// About bidirectional relationship:
+// look at Domain Driven Design of Eric Evans - Chapter 5 - avoiding bidirectional relationship if there is no such need
 class Medicament(
     val id: Long? = null,
     val name: String,
-    val ingredients: List<Ingredient>? = mutableListOf()  // Initialize to empty list
-)
+    var ingredients: MutableList<Ingredient>? = mutableListOf()  // Initialize to empty list
+) {
+    fun addIngredients(ingredients: MutableList<Ingredient>) {
+        this.ingredients = ingredients
+        ingredients.forEach{ ingredient -> ingredient.medicament = this }
+    }
+}

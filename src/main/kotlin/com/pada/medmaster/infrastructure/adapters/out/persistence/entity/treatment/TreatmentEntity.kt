@@ -3,12 +3,9 @@ package com.pada.medmaster.infrastructure.adapters.out.persistence.entity.treatm
 import com.pada.medmaster.domain.model.treatment.Treatment
 import java.time.LocalDateTime
 import jakarta.persistence.*
-import lombok.Builder
 
-@Builder
 @Entity
 @Table(name = "treatment")
-// To learn : Why data classes are not recommended as JPA Entities
 data class TreatmentEntity(
     @Id
     @SequenceGenerator(name = "treatment_id_sequence", sequenceName = "treatment_id_seq", allocationSize = 1)
@@ -18,22 +15,19 @@ data class TreatmentEntity(
     val disease: String,
     val description: String,
     val beginDate: LocalDateTime,
-    val endDate: LocalDateTime
-) { // values in () are defined in primary constructor, they will be automatically used in equals(), hashCode(), toString() methods
-    // (in data class, check what in normal class). Since below are relationships, it is better not to put them inside primary constructor (why)
+    val endDate: LocalDateTime,
     @OneToMany(
         mappedBy = "treatment", cascade = [CascadeType.ALL],
         fetch = FetchType.LAZY, orphanRemoval = true
     )
-    @Builder.Default
-    val medicalProcedures: List<MedicalProcedureEntity> = ArrayList()
+    val medicalProcedures: List<MedicalProcedureEntity>,
 
     @OneToMany(
         mappedBy = "treatment", cascade = [CascadeType.ALL],
         fetch = FetchType.LAZY, orphanRemoval = true
     )
-    @Builder.Default
-    val intakes: List<IntakeEntity> = ArrayList()
+    val intakes: List<IntakeEntity> = listOf()
+) {
 
     fun asDomain() =
         Treatment(
@@ -50,7 +44,9 @@ data class TreatmentEntity(
                 treatment.description,
                 treatment.code,
                 treatment.beginDate,
-                treatment.endDate
+                treatment.endDate,
+                treatment.medicalProcedures.map { MedicalProcedureEntity.of(it) },
+                treatment.intakes.map { IntakeEntity.of(it) }
             )
     }
 }

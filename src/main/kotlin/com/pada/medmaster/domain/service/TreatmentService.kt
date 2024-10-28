@@ -5,10 +5,7 @@ import com.pada.medmaster.application.ports.`in`.CreateTreatmentUseCase
 import com.pada.medmaster.application.ports.`in`.GetTreatmentUseCase
 import com.pada.medmaster.application.ports.out.CreateTreatmentPort
 import com.pada.medmaster.application.ports.out.GetTreatmentPort
-import com.pada.medmaster.domain.model.treatment.Intake
-import com.pada.medmaster.domain.model.treatment.MedicalProcedure
-import com.pada.medmaster.domain.model.treatment.Medicament
-import com.pada.medmaster.domain.model.treatment.Treatment
+import com.pada.medmaster.domain.model.treatment.*
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 
@@ -23,22 +20,7 @@ class TreatmentService(
 
     @Transactional
     override fun createTreatment(treatmentRequestDTO: TreatmentRequestDTO) {
-        val medicalProcedures = treatmentRequestDTO.medicalProcedures.map {
-            MedicalProcedure(null,it.name,it.description, it.procedureDate,
-            it.minimalRecoveryDate, null
-        ) }
-        val intakes = treatmentRequestDTO.intakes.map { Intake(null,Medicament(null,it.medicament.name, null),
-            it.form, it.dosage,it.intakeFrequency,null, it.intakeLimit, null) }
-        val treatment = Treatment(
-            null,
-            treatmentRequestDTO.disease,
-            treatmentRequestDTO.description,
-            treatmentRequestDTO.code,
-            medicalProcedures,
-            intakes,
-            treatmentRequestDTO.beginDate,
-            treatmentRequestDTO.endDate
-        )
+        val treatment = treatmentRequestDTO.toDomain()
         createTreatmentPort.createTreatment(treatment)
     }
 }

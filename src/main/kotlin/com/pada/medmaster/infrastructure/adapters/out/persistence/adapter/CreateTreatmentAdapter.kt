@@ -8,9 +8,12 @@ import com.pada.medmaster.infrastructure.adapters.out.persistence.repository.Tre
 import org.springframework.stereotype.Component
 
 @Component
-class CreateTreatmentAdapter(val treatmentRepository : TreatmentRepository) : CreateTreatmentPort {
+class CreateTreatmentAdapter(val treatmentRepository: TreatmentRepository) : CreateTreatmentPort {
 
     override fun createTreatment(treatment: Treatment) {
-       treatmentRepository.save(TreatmentEntity.of(treatment))
+        val treatmentEntity = TreatmentEntity.of(treatment)
+        treatmentEntity.medicalProcedures.forEach { mp -> mp.treatment = treatmentEntity }
+        treatmentEntity.intakes.forEach { intakeEntity -> intakeEntity.treatment = treatmentEntity }
+        treatmentRepository.save(treatmentEntity)
     }
 }

@@ -20,7 +20,7 @@ class IngredientEntity(
     val parent: IngredientEntity?,
 
     @OneToMany(mappedBy = "parent", cascade = [CascadeType.ALL], orphanRemoval = true)
-    val mutuallyExclusive: List<IngredientEntity>,
+    val mutuallyExclusive: List<IngredientEntity>?,
 
     @ManyToMany(cascade = [CascadeType.PERSIST, CascadeType.MERGE], fetch = FetchType.LAZY)
     @JoinTable(
@@ -28,14 +28,14 @@ class IngredientEntity(
         joinColumns = [JoinColumn(name = "ingredient_id")],
         inverseJoinColumns = [JoinColumn(name = "country_id")]
     )
-    var prohibitingCountries: List<CountryEntity> = emptyList()
+    var prohibitingCountries: List<CountryEntity>? = emptyList()
 ) {
 
 
     fun asDomain(): Ingredient {
         return Ingredient(
             id, name, medicament.asDomain(),
-            null, emptyList(), prohibitingCountries.map { it.asDomain() }
+            null, mutableListOf(), prohibitingCountries?.map { it.asDomain() }
         )
     }
 
@@ -44,10 +44,10 @@ class IngredientEntity(
             return IngredientEntity(
                 ingredient.id ?: 0,
                 ingredient.name,
-                MedicamentEntity.of(ingredient.medicament),
+                MedicamentEntity.of(ingredient.medicament!!),
                 null, // TODO fix null
                 emptyList(),
-                ingredient.prohibitingCountries.map { CountryEntity.of(it) },
+                ingredient.prohibitingCountries?.map { CountryEntity.of(it) },
             )
         }
     }

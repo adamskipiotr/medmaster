@@ -7,8 +7,18 @@ class Treatment(
     val disease: String,
     val description: String,
     val code: String,
-    val medicalProcedures: List<MedicalProcedure>,
-    val intakes: List<Intake>,
+    var medicalProcedures: List<MedicalProcedure>,
+    var intakes: List<Intake>,
     val beginDate: LocalDateTime,
     val endDate: LocalDateTime
-)
+) {
+    fun addMedicalProcedures(medicalProcedures: List<MedicalProcedure>) {
+        this.medicalProcedures = medicalProcedures
+        medicalProcedures.forEach{medicalProcedure -> medicalProcedure.treatment = this }
+    }
+
+    fun addIntakes(intakes: List<Intake>) {
+        this.intakes =  intakes
+        intakes.forEach { intake -> intake.treatment = this }
+    }
+}

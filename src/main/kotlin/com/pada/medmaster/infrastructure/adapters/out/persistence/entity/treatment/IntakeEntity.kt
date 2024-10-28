@@ -1,6 +1,7 @@
 package com.pada.medmaster.infrastructure.adapters.out.persistence.entity.treatment
 
 import com.pada.medmaster.domain.model.treatment.Intake
+import com.pada.medmaster.domain.model.treatment.Medicament
 import jakarta.persistence.*
 import lombok.AllArgsConstructor
 
@@ -26,30 +27,44 @@ class IntakeEntity(
 
     @Column(nullable = false)
     val intakeLimit: Int,
-    ) {
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
     @JoinColumn(name = "medicament_id")
-    lateinit var medicament: MedicamentEntity
+    var medicament: MedicamentEntity?,
 
     @OneToMany(mappedBy = "intake", cascade = [CascadeType.ALL], fetch = FetchType.LAZY, orphanRemoval = true)
-    val intakeDates: List<IntakeDateEntity> = emptyList()  // Initialize the list
+    val intakeDates: List<IntakeDateEntity>,
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "treatment_id")
-    lateinit var treatment: TreatmentEntity
-
+    var treatment: TreatmentEntity?,
+) {
 
     fun asDomain(): Intake {
         return Intake(
             id,
-            medicament.asDomain(),
+            medicament?.asDomain(),
             form,
             dosage,
             intakeFrequency,
             intakeDates.map { it.asDomain() },
             intakeLimit,
-            treatment.asDomain()
+            treatment!!.asDomain()
         )
+    }
+
+    companion object {
+        fun of(intake: Intake): IntakeEntity {
+            return IntakeEntity(
+                intake.id ?: 0,
+                intake.form,
+                intake.dosage,
+                intake.intakeFrequency!!,
+                intake.intakeLimit,
+                MedicamentEntity.of(intake.medicament!!),
+                intake.intakeDates?.map { IntakeDateEntity.of(it) } ?: emptyList(),
+                null
+            )
+        }
     }
 }

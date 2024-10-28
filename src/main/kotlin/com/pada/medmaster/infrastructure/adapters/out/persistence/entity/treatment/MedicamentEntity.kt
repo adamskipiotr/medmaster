@@ -11,18 +11,12 @@ class MedicamentEntity(                 // TODO: why class should be open for Hi
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "medicament_id_sequence")
     var id: Long = 0,
     val name: String,
-    @OneToMany(                                                 // TODO: Move them here but dont use data class with JPA
-        mappedBy = "medicament", cascade = [CascadeType.ALL],   // TODO: Or override equals and hashcode by yourself
-        fetch = FetchType.LAZY, orphanRemoval = true
-    )
-    val ingredients: List<IngredientEntity>  // Initialize to empty list
 
 ) {
 
     fun asDomain(): Medicament {
         return Medicament(
-            id, name,
-            ingredients.map { it.asDomain() }
+            id, name
         )
     }
 
@@ -31,7 +25,6 @@ class MedicamentEntity(                 // TODO: why class should be open for Hi
             return MedicamentEntity(
                 medicament.id ?: 0,
                 medicament.name,
-                medicament.ingredients!!.map { IngredientEntity.of(it) } // todo avoid !!
             )
         }
     }
