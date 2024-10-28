@@ -10,8 +10,6 @@ fun TreatmentRequestDTO.toDomain(): Treatment {
         disease = disease,
         description = description,
         code = code,
-        medicalProcedures = emptyList(),
-        intakes = emptyList(),
         beginDate = beginDate,
         endDate = endDate
     )

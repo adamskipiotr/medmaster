@@ -6,47 +6,51 @@ import jakarta.persistence.*
 
 @Entity
 @Table(name = "treatment")
-data class TreatmentEntity(
+class TreatmentEntity {
+
+    lateinit var code: String
+    lateinit var disease: String
+    lateinit var description: String
+    lateinit var beginDate: LocalDateTime
+    lateinit var endDate: LocalDateTime
+
     @Id
     @SequenceGenerator(name = "treatment_id_sequence", sequenceName = "treatment_id_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "treatment_id_sequence")
-    var id: Long = 0,
-    val code: String,
-    val disease: String,
-    val description: String,
-    val beginDate: LocalDateTime,
-    val endDate: LocalDateTime,
-    @OneToMany(
-        mappedBy = "treatment", cascade = [CascadeType.ALL],
-        fetch = FetchType.LAZY, orphanRemoval = true
-    )
-    val medicalProcedures: List<MedicalProcedureEntity>,
+    var id: Long = 0
 
     @OneToMany(
         mappedBy = "treatment", cascade = [CascadeType.ALL],
         fetch = FetchType.LAZY, orphanRemoval = true
     )
-    val intakes: List<IntakeEntity> = listOf()
-) {
+    var medicalProcedures: MutableList<MedicalProcedureEntity> = mutableListOf()
 
-    fun asDomain() =
-        Treatment(
-            id, disease, description, code,
-            this.medicalProcedures.map { it.asDomain() },
-            intakes.map { it.asDomain() }, beginDate, endDate
-        )
+    @OneToMany(
+        mappedBy = "treatment", cascade = [CascadeType.ALL],
+        fetch = FetchType.LAZY, orphanRemoval = true
+    )
+    var intakes: MutableList<IntakeEntity> = mutableListOf()
 
     companion object {
-        fun of(treatment: Treatment) =
-            TreatmentEntity(
-                treatment.id ?: 0,
-                treatment.disease,
-                treatment.description,
-                treatment.code,
-                treatment.beginDate,
-                treatment.endDate,
-                treatment.medicalProcedures.map { MedicalProcedureEntity.of(it) },
-                treatment.intakes.map { IntakeEntity.of(it) }
-            )
+        fun of(treatment: Treatment) = TreatmentEntity().apply {
+                disease = treatment.disease
+                description = treatment.description
+                code = treatment.code
+                beginDate = treatment.beginDate
+                endDate = treatment.endDate
+                medicalProcedures.addAll(treatment.medicalProcedures.map {p -> MedicalProcedureEntity.of(p)})
+                intakes.addAll(treatment.intakes.map {i -> IntakeEntity.of(i)})
+            }
     }
+
+    fun asDomain() = Treatment(
+        id,
+        disease,
+        description,
+        code,
+        medicalProcedures.map { it.asDomain() }.toMutableList(),
+        intakes.map { it.asDomain() }.toMutableList(),
+        beginDate,
+        endDate
+    )
 }

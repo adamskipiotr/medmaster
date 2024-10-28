@@ -33,8 +33,8 @@ class TreatmentController(private val getTreatmentUseCase: GetTreatmentUseCase,
     }
 
     @PostMapping("/test")
-    fun createTreatmentooo(@RequestBody intakeDateRequestDTO: IntakeDateRequestDTO) {
-    }
+    fun createTreatmentooo(@RequestBody intakeDateRequestDTO: IntakeDateRequestDTO) {}
+
     @PatchMapping("/{code}")
     fun getTreatmentByCode(@PathVariable code: String): Treatment {
         return getTreatmentUseCase.getTreatment(code)

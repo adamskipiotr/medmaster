@@ -5,11 +5,11 @@ import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.treatme
 
 class Intake(
     val id: Long? = null,
-    var medicament: Medicament?,
+    val medicament: Medicament?,
     val form: IntakeForm,  // No need for @ManyToOne, this is an enum
     val dosage: Int,
     val intakeFrequency: IntakeFrequency?,
-    var intakeDates: List<IntakeDate>? = mutableListOf(),  // Initialize the list
+    val intakeDates: List<IntakeDate>? = mutableListOf(),  // Initialize the list
     val intakeLimit: Int,
-    var treatment: Treatment?
+    val treatment: Treatment?
 )

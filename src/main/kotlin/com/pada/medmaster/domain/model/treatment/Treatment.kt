@@ -7,18 +7,16 @@ class Treatment(
     val disease: String,
     val description: String,
     val code: String,
-    var medicalProcedures: List<MedicalProcedure>,
-    var intakes: List<Intake>,
+    val medicalProcedures: MutableList<MedicalProcedure> = mutableListOf(),
+    val intakes: MutableList<Intake> = mutableListOf(),
     val beginDate: LocalDateTime,
-    val endDate: LocalDateTime
+    val endDate: LocalDateTime,
 ) {
     fun addMedicalProcedures(medicalProcedures: List<MedicalProcedure>) {
-        this.medicalProcedures = medicalProcedures
-        medicalProcedures.forEach{medicalProcedure -> medicalProcedure.treatment = this }
+        this.medicalProcedures.addAll(medicalProcedures)
     }
 
     fun addIntakes(intakes: List<Intake>) {
-        this.intakes =  intakes
-        intakes.forEach { intake -> intake.treatment = this }
+        this.intakes.addAll(intakes)
     }
 }

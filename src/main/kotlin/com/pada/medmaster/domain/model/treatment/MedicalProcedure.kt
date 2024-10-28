@@ -8,5 +8,5 @@ class MedicalProcedure(
     val description: String,
     val procedureDate: LocalDateTime,
     val minimalRecoveryDate: LocalDateTime,
-    var treatment: Treatment?
+    val treatment: Treatment?
 )
