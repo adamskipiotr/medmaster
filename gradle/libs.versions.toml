@@ -1,0 +1,9 @@
+[versions]
+flywayVersion = "9.19.3"
+openApiWebMvcUI = "3.3.4"
+
+[libraries]
+flyway-core = { group = "org.flywaydb", name = "flyway-core", version.ref = "flywayVersion" }
+springdoc-openapi-starter-webmvc-ui = { group = "org.springdoc", name = "springdoc-openapi-starter-webmvc-ui", version.ref = "openApiWebMvcUI" }
+
+

@@ -25,17 +25,16 @@ repositories {
 }
 
 dependencies {
-    val flywayVersion = "9.19.3"
-    val openApiVersion = "2.1.0"
-    val hibernateValidatorVersion = "8.0.0.Final"
-
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-graphql")
-    implementation("org.flywaydb:flyway-core:$flywayVersion")
-    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:$openApiVersion")
-    implementation("org.hibernate.validator:hibernate-validator:$hibernateValidatorVersion")
+
+    implementation(libs.flyway.core)
+    implementation(libs.springdoc.openapi.starter.webmvc.ui)
+
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0")
+    implementation("org.hibernate.validator:hibernate-validator:8.0.0.Final")
     implementation("org.projectlombok:lombok:1.18.26")
     implementation("org.mapstruct:mapstruct:1.5.5.Final")
     implementation("org.mapstruct:mapstruct-processor:1.5.5.Final")
