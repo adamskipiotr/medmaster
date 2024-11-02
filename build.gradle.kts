@@ -29,6 +29,7 @@ dependencies {
     implementation(libs.spring.boot.starter.data.jpa)
     implementation(libs.spring.boot.starter.validation)
     implementation(libs.spring.boot.starter.graphql)
+    implementation(libs.spring.boot.devtools)
 
     implementation(libs.springdoc.openapi.starter.webmvc.ui)
     implementation(libs.hibernate.validator)

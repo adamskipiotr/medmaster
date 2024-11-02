@@ -27,6 +27,7 @@ spring-boot-starter-web = { group = "org.springframework.boot", name = "spring-b
 spring-boot-starter-data-jpa = { group = "org.springframework.boot", name = "spring-boot-starter-data-jpa" }
 spring-boot-starter-validation = { group = "org.springframework.boot", name = "spring-boot-starter-validation" }
 spring-boot-starter-graphql = { group = "org.springframework.boot", name = "spring-boot-starter-graphql" }
+spring-boot-devtools = { group = "org.springframework.boot", name = "spring-boot-devtools" }
 
 # SPRING DOC
 springdoc-openapi-starter-webmvc-ui = { group = "org.springdoc", name = "springdoc-openapi-starter-webmvc-ui", version.ref = "springDocVersion" }
