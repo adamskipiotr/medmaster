@@ -2,7 +2,6 @@ package com.pada.medmaster.infrastructure.adapters.out.persistence.repository
 
 import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.treatment.TreatmentEntity
 import org.springframework.data.jpa.repository.JpaRepository
-import org.springframework.data.repository.kotlin.CoroutineCrudRepository
 import org.springframework.stereotype.Repository
 
 @Repository

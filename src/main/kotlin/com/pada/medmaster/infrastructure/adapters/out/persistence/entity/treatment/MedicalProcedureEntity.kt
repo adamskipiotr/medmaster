@@ -1,7 +1,6 @@
 package com.pada.medmaster.infrastructure.adapters.out.persistence.entity.treatment
 
 import com.pada.medmaster.domain.model.treatment.MedicalProcedure
-import com.pada.medmaster.domain.model.treatment.Treatment
 import jakarta.persistence.*
 import java.time.LocalDateTime
 
@@ -24,7 +23,7 @@ data class MedicalProcedureEntity(
     val minimalRecoveryDate: LocalDateTime,
     @ManyToOne
     var treatment: TreatmentEntity? = null
-    ) {
+) {
     fun asDomain(): MedicalProcedure { // why  fun asDomain(): MedicalProcedure { doesnt work here
         return MedicalProcedure(       // to learn: what is Local Extension
             id,                   // TODO: move it to extension file

@@ -1,8 +1,8 @@
 package com.pada.medmaster.infrastructure.adapters.out.persistence.entity.treatment
 
 import com.pada.medmaster.domain.model.treatment.Treatment
-import java.time.LocalDateTime
 import jakarta.persistence.*
+import java.time.LocalDateTime
 
 @Entity
 @Table(name = "treatment")
@@ -33,14 +33,14 @@ class TreatmentEntity {
 
     companion object {
         fun of(treatment: Treatment) = TreatmentEntity().apply {
-                disease = treatment.disease
-                description = treatment.description
-                code = treatment.code
-                beginDate = treatment.beginDate
-                endDate = treatment.endDate
-                medicalProcedures.addAll(treatment.medicalProcedures.map {p -> MedicalProcedureEntity.of(p)})
-                intakes.addAll(treatment.intakes.map {i -> IntakeEntity.of(i)})
-            }
+            disease = treatment.disease
+            description = treatment.description
+            code = treatment.code
+            beginDate = treatment.beginDate
+            endDate = treatment.endDate
+            medicalProcedures.addAll(treatment.medicalProcedures.map { p -> MedicalProcedureEntity.of(p) })
+            intakes.addAll(treatment.intakes.map { i -> IntakeEntity.of(i) })
+        }
     }
 
     fun asDomain() = Treatment(

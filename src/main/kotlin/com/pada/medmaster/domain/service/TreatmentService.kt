@@ -5,7 +5,7 @@ import com.pada.medmaster.application.ports.`in`.CreateTreatmentUseCase
 import com.pada.medmaster.application.ports.`in`.GetTreatmentUseCase
 import com.pada.medmaster.application.ports.out.CreateTreatmentPort
 import com.pada.medmaster.application.ports.out.GetTreatmentPort
-import com.pada.medmaster.domain.model.treatment.*
+import com.pada.medmaster.domain.model.treatment.Treatment
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 

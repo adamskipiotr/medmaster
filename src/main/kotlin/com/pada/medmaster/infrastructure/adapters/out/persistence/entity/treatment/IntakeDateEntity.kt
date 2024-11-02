@@ -1,6 +1,5 @@
 package com.pada.medmaster.infrastructure.adapters.out.persistence.entity.treatment
 
-import com.pada.medmaster.domain.model.treatment.Intake
 import com.pada.medmaster.domain.model.treatment.IntakeDate
 import jakarta.persistence.*
 import java.time.LocalDateTime
@@ -16,7 +15,7 @@ class IntakeDateEntity(
     @ManyToOne
     val intake: IntakeEntity
 
-    ) { // learn: internal in Kotlin vs package-in Java
+) { // learn: internal in Kotlin vs package-in Java
 
 
     fun asDomain(): IntakeDate { // why  fun asDomain(): MedicalProcedure { doesnt work here

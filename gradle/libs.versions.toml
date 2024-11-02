@@ -1,9 +1,47 @@
 [versions]
-flywayVersion = "9.19.3"
-openApiWebMvcUI = "3.3.4"
+kotlinVersion = "2.0.21"
+springBootVersion = "3.3.5"
+springDependencyManagement = "1.1.6"
+springDocVersion = "2.6.0"
+postgresVersion = "42.7.4"
+flywayVersion = "10.20.1"
+hibernateJpaModelgenVersion = "6.6.1.Final"
+hibernateValidatorVersion = "8.0.1.Final"
+testContainersVersion = "1.20.3"
+
+[plugins]
+# KOTLIN
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlinVersion" }
+kotlin-spring = { id = "org.jetbrains.kotlin.plugin.spring", version.ref = "kotlinVersion" }
+
+# SPRING
+spring-boot = { id = "org.springframework.boot", version.ref = "springBootVersion" }
+spring-dependency-management = { id = "io.spring.dependency-management", version.ref = "springDependencyManagement" }
 
 [libraries]
+# KOTLIN
+kotlin-reflect = { group = "org.jetbrains.kotlin", name = "kotlin-reflect", version.ref = "kotlinVersion" }
+
+# SPRING
+spring-boot-starter-web = { group = "org.springframework.boot", name = "spring-boot-starter-web" }
+spring-boot-starter-data-jpa = { group = "org.springframework.boot", name = "spring-boot-starter-data-jpa" }
+spring-boot-starter-validation = { group = "org.springframework.boot", name = "spring-boot-starter-validation" }
+spring-boot-starter-graphql = { group = "org.springframework.boot", name = "spring-boot-starter-graphql" }
+
+# SPRING DOC
+springdoc-openapi-starter-webmvc-ui = { group = "org.springdoc", name = "springdoc-openapi-starter-webmvc-ui", version.ref = "springDocVersion" }
+
+# HIBERNATE
+hibernate-jpamodelgen = { group = "org.hibernate", name = "hibernate-jpamodelgen", version.ref = "hibernateJpaModelgenVersion" }
+hibernate-validator = { group = "org.hibernate", name = "hibernate-validator", version.ref = "hibernateValidatorVersion" }
+
+# POSTGRES
+postgres-driver = { group = "org.postgresql", name = "postgresql", version.ref = "postgresVersion" }
+
+# FLYWAY
 flyway-core = { group = "org.flywaydb", name = "flyway-core", version.ref = "flywayVersion" }
-springdoc-openapi-starter-webmvc-ui = { group = "org.springdoc", name = "springdoc-openapi-starter-webmvc-ui", version.ref = "openApiWebMvcUI" }
+flyway-postgres = { group = "org.flywaydb", name = "flyway-database-postgresql", version.ref = "flywayVersion" }
 
-
+# TEST CONTAINERS
+test-containers-junit = { group = "org.testcontainers", name = "junit-jupiter", version.ref = "testContainersVersion" }
+test-containers-postgresql = { group = "org.testcontainers", name = "postgresql", version.ref = "testContainersVersion" }

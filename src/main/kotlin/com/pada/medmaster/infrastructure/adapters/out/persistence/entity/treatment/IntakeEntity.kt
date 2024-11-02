@@ -1,12 +1,9 @@
 package com.pada.medmaster.infrastructure.adapters.out.persistence.entity.treatment
 
 import com.pada.medmaster.domain.model.treatment.Intake
-import com.pada.medmaster.domain.model.treatment.Medicament
 import jakarta.persistence.*
-import lombok.AllArgsConstructor
 
 @Entity
-@AllArgsConstructor
 @Table(name = "intake")
 class IntakeEntity(
     @Id
