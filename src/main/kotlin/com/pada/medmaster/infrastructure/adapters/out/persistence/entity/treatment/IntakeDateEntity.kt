@@ -12,8 +12,8 @@ class IntakeDateEntity(
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "intake_date_id_sequence")
     var id: Long = 0,
     val date: LocalDateTime,
-    @ManyToOne
-    val intake: IntakeEntity
+    @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
+    var intake: IntakeEntity? = null
 
 ) { // learn: internal in Kotlin vs package-in Java
 
@@ -21,17 +21,8 @@ class IntakeDateEntity(
     fun asDomain(): IntakeDate { // why  fun asDomain(): MedicalProcedure { doesnt work here
         return IntakeDate(
             // to learn: what is Local Extension
-            id, date, intake.asDomain(),
+            id, date, intake!!.asDomain(),
         )
     }
 
-    companion object {
-        fun of(intakeDate: IntakeDate): IntakeDateEntity {
-            return IntakeDateEntity(
-                intakeDate.id ?: 0,
-                intakeDate.date,
-                IntakeEntity.of(intakeDate.intake)
-            )
-        }
-    }
 }

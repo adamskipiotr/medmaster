@@ -5,22 +5,24 @@ import jakarta.persistence.*
 
 @Entity
 @Table(name = "ingredient")
-class IngredientEntity(
+class IngredientEntity {
     @Id
     @SequenceGenerator(name = "ingredient_id_sequence", sequenceName = "ingredient_id_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ingredient_id_sequence")
-    var id: Long = 0,
-    val name: String,
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "medicament_id")  // Join column for medicament
-    val medicament: MedicamentEntity,
+    var id: Long = 0
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    lateinit var name: String
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
+    @JoinColumn(name = "medicament_id")  // Join column for medicament
+    var medicament: MedicamentEntity? = null
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
     @JoinColumn(name = "parent_id")
-    val parent: IngredientEntity?,
+    var parent: IngredientEntity? = null
 
     @OneToMany(mappedBy = "parent", cascade = [CascadeType.ALL], orphanRemoval = true)
-    val mutuallyExclusive: List<IngredientEntity>?,
+    lateinit var mutuallyExclusive: List<IngredientEntity>
 
     @ManyToMany(cascade = [CascadeType.PERSIST, CascadeType.MERGE], fetch = FetchType.LAZY)
     @JoinTable(
@@ -28,28 +30,19 @@ class IngredientEntity(
         joinColumns = [JoinColumn(name = "ingredient_id")],
         inverseJoinColumns = [JoinColumn(name = "country_id")]
     )
-    var prohibitingCountries: List<CountryEntity>? = emptyList()
-) {
+    var prohibitingCountries: MutableList<CountryEntity> = mutableListOf()
 
 
     fun asDomain(): Ingredient {
         return Ingredient(
-            id, name, medicament.asDomain(),
-            null, mutableListOf(), prohibitingCountries?.map { it.asDomain() }
+            id,
+            name,
+            medicament?.asDomain(),
+            null,
+            mutableListOf(),
+            prohibitingCountries.map { it.asDomain() }.toMutableList()
         )
     }
-
-    companion object {
-        fun of(ingredient: Ingredient): IngredientEntity {
-            return IngredientEntity(
-                ingredient.id ?: 0,
-                ingredient.name,
-                MedicamentEntity.of(ingredient.medicament!!),
-                null, // TODO fix null
-                emptyList(),
-                ingredient.prohibitingCountries?.map { CountryEntity.of(it) },
-            )
-        }
-    }
 }
+
 

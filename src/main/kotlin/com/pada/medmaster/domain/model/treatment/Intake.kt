@@ -9,7 +9,11 @@ class Intake(
     val form: IntakeForm,  // No need for @ManyToOne, this is an enum
     val dosage: Int,
     val intakeFrequency: IntakeFrequency?,
-    val intakeDates: List<IntakeDate>? = mutableListOf(),  // Initialize the list
+    val intakeDates: MutableList<IntakeDate> = mutableListOf(),  // Initialize the list
     val intakeLimit: Int,
     val treatment: Treatment?
-)
+) {
+    fun addIntakeDates(intakeDates: List<IntakeDate>) {
+        this.intakeDates.addAll(intakeDates)
+    }
+}

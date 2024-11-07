@@ -5,5 +5,5 @@ import java.time.LocalDateTime
 class IntakeDate(
     val id: Long? = null,
     val date: LocalDateTime,
-    val intake: Intake
+    val intake: Intake?
 )

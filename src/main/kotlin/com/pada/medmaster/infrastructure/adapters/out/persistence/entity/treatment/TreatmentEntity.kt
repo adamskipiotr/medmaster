@@ -6,7 +6,7 @@ import java.time.LocalDateTime
 
 @Entity
 @Table(name = "treatment")
-class TreatmentEntity {
+class TreatmentEntity {  // Aggregate Root
 
     lateinit var code: String
     lateinit var disease: String
@@ -21,7 +21,7 @@ class TreatmentEntity {
 
     @OneToMany(
         mappedBy = "treatment", cascade = [CascadeType.ALL],
-        fetch = FetchType.LAZY, orphanRemoval = true
+        fetch = FetchType.EAGER, orphanRemoval = true
     )
     var medicalProcedures: MutableList<MedicalProcedureEntity> = mutableListOf()
 
@@ -30,18 +30,6 @@ class TreatmentEntity {
         fetch = FetchType.LAZY, orphanRemoval = true
     )
     var intakes: MutableList<IntakeEntity> = mutableListOf()
-
-    companion object {
-        fun of(treatment: Treatment) = TreatmentEntity().apply {
-            disease = treatment.disease
-            description = treatment.description
-            code = treatment.code
-            beginDate = treatment.beginDate
-            endDate = treatment.endDate
-            medicalProcedures.addAll(treatment.medicalProcedures.map { p -> MedicalProcedureEntity.of(p) })
-            intakes.addAll(treatment.intakes.map { i -> IntakeEntity.of(i) })
-        }
-    }
 
     fun asDomain() = Treatment(
         id,
