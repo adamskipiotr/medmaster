@@ -10,8 +10,6 @@ fun TreatmentRequestDTO.toDomain(): Treatment {
         disease = disease,
         description = description,
         code = code,
-        medicalProcedures = emptyList(),
-        intakes = emptyList(),
         beginDate = beginDate,
         endDate = endDate
     )
@@ -31,14 +29,25 @@ fun MedicalProcedureRequestDTO.toDomain(): MedicalProcedure = MedicalProcedure(
     treatment = null
 )
 
-fun IntakeRequestDTO.toDomain(): Intake = Intake(
+fun IntakeRequestDTO.toDomain(): Intake {
+    val intake = Intake(
+        id = null,
+        medicament = medicament.toDomain(),
+        form = form,
+        dosage = dosage,
+        intakeFrequency = intakeFrequency,
+        treatment = null,
+        intakeLimit = intakeLimit,
+    )
+    val intakeDates = this.intakeDates.map { it.toDomain() }
+    intake.addIntakeDates(intakeDates)
+    return intake
+}
+
+fun IntakeDateRequestDTO.toDomain(): IntakeDate = IntakeDate(
     id = null,
-    medicament = medicament.toDomain(),
-    form = form,
-    dosage = dosage,
-    intakeFrequency = intakeFrequency,
-    treatment = null,
-    intakeLimit = intakeLimit,
+    date = date,
+    intake = null
 )
 
 fun MedicamentRequestDTO.toDomain(): Medicament {
@@ -58,7 +67,7 @@ fun IngredientRequestDTO.toDomain(): Ingredient {
         medicament = null,
         parent = null,
         mutuallyExclusive = mutableListOf(),
-        prohibitingCountries = prohibitingCountries?.map { it.toDomain() }
+        prohibitingCountries = prohibitingCountries.map { it.toDomain() }
     )
     this.mutuallyExclusive?.forEach { childDTO -> ingredient.addMutuallyExclusiveIngredient(childDTO.toDomain()) }
     return ingredient

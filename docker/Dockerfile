@@ -1,5 +1,5 @@
-# Use the official Gradle image with JDK 17 as the base image for building
-FROM gradle:7.4.1-jdk17 AS builder
+# Use the official Gradle image with JDK 23 as the base image for building
+FROM gradle:jdk21 AS builder
 
 # Set the working directory
 WORKDIR /app
@@ -20,7 +20,7 @@ RUN chmod +x gradlew
 RUN ./gradlew clean build -x test
 
 # Use a smaller base image for running the application
-FROM eclipse-temurin:17-jdk-focal
+FROM eclipse-temurin:21.0.5_11-jdk-noble
 
 # Set the working directory in the new image
 WORKDIR /app

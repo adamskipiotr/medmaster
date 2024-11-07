@@ -1,44 +1,40 @@
 package com.pada.medmaster.infrastructure.adapters.out.persistence.entity.treatment
 
 import com.pada.medmaster.domain.model.treatment.Intake
-import com.pada.medmaster.domain.model.treatment.Medicament
 import jakarta.persistence.*
-import lombok.AllArgsConstructor
 
 @Entity
-@AllArgsConstructor
 @Table(name = "intake")
-class IntakeEntity(
+class IntakeEntity {
     @Id
     @SequenceGenerator(name = "intake_id_sequence", sequenceName = "intake_id_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "intake_id_sequence")
-    var id: Long = 0,
+    var id: Long = 0
 
     @Enumerated(EnumType.STRING)  // Use @Enumerated to map the enum
     @Column(name = "form")
-    val form: IntakeForm,  // No need for @ManyToOne, this is an enum
+    lateinit var form: IntakeForm  // No need for @ManyToOne, this is an enum
 
     @Column(nullable = false)
-    val dosage: Int,
+    var dosage: Int = 0
 
     @Enumerated(EnumType.STRING)  // Use @Enumerated to map the enum
     @Column(name = "intakeFrequency")
-    val intakeFrequency: IntakeFrequency,
+    lateinit var intakeFrequency: IntakeFrequency
 
     @Column(nullable = false)
-    val intakeLimit: Int,
+    var intakeLimit: Int = 0
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
     @JoinColumn(name = "medicament_id")
-    var medicament: MedicamentEntity?,
+    var medicament: MedicamentEntity? = null
 
     @OneToMany(mappedBy = "intake", cascade = [CascadeType.ALL], fetch = FetchType.LAZY, orphanRemoval = true)
-    val intakeDates: List<IntakeDateEntity>,
+    var intakeDates: MutableList<IntakeDateEntity>  = mutableListOf()
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "treatment_id")
-    var treatment: TreatmentEntity?,
-) {
+    var treatment: TreatmentEntity? = null
 
     fun asDomain(): Intake {
         return Intake(
@@ -47,24 +43,9 @@ class IntakeEntity(
             form,
             dosage,
             intakeFrequency,
-            intakeDates.map { it.asDomain() },
+            intakeDates.map { it.asDomain() }.toMutableList(),
             intakeLimit,
-            treatment!!.asDomain()
+            null
         )
-    }
-
-    companion object {
-        fun of(intake: Intake): IntakeEntity {
-            return IntakeEntity(
-                intake.id ?: 0,
-                intake.form,
-                intake.dosage,
-                intake.intakeFrequency!!,
-                intake.intakeLimit,
-                MedicamentEntity.of(intake.medicament!!),
-                intake.intakeDates?.map { IntakeDateEntity.of(it) } ?: emptyList(),
-                null
-            )
-        }
     }
 }

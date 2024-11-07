@@ -5,10 +5,9 @@ package com.pada.medmaster.domain.model.treatment
 class Medicament(
     val id: Long? = null,
     val name: String,
-    var ingredients: MutableList<Ingredient>? = mutableListOf()  // Initialize to empty list
+    var ingredients: MutableList<Ingredient> = mutableListOf()  // Initialize to empty list
 ) {
-    fun addIngredients(ingredients: MutableList<Ingredient>) {
-        this.ingredients = ingredients
-        ingredients.forEach{ ingredient -> ingredient.medicament = this }
+    fun addIngredients(ingredients: List<Ingredient>) {
+        this.ingredients.addAll(ingredients)
     }
 }
