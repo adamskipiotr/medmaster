@@ -32,7 +32,7 @@ fun MedicalProcedureRequestDTO.toDomain(): MedicalProcedure = MedicalProcedure(
 fun IntakeRequestDTO.toDomain(): Intake {
     val intake = Intake(
         id = null,
-        medicament = medicament.toDomain(),
+        medicamentId = medicamentId,
         form = form,
         dosage = dosage,
         intakeFrequency = intakeFrequency,

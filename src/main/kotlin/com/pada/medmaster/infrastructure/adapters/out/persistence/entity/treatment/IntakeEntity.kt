@@ -1,6 +1,7 @@
 package com.pada.medmaster.infrastructure.adapters.out.persistence.entity.treatment
 
 import com.pada.medmaster.domain.model.treatment.Intake
+import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.medicament.MedicamentEntity
 import jakarta.persistence.*
 
 @Entity
@@ -25,9 +26,10 @@ class IntakeEntity {
     @Column(nullable = false)
     var intakeLimit: Int = 0
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
-    @JoinColumn(name = "medicament_id")
-    var medicament: MedicamentEntity? = null
+    var medicamentId: Long? = null // Object inside Aggregate can have reference to other Aggregate under 2 conditions:
+                                             // 1. Only to Aggregate Root
+                                             // 2. Only by its ID
+                                             // see more: "Domain-Driven Design" by Evans, "Implementing Domain-Driven Design" by Vernon
 
     @OneToMany(mappedBy = "intake", cascade = [CascadeType.ALL], fetch = FetchType.LAZY, orphanRemoval = true)
     var intakeDates: MutableList<IntakeDateEntity>  = mutableListOf()
@@ -39,7 +41,7 @@ class IntakeEntity {
     fun asDomain(): Intake {
         return Intake(
             id,
-            medicament?.asDomain(),
+            null, // after change from relation to ID - expected behaviour is to fetch Medicament for Intake based on medicamentId
             form,
             dosage,
             intakeFrequency,

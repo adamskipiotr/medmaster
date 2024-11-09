@@ -4,9 +4,10 @@ import com.pada.medmaster.domain.model.treatment.Treatment
 import jakarta.persistence.*
 import java.time.LocalDateTime
 
+// Aggregate Root: Treatment
 @Entity
 @Table(name = "treatment")
-class TreatmentEntity {  // Aggregate Root
+class TreatmentEntity {
 
     lateinit var code: String
     lateinit var disease: String
