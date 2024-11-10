@@ -16,6 +16,7 @@ internal class TestMedmasterApplication {
         return PostgreSQLContainer("postgres:latest")
     }
 
+    
     companion object {
         @JvmStatic
         fun main(args: Array<String>) {
