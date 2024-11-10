@@ -61,7 +61,7 @@ tasks.withType<Test> {
 
 sonarqube {
     properties {
-        property("sonar.projectKey", "adamskipiotr_learnproject")
+        property("sonar.projectKey", "adamskipiotr_medmaster")
         property("sonar.organization", "adamskipiotr")
         property("sonar.host.url", "https://sonarcloud.io")
     }
