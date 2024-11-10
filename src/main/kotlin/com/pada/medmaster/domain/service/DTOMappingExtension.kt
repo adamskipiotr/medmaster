@@ -1,6 +1,8 @@
 package com.pada.medmaster.domain.service
 
 import com.pada.medmaster.application.dto.request.*
+import com.pada.medmaster.domain.model.medicament.Ingredient
+import com.pada.medmaster.domain.model.medicament.Medicament
 import com.pada.medmaster.domain.model.treatment.*
 
 // Extension functions for mapping each part

@@ -1,10 +1,15 @@
 package com.pada.medmaster.infrastructure.adapters.out.persistence.adapter
 
+import com.pada.medmaster.domain.model.medicament.Ingredient
+import com.pada.medmaster.domain.model.medicament.Medicament
 import com.pada.medmaster.domain.model.treatment.*
 import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.medicament.CountryEntity
 import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.medicament.IngredientEntity
 import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.medicament.MedicamentEntity
-import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.treatment.*
+import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.treatment.IntakeDateEntity
+import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.treatment.IntakeEntity
+import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.treatment.MedicalProcedureEntity
+import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.treatment.TreatmentEntity
 
 // Extension functions for mapping each part
 fun of(treatment: Treatment) = TreatmentEntity().apply {

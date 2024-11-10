@@ -1,7 +1,6 @@
 package com.pada.medmaster.infrastructure.adapters.out.persistence.entity.treatment
 
 import com.pada.medmaster.domain.model.treatment.Intake
-import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.medicament.MedicamentEntity
 import jakarta.persistence.*
 
 @Entity
