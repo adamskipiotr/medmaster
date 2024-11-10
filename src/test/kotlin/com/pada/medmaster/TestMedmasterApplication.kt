@@ -15,7 +15,6 @@ internal class TestMedmasterApplication {
     fun postgresContainer(): PostgreSQLContainer<*> {
         return PostgreSQLContainer("postgres:latest")
     }
-
     
     companion object {
         @JvmStatic
