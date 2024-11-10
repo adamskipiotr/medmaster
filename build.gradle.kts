@@ -3,6 +3,8 @@ plugins {
     alias(libs.plugins.kotlin.spring)
     alias(libs.plugins.spring.boot) apply true
     alias(libs.plugins.spring.dependency.management) apply true
+    id("org.sonarqube") version "4.3.0.3225" apply true  // Apply SonarQube plugin directly
+    id("jacoco")
 }
 
 group = "com.pada"
@@ -55,4 +57,20 @@ kotlin {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+sonarqube {
+    properties {
+        property("sonar.projectKey", "adamskipiotr_learnproject")
+        property("sonar.organization", "adamskipiotr")
+        property("sonar.host.url", "https://sonarcloud.io")
+    }
+}
+
+tasks.jacocoTestReport {
+    reports {
+        xml.required.set(true)  // Enable XML report for SonarCloud
+        html.required.set(false)
+        csv.required.set(false)
+    }
 }
