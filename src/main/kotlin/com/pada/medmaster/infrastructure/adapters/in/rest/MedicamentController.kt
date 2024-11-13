@@ -2,10 +2,8 @@ package com.pada.medmaster.infrastructure.adapters.`in`.rest
 
 import com.pada.medmaster.application.dto.request.MedicamentRequestDTO
 import com.pada.medmaster.application.ports.`in`.CreateMedicamentUseCase
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.http.HttpStatus
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/medicaments")
@@ -14,6 +12,7 @@ class MedicamentController(
 ) {
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     fun createTreatment(@RequestBody medicamentRequestDTO: MedicamentRequestDTO) {
         createMedicamentUseCase.create(medicamentRequestDTO)
     }
