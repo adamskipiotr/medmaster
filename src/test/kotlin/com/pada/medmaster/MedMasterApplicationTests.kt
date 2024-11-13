@@ -14,7 +14,7 @@ import org.testcontainers.junit.jupiter.Testcontainers
 @DirtiesContext
 @ContextConfiguration(initializers = [MedMasterApplicationTests.TestEnvInitializer::class])
 @TestPropertySource(properties = ["spring.datasource.driver-class-name="])
-class MedMasterApplicationTests {
+open class MedMasterApplicationTests {
 
 	@Test
 	fun testFakeData() {

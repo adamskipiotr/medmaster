@@ -1,8 +1,15 @@
 package com.pada.medmaster.infrastructure.adapters.out.persistence.adapter
 
-import com.pada.medmaster.application.dto.request.*
+import com.pada.medmaster.domain.model.medicament.Ingredient
+import com.pada.medmaster.domain.model.medicament.Medicament
 import com.pada.medmaster.domain.model.treatment.*
-import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.treatment.*
+import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.medicament.CountryEntity
+import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.medicament.IngredientEntity
+import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.medicament.MedicamentEntity
+import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.treatment.IntakeDateEntity
+import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.treatment.IntakeEntity
+import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.treatment.MedicalProcedureEntity
+import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.treatment.TreatmentEntity
 
 // Extension functions for mapping each part
 fun of(treatment: Treatment) = TreatmentEntity().apply {
@@ -28,7 +35,7 @@ fun of(intake: Intake) = IntakeEntity().apply {
     dosage = intake.dosage
     intakeFrequency = intake.intakeFrequency!!
     intakeLimit = intake.intakeLimit
-    medicament = of(intake.medicament!!)
+    medicamentId = intake.medicamentId
     intakeDates.addAll(intake.intakeDates.map { of(it) })
 }
 
