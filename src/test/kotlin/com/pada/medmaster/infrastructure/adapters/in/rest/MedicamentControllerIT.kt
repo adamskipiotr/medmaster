@@ -1,8 +1,9 @@
 package com.pada.medmaster.infrastructure.adapters.`in`.rest
 
 import MedMasterApplicationTests
-import com.pada.medmaster.application.dto.request.IngredientRequestDTO
-import com.pada.medmaster.application.dto.request.MedicamentRequestDTO
+import com.pada.medmaster.application.dto.request.medicament.IngredientRequestDTO
+import com.pada.medmaster.application.dto.request.medicament.MedicamentRequestDTO
+import com.pada.medmaster.application.dto.request.medicament.PharmacyDTO
 import com.pada.medmaster.infrastructure.adapters.out.persistence.repository.MedicamentRepository
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
@@ -25,10 +26,13 @@ class MedicamentControllerIT : MedMasterApplicationTests(){
 
 
     @Test
-    fun should_createMedicament_when_ingredientsAreProvided() {
+    fun should_createMedicament_when_ingredientsAndOverdoseCounteractionsAreProvided() {
         // given
-        val ingredientRequestDTO = IngredientRequestDTO("name", null, null, emptyList())
-        val medicamentRequestDTO = MedicamentRequestDTO("name", listOf(ingredientRequestDTO))
+        val ingredientRequestDTO = IngredientRequestDTO("Ingredient Name", null, null, emptyList())
+        val pharmacyDTO = PharmacyDTO("Pharmacy Name", "Voivodeship", "District", "Community",
+            "Location", "Street", "123", "456", "12-345")
+        val medicamentRequestDTO = MedicamentRequestDTO("Medicament Name","Producer Name", "Overdose counteractions",
+            listOf(ingredientRequestDTO), listOf(pharmacyDTO))
 
         //when
         val response: ResponseEntity<Unit> = restTemplate.exchange(

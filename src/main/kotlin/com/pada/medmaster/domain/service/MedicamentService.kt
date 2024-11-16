@@ -1,6 +1,6 @@
 package com.pada.medmaster.domain.service
 
-import com.pada.medmaster.application.dto.request.MedicamentRequestDTO
+import com.pada.medmaster.application.dto.request.medicament.MedicamentRequestDTO
 import com.pada.medmaster.application.ports.`in`.CreateMedicamentUseCase
 import com.pada.medmaster.application.ports.out.CreateMedicamentPort
 import jakarta.transaction.Transactional
