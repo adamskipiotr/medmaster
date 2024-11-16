@@ -5,7 +5,7 @@ import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.ingredi
 import jakarta.persistence.*
 
 
-//Aggregate Root: Medicament
+// Aggregate Root: Medicament
 @Entity
 @Table(name = "medicament")
 class MedicamentEntity(                 // TODO: why class should be open for Hibernate - for extending by Proxy

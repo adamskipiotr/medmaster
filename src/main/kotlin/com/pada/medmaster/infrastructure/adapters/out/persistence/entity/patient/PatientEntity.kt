@@ -28,7 +28,7 @@ class PatientEntity {
         name = "patient__treatments",
         joinColumns = [JoinColumn(name = "patient_id")]
     )
-    @Column(name = "patient__treatments")
+    @Column(name = "treatment_id")
     var treatmentsIds: MutableList<Long> = mutableListOf()
 
     @ManyToMany(cascade = [CascadeType.PERSIST, CascadeType.MERGE], fetch = FetchType.LAZY)
