@@ -2,10 +2,12 @@ package com.pada.medmaster.infrastructure.adapters.out.persistence.adapter
 
 import com.pada.medmaster.domain.model.medicament.Ingredient
 import com.pada.medmaster.domain.model.medicament.Medicament
+import com.pada.medmaster.domain.model.pharmacy.Pharmacy
 import com.pada.medmaster.domain.model.treatment.*
 import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.medicament.CountryEntity
 import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.medicament.IngredientEntity
 import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.medicament.MedicamentEntity
+import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.medicament.PharmacyEntity
 import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.treatment.IntakeDateEntity
 import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.treatment.IntakeEntity
 import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.treatment.MedicalProcedureEntity
@@ -48,9 +50,23 @@ fun of(intakeDate: IntakeDate): IntakeDateEntity {
 
 fun of(medicament: Medicament) = MedicamentEntity().apply {
     name = medicament.name
+    producer = medicament.producer
+    overdoseCounteractions = medicament.overdoseCounteractions
+    pharmacies.addAll(medicament.pharmacies.map { i -> of(i) })
     ingredients.addAll(medicament.ingredients.map { i -> of(i) })
 }
 
+fun of(pharmacy: Pharmacy) = PharmacyEntity().apply {
+    name = pharmacy.name
+    voivodeship = pharmacy.voivodeship
+    district = pharmacy.district
+    community = pharmacy.community
+    location = pharmacy.location
+    street = pharmacy.street
+    buildingNumber = pharmacy.buildingNumber
+    apartmentNumber = pharmacy.apartmentNumber
+    zipCode = pharmacy.zipCode
+}
 
 fun of(ingredient: Ingredient) = IngredientEntity().apply {
         name = ingredient.name

@@ -1,4 +1,6 @@
-package com.pada.medmaster.application.dto.request
+package com.pada.medmaster.application.dto.request.medicament
+
+import com.pada.medmaster.application.dto.request.treatment.CountryRequestDTO
 
 data class IngredientRequestDTO(
     val name: String,

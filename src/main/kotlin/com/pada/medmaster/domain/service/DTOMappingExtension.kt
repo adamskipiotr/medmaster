@@ -1,13 +1,17 @@
 package com.pada.medmaster.domain.service
 
-import com.pada.medmaster.application.dto.request.*
+import com.pada.medmaster.application.dto.request.medicament.IngredientRequestDTO
+import com.pada.medmaster.application.dto.request.medicament.MedicamentRequestDTO
+import com.pada.medmaster.application.dto.request.medicament.PharmacyDTO
+import com.pada.medmaster.application.dto.request.treatment.*
 import com.pada.medmaster.domain.model.medicament.Ingredient
 import com.pada.medmaster.domain.model.medicament.Medicament
+import com.pada.medmaster.domain.model.pharmacy.Pharmacy
 import com.pada.medmaster.domain.model.treatment.*
 
 // Extension functions for mapping each part
 fun TreatmentRequestDTO.toDomain(): Treatment {
-   val treatment =  Treatment(
+    val treatment = Treatment(
         id = null,
         disease = disease,
         description = description,
@@ -54,12 +58,32 @@ fun IntakeDateRequestDTO.toDomain(): IntakeDate = IntakeDate(
 
 fun MedicamentRequestDTO.toDomain(): Medicament {
     val ingredients = this.ingredients.map { it.toDomain() }.toMutableList()
+    val pharmacies = this.pharmacies.map { it.toDomain() }.toMutableList()
     val medicament = Medicament(
         id = null,
         name = name,
-        ingredients = ingredients
+        producer = producer,
+        overdoseCounteractions = overdoseCounteraction,
+        ingredients = ingredients,
+        pharmacies = pharmacies
     )
     return medicament
+}
+
+fun PharmacyDTO.toDomain(): Pharmacy {
+
+    val pharmacy = Pharmacy(
+        name = name,
+        voivodeship = voivodeship,
+        district = district,
+        community = community,
+        location = location,
+        street = street,
+        buildingNumber = buildingNumber,
+        apartmentNumber = apartmentNumber,
+        zipCode = zipCode
+    )
+    return pharmacy
 }
 
 

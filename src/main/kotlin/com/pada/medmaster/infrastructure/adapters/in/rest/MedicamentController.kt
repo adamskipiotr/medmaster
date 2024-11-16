@@ -1,6 +1,6 @@
 package com.pada.medmaster.infrastructure.adapters.`in`.rest
 
-import com.pada.medmaster.application.dto.request.MedicamentRequestDTO
+import com.pada.medmaster.application.dto.request.medicament.MedicamentRequestDTO
 import com.pada.medmaster.application.ports.`in`.CreateMedicamentUseCase
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
@@ -16,5 +16,4 @@ class MedicamentController(
     fun createTreatment(@RequestBody medicamentRequestDTO: MedicamentRequestDTO) {
         createMedicamentUseCase.create(medicamentRequestDTO)
     }
-
 }

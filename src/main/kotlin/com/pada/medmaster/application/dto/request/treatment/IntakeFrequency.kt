@@ -1,4 +1,4 @@
-package com.pada.medmaster.application.dto.request
+package com.pada.medmaster.application.dto.request.treatment
 
 enum class IntakeFrequency {
     HOURLY,
