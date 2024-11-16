@@ -57,14 +57,13 @@ fun IntakeDateRequestDTO.toDomain(): IntakeDate = IntakeDate(
 )
 
 fun MedicamentRequestDTO.toDomain(): Medicament {
-    val ingredients = this.ingredients.map { it.toDomain() }.toMutableList()
     val pharmacies = this.pharmacies.map { it.toDomain() }.toMutableList()
     val medicament = Medicament(
         id = null,
         name = name,
         producer = producer,
         overdoseCounteractions = overdoseCounteraction,
-        ingredients = ingredients,
+        ingredientsIds = ingredientsIds,
         pharmacies = pharmacies
     )
     return medicament

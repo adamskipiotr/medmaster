@@ -5,7 +5,7 @@ import com.pada.medmaster.domain.model.medicament.Medicament
 import com.pada.medmaster.domain.model.pharmacy.Pharmacy
 import com.pada.medmaster.domain.model.treatment.*
 import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.medicament.CountryEntity
-import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.medicament.IngredientEntity
+import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.ingredient.IngredientEntity
 import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.medicament.MedicamentEntity
 import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.medicament.PharmacyEntity
 import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.treatment.IntakeDateEntity
@@ -53,7 +53,7 @@ fun of(medicament: Medicament) = MedicamentEntity().apply {
     producer = medicament.producer
     overdoseCounteractions = medicament.overdoseCounteractions
     pharmacies.addAll(medicament.pharmacies.map { i -> of(i) })
-    ingredients.addAll(medicament.ingredients.map { i -> of(i) })
+    ingredientsIds.addAll(medicament.ingredientsIds)
 }
 
 fun of(pharmacy: Pharmacy) = PharmacyEntity().apply {

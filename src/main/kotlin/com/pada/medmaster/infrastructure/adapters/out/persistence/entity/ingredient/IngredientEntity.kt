@@ -1,8 +1,11 @@
-package com.pada.medmaster.infrastructure.adapters.out.persistence.entity.medicament
+package com.pada.medmaster.infrastructure.adapters.out.persistence.entity.ingredient
 
 import com.pada.medmaster.domain.model.medicament.Ingredient
+import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.medicament.CountryEntity
+import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.medicament.MedicamentEntity
 import jakarta.persistence.*
 
+// Aggregate Root: Ingredient
 @Entity
 @Table(name = "ingredient")
 class IngredientEntity {
@@ -13,9 +16,7 @@ class IngredientEntity {
 
     lateinit var name: String
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
-    @JoinColumn(name = "medicament_id")  // Join column for medicament
-    var medicament: MedicamentEntity? = null
+    var medicamentId: Long? = null
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
     @JoinColumn(name = "parent_id")
@@ -37,7 +38,7 @@ class IngredientEntity {
         return Ingredient(
             id,
             name,
-            medicament?.asDomain(),
+            null, // changed from relation to ID - Ingredient as separate Aggregate Root
             null,
             mutableListOf(),
             prohibitingCountries.map { it.asDomain() }.toMutableList()

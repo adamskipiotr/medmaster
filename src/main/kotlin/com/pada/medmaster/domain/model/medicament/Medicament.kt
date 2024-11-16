@@ -10,17 +10,18 @@ class Medicament(
     val name: String,
     var producer: String,
     var overdoseCounteractions: String,
-    var ingredients: MutableList<Ingredient> = mutableListOf(),  // Initialize to empty list
+    var ingredientsIds: MutableList<Long> = mutableListOf(),  // Initialize to empty list
     var pharmacies: MutableList<Pharmacy> = mutableListOf(),
     // add: producer, places of availability
 ) {
 
     init {
-        require(ingredients.isNotEmpty()) { "A medicament must have at least one ingredient." }
+        require(ingredientsIds.isNotEmpty()) { "A medicament must have at least one ingredient." }
         require(overdoseCounteractions.isNotEmpty()) {"A medicament must have its overdose counteractions provided"}
     }
 
     fun addIngredients(ingredients: List<Ingredient>) {
-        this.ingredients.addAll(ingredients)
+        val  ingredientsIds = ingredients.mapNotNull { it.id }.toMutableList()
+        this.ingredientsIds.addAll(ingredientsIds)
     }
 }
