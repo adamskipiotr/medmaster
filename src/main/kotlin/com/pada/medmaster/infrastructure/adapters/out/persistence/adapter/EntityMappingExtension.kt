@@ -2,12 +2,14 @@ package com.pada.medmaster.infrastructure.adapters.out.persistence.adapter
 
 import com.pada.medmaster.domain.model.medicament.Ingredient
 import com.pada.medmaster.domain.model.medicament.Medicament
+import com.pada.medmaster.domain.model.patient.Patient
 import com.pada.medmaster.domain.model.pharmacy.Pharmacy
 import com.pada.medmaster.domain.model.treatment.*
 import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.medicament.CountryEntity
 import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.ingredient.IngredientEntity
 import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.medicament.MedicamentEntity
 import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.medicament.PharmacyEntity
+import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.patient.PatientEntity
 import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.treatment.IntakeDateEntity
 import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.treatment.IntakeEntity
 import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.treatment.MedicalProcedureEntity
@@ -75,4 +77,12 @@ fun of(ingredient: Ingredient) = IngredientEntity().apply {
 
 fun of(country: Country) = CountryEntity().apply {
         name = country.name
+}
+
+fun of(patient: Patient) = PatientEntity().apply {
+    name = patient.name
+    lastName = patient.lastName
+    birthDate = patient.birthDate
+    gender = patient.gender
+    specialHealthConditions = patient.specialHealthConditions
 }

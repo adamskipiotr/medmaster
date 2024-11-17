@@ -5,7 +5,15 @@ CREATE TABLE IF NOT EXISTS patient
     id BIGINT NOT NULL PRIMARY KEY DEFAULT nextval('patient_id_seq'),
     name VARCHAR(255),
     last_name VARCHAR(255),
-    birth_date DATE
+    birth_date DATE,
+    gender VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE patient_special_health_conditions (
+    patient_id BIGINT NOT NULL,
+    special_health_conditions VARCHAR(50) NOT NULL,
+    PRIMARY KEY (patient_id, special_health_conditions),
+    FOREIGN KEY (patient_id) REFERENCES patient(id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS medicament__ingredients

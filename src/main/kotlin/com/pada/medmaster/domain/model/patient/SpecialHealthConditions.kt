@@ -1,4 +1,4 @@
-package com.pada.medmaster.infrastructure.adapters.out.persistence.entity.patient
+package com.pada.medmaster.domain.model.patient
 
 enum class SpecialHealthConditions {
     PREGNANT,
