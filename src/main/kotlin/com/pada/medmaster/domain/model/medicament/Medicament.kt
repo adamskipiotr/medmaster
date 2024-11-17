@@ -12,7 +12,6 @@ class Medicament(
     var overdoseCounteractions: String,
     var ingredientsIds: MutableList<Long> = mutableListOf(),  // Initialize to empty list
     var pharmacies: MutableList<Pharmacy> = mutableListOf(),
-    // add: producer, places of availability
 ) {
 
     init {
