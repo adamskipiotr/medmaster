@@ -6,7 +6,7 @@ import com.pada.medmaster.infrastructure.adapters.out.persistence.repository.Tre
 import org.springframework.stereotype.Component
 
 @Component
-class GetTreatmentAdapter(val treatmentRepository : TreatmentRepository) : GetTreatmentPort {
+class GetTreatmentAdapter(val treatmentRepository: TreatmentRepository) : GetTreatmentPort {
     override fun getTreatment(code: String): Treatment {
         return treatmentRepository.findByCode("Placeholder").asDomain()
     }

@@ -9,4 +9,4 @@ class MedicamentRequestDTO(
     @NotNull
     val ingredientsIds: MutableList<Long> = mutableListOf(),  // Initialize to empty list
     val pharmacies: List<PharmacyDTO> = mutableListOf()
-    )
+)

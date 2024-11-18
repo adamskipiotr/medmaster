@@ -1,12 +1,8 @@
 package com.pada.medmaster.domain.service
 
 import com.pada.medmaster.application.dto.request.medicament.IngredientRequestDTO
-import com.pada.medmaster.application.dto.request.patient.PatientRequestDTO
-import com.pada.medmaster.application.dto.request.treatment.TreatmentRequestDTO
-import com.pada.medmaster.application.ports.`in`.*
-import com.pada.medmaster.application.ports.out.*
-import com.pada.medmaster.domain.model.medicament.Ingredient
-import com.pada.medmaster.domain.model.treatment.Treatment
+import com.pada.medmaster.application.ports.`in`.CreateIngredientUseCase
+import com.pada.medmaster.application.ports.out.CreateIngredientPort
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 
