@@ -11,6 +11,5 @@ class PatientRequestDTO(
     var lastName: String,
     var birthDate: LocalDate,
     var specialHealthConditions: MutableList<SpecialHealthConditions> = mutableListOf(),
-    var gender: Gender,
-    var medicaments: MutableList<Medicament> = mutableListOf(),
+    var gender: Gender
     )

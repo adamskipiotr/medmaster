@@ -55,7 +55,6 @@ class PatientEntity {
         lastName,
         birthDate,
         specialHealthConditions,
-        gender,
-        mutableListOf()
+        gender
     )
 }
