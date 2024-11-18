@@ -1,10 +1,11 @@
 package com.pada.medmaster.infrastructure.adapters.out.persistence.entity.medicament
 
 import com.pada.medmaster.domain.model.medicament.Medicament
+import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.ingredient.IngredientEntity
 import jakarta.persistence.*
 
 
-//Aggregate Root: Medicament
+// Aggregate Root: Medicament
 @Entity
 @Table(name = "medicament")
 class MedicamentEntity(                 // TODO: why class should be open for Hibernate - for extending by Proxy
@@ -15,11 +16,15 @@ class MedicamentEntity(                 // TODO: why class should be open for Hi
     var name: String = "", // to fix: Without default value - "No default constructor for entity" exception
     var producer: String = "",
     var overdoseCounteractions: String = "",
-    @OneToMany(
-        mappedBy = "medicament", cascade = [CascadeType.ALL],
-        fetch = FetchType.LAZY, orphanRemoval = true
+
+    @ElementCollection
+    @CollectionTable(
+        name = "medicament__ingredients",
+        joinColumns = [JoinColumn(name = "medicament_id")]
     )
-    var ingredients: MutableList<IngredientEntity> = mutableListOf(),
+    @Column(name = "ingredients_ids")
+    var ingredientsIds: MutableList<Long> = mutableListOf(),
+
     @ManyToMany(cascade = [CascadeType.PERSIST, CascadeType.MERGE], fetch = FetchType.LAZY)
     @JoinTable(
         name = "medicament__pharmacies",

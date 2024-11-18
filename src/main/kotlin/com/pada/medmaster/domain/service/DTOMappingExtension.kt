@@ -3,9 +3,11 @@ package com.pada.medmaster.domain.service
 import com.pada.medmaster.application.dto.request.medicament.IngredientRequestDTO
 import com.pada.medmaster.application.dto.request.medicament.MedicamentRequestDTO
 import com.pada.medmaster.application.dto.request.medicament.PharmacyDTO
+import com.pada.medmaster.application.dto.request.patient.PatientRequestDTO
 import com.pada.medmaster.application.dto.request.treatment.*
 import com.pada.medmaster.domain.model.medicament.Ingredient
 import com.pada.medmaster.domain.model.medicament.Medicament
+import com.pada.medmaster.domain.model.patient.Patient
 import com.pada.medmaster.domain.model.pharmacy.Pharmacy
 import com.pada.medmaster.domain.model.treatment.*
 
@@ -57,14 +59,13 @@ fun IntakeDateRequestDTO.toDomain(): IntakeDate = IntakeDate(
 )
 
 fun MedicamentRequestDTO.toDomain(): Medicament {
-    val ingredients = this.ingredients.map { it.toDomain() }.toMutableList()
     val pharmacies = this.pharmacies.map { it.toDomain() }.toMutableList()
     val medicament = Medicament(
         id = null,
         name = name,
         producer = producer,
         overdoseCounteractions = overdoseCounteraction,
-        ingredients = ingredients,
+        ingredientsIds = ingredientsIds,
         pharmacies = pharmacies
     )
     return medicament
@@ -103,3 +104,15 @@ fun CountryRequestDTO.toDomain(): Country = Country(
     id = null,
     name = name
 )
+
+fun PatientRequestDTO.toDomain(): Patient {
+    val patient = Patient(
+        name = name,
+        lastName = lastName,
+        birthDate = birthDate,
+        specialHealthConditions = specialHealthConditions,
+        gender = gender
+
+    )
+    return patient
+}
