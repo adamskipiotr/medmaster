@@ -1,16 +1,8 @@
 package com.pada.medmaster.domain.model.treatment
 
-import java.time.LocalDateTime
 
-class Treatment(
-    val id: Long? = null,
-    val disease: String,
-    val description: String,
+class TreatmentCode(
     val code: String,
-    val medicalProcedures: MutableList<MedicalProcedure> = mutableListOf(),
-    val intakes: MutableList<Intake> = mutableListOf(),
-    val beginDate: LocalDateTime,
-    val endDate: LocalDateTime,
     val maximalActiveTreatments: Int?
 ) {
     init {
@@ -25,13 +17,5 @@ class Treatment(
         if (maximalActiveTreatments != null && activeTreatmentsCount >= maximalActiveTreatments) {
             throw IllegalStateException("Cannot add treatment. Adding this treatment would exceed the limit of $maximalActiveTreatments active treatments for code '$code'.")
         }
-    }
-
-    fun addMedicalProcedures(medicalProcedures: List<MedicalProcedure>) {
-        this.medicalProcedures.addAll(medicalProcedures)
-    }
-
-    fun addIntakes(intakes: List<Intake>) {
-        this.intakes.addAll(intakes)
     }
 }

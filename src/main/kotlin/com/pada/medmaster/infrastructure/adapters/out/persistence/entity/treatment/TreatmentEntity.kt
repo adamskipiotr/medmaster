@@ -9,7 +9,8 @@ import java.time.LocalDateTime
 @Table(name = "treatment")
 class TreatmentEntity {
 
-    lateinit var code: String
+    @Embedded
+    lateinit var code: TreatmentCodeVO
     lateinit var disease: String
     lateinit var description: String
     lateinit var beginDate: LocalDateTime
@@ -36,7 +37,7 @@ class TreatmentEntity {
         id,
         disease,
         description,
-        code,
+        code.asDomain(),
         medicalProcedures.map { it.asDomain() }.toMutableList(),
         intakes.map { it.asDomain() }.toMutableList(),
         beginDate,

@@ -1,8 +1,10 @@
 package com.pada.medmaster.application.ports.out
 
 import com.pada.medmaster.domain.model.treatment.Treatment
+import com.pada.medmaster.domain.model.treatment.TreatmentCode
 
-interface GetTreatmentsByCodePort {
-    fun getTreatment(code: String): Treatment
+interface GetActiveTreatmentsByCodePort {
+
+    fun get(code: TreatmentCode): List<Treatment>
 
 }

@@ -10,21 +10,24 @@ import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.medicam
 import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.medicament.MedicamentEntity
 import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.medicament.PharmacyEntity
 import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.patient.PatientEntity
-import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.treatment.IntakeDateEntity
-import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.treatment.IntakeEntity
-import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.treatment.MedicalProcedureEntity
-import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.treatment.TreatmentEntity
+import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.treatment.*
 
 // Extension functions for mapping each part
 fun of(treatment: Treatment) = TreatmentEntity().apply {
     disease = treatment.disease
     description = treatment.description
-    code = treatment.code
+    code = of(treatment.code)
     beginDate = treatment.beginDate
     endDate = treatment.endDate
     medicalProcedures.addAll(treatment.medicalProcedures.map { p -> of(p) })
     intakes.addAll(treatment.intakes.map { i -> of(i) })
 }
+
+fun of(treatmentCode: TreatmentCode) = TreatmentCodeVO().apply {
+    code = treatmentCode.code
+    maximalActiveTreatments = treatmentCode.maximalActiveTreatments!!
+}
+
 
 fun of(medicalProcedure: MedicalProcedure) = MedicalProcedureEntity().apply {
     name = medicalProcedure.name

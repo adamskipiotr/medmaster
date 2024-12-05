@@ -10,6 +10,7 @@ import com.pada.medmaster.domain.model.medicament.Medicament
 import com.pada.medmaster.domain.model.patient.Patient
 import com.pada.medmaster.domain.model.pharmacy.Pharmacy
 import com.pada.medmaster.domain.model.treatment.*
+import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.treatment.TreatmentCodeVO
 
 // Extension functions for mapping each part
 fun TreatmentRequestDTO.toDomain(): Treatment {
@@ -17,9 +18,9 @@ fun TreatmentRequestDTO.toDomain(): Treatment {
         id = null,
         disease = disease,
         description = description,
-        code = code,
+        code = code.toDomain(),
         beginDate = beginDate,
-        endDate = endDate
+        endDate = endDate,
     )
     val medicalProcedures = this.medicalProcedures.map { it.toDomain() }
     treatment.addMedicalProcedures(medicalProcedures)
@@ -28,6 +29,10 @@ fun TreatmentRequestDTO.toDomain(): Treatment {
     return treatment
 }
 
+fun TreatmentCodeDTO.toDomain(): TreatmentCode = TreatmentCode(
+    code = code,
+    maximalActiveTreatments = maximalActiveTreatments
+)
 fun MedicalProcedureRequestDTO.toDomain(): MedicalProcedure = MedicalProcedure(
     id = null,
     name = name,

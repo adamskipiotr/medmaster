@@ -16,4 +16,6 @@ class PatientController(
     fun createPatient(@RequestBody patientRequestDTO: PatientRequestDTO) {
         createPatientUseCase.create(patientRequestDTO)
     }
+
+
 }
