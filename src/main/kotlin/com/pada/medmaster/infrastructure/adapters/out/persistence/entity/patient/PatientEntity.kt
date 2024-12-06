@@ -54,4 +54,8 @@ class PatientEntity {
         specialHealthConditions,
         gender
     )
+
+    fun addTreatment(treatmentId: Long) {
+        treatmentsIds.add(treatmentId)
+    }
 }

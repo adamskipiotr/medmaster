@@ -1,2 +1,0 @@
-ALTER TABLE treatment
-ADD COLUMN maximal_active_treatments INTEGER

@@ -16,18 +16,12 @@ import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.treatme
 fun of(treatment: Treatment) = TreatmentEntity().apply {
     disease = treatment.disease
     description = treatment.description
-    code = of(treatment.code)
+    code = treatment.code
     beginDate = treatment.beginDate
     endDate = treatment.endDate
     medicalProcedures.addAll(treatment.medicalProcedures.map { p -> of(p) })
     intakes.addAll(treatment.intakes.map { i -> of(i) })
 }
-
-fun of(treatmentCode: TreatmentCode) = TreatmentCodeVO().apply {
-    code = treatmentCode.code
-    maximalActiveTreatments = treatmentCode.maximalActiveTreatments!!
-}
-
 
 fun of(medicalProcedure: MedicalProcedure) = MedicalProcedureEntity().apply {
     name = medicalProcedure.name

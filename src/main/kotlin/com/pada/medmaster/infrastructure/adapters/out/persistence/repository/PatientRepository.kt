@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository
 @Repository
 interface PatientRepository :
     JpaRepository<PatientEntity, String> { //TODO should be replaced wih CoroutineCrudRepository?
+
+    fun findById(id: Long): PatientEntity
 }
