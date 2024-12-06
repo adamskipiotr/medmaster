@@ -5,5 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface MedicamentRepository : JpaRepository<MedicamentEntity, String> { //TODO should be replaced wih CoroutineCrudRepository?
+interface MedicamentRepository :
+    JpaRepository<MedicamentEntity, String> { //TODO should be replaced wih CoroutineCrudRepository?
 }

@@ -13,5 +13,5 @@ import org.springframework.transaction.annotation.EnableTransactionManagement
 class MedMasterApplication
 
 fun main(args: Array<String>) {
-	runApplication<MedMasterApplication>(*args)
+    runApplication<MedMasterApplication>(*args)
 }

@@ -19,7 +19,7 @@ fun TreatmentRequestDTO.toDomain(): Treatment {
         description = description,
         code = code,
         beginDate = beginDate,
-        endDate = endDate
+        endDate = endDate,
     )
     val medicalProcedures = this.medicalProcedures.map { it.toDomain() }
     treatment.addMedicalProcedures(medicalProcedures)

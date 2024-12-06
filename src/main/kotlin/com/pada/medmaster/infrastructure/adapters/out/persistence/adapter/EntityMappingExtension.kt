@@ -5,15 +5,12 @@ import com.pada.medmaster.domain.model.medicament.Medicament
 import com.pada.medmaster.domain.model.patient.Patient
 import com.pada.medmaster.domain.model.pharmacy.Pharmacy
 import com.pada.medmaster.domain.model.treatment.*
-import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.medicament.CountryEntity
 import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.ingredient.IngredientEntity
+import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.medicament.CountryEntity
 import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.medicament.MedicamentEntity
 import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.medicament.PharmacyEntity
 import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.patient.PatientEntity
-import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.treatment.IntakeDateEntity
-import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.treatment.IntakeEntity
-import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.treatment.MedicalProcedureEntity
-import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.treatment.TreatmentEntity
+import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.treatment.*
 
 // Extension functions for mapping each part
 fun of(treatment: Treatment) = TreatmentEntity().apply {
@@ -27,11 +24,11 @@ fun of(treatment: Treatment) = TreatmentEntity().apply {
 }
 
 fun of(medicalProcedure: MedicalProcedure) = MedicalProcedureEntity().apply {
-        name = medicalProcedure.name
-        description = medicalProcedure.description
-        procedureDate = medicalProcedure.procedureDate
-        minimalRecoveryDate = medicalProcedure.minimalRecoveryDate
-    }
+    name = medicalProcedure.name
+    description = medicalProcedure.description
+    procedureDate = medicalProcedure.procedureDate
+    minimalRecoveryDate = medicalProcedure.minimalRecoveryDate
+}
 
 fun of(intake: Intake) = IntakeEntity().apply {
     id = intake.id ?: 0
@@ -71,12 +68,12 @@ fun of(pharmacy: Pharmacy) = PharmacyEntity().apply {
 }
 
 fun of(ingredient: Ingredient) = IngredientEntity().apply {
-        name = ingredient.name
-        prohibitingCountries.addAll(ingredient.prohibitingCountries.map { of(it) })
+    name = ingredient.name
+    prohibitingCountries.addAll(ingredient.prohibitingCountries.map { of(it) })
 }
 
 fun of(country: Country) = CountryEntity().apply {
-        name = country.name
+    name = country.name
 }
 
 fun of(patient: Patient) = PatientEntity().apply {

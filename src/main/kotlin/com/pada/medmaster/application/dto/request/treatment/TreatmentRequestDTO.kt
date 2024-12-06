@@ -9,5 +9,6 @@ data class TreatmentRequestDTO(
     val medicalProcedures: List<MedicalProcedureRequestDTO>,
     val intakes: List<IntakeRequestDTO>,
     val beginDate: LocalDateTime,
-    val endDate: LocalDateTime
+    val endDate: LocalDateTime,
+    val patientId: Long,
 )

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component
 @Component
 class CreateTreatmentAdapter(val treatmentRepository: TreatmentRepository) : CreateTreatmentPort {
 
-    override fun createTreatment(treatment: Treatment) {
+    override fun createTreatment(treatment: Treatment): Treatment {
         val treatmentEntity = of(treatment)
         treatmentEntity.medicalProcedures.forEach { mp -> mp.treatment = treatmentEntity }
         treatmentEntity.intakes.forEach { intakeEntity -> intakeEntity.treatment = treatmentEntity }
@@ -18,6 +18,6 @@ class CreateTreatmentAdapter(val treatmentRepository: TreatmentRepository) : Cre
                 intakeDateEntity.intake = intakeEntity
             }
         }
-        treatmentRepository.save(treatmentEntity)
+       return treatmentRepository.save(treatmentEntity).asDomain()
     }
 }

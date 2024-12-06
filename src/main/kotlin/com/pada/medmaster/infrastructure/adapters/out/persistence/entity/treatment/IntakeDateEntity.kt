@@ -21,7 +21,7 @@ class IntakeDateEntity(
     fun asDomain(): IntakeDate { // why  fun asDomain(): MedicalProcedure { doesnt work here
         return IntakeDate(
             // to learn: what is Local Extension
-            id, date, intake!!.asDomain(),
+            id, date, null,
         )
     }
 

@@ -2,7 +2,6 @@ package com.pada.medmaster.infrastructure.adapters.out.persistence.entity.ingred
 
 import com.pada.medmaster.domain.model.medicament.Ingredient
 import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.medicament.CountryEntity
-import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.medicament.MedicamentEntity
 import jakarta.persistence.*
 
 // Aggregate Root: Ingredient

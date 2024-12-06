@@ -1,10 +1,7 @@
 package com.pada.medmaster.domain.model.patient
 
-import com.pada.medmaster.domain.model.medicament.Medicament
-import com.pada.medmaster.domain.model.pharmacy.Pharmacy
 import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.patient.Gender
 import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.patient.SpecialHealthConditions
-import org.springframework.boot.availability.ApplicationAvailability
 import java.time.LocalDate
 
 // About bidirectional relationship:
@@ -16,6 +13,4 @@ class Patient(
     var birthDate: LocalDate,
     var specialHealthConditions: MutableList<SpecialHealthConditions> = mutableListOf(),
     var gender: Gender,
-) {
-
-}
+)
