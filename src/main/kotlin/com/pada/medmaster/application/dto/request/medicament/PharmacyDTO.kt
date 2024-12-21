@@ -1,7 +1,5 @@
 package com.pada.medmaster.application.dto.request.medicament
 
-import org.jetbrains.annotations.NotNull
-
 class PharmacyDTO(
     val name: String,
     val voivodeship: String,
@@ -12,4 +10,4 @@ class PharmacyDTO(
     val buildingNumber: String,
     val apartmentNumber: String,
     val zipCode: String,
-    )
+)

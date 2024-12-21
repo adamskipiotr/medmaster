@@ -1,6 +1,6 @@
 package com.pada.medmaster.domain.model.pharmacy
 
-class Pharmacy (
+class Pharmacy(
     val id: Long? = null,
     val name: String,
     val voivodeship: String,
@@ -14,10 +14,10 @@ class Pharmacy (
 ) {
     init {
         require(voivodeship.isNotEmpty()) { "A pharmacy must have its voivodeship provided." }
-        require(district.isNotEmpty()) {"A pharmacy must have its district provided."}
-        require(community.isNotEmpty()) {"A pharmacy must have its community provided."}
-        require(location.isNotEmpty()) {"A pharmacy must have its location provided."}
-        require(buildingNumber.isNotEmpty()) {"A pharmacy must have its building number provided."}
-        require(zipCode.isNotEmpty()) {"A pharmacy must have its zip code provided."}
+        require(district.isNotEmpty()) { "A pharmacy must have its district provided." }
+        require(community.isNotEmpty()) { "A pharmacy must have its community provided." }
+        require(location.isNotEmpty()) { "A pharmacy must have its location provided." }
+        require(buildingNumber.isNotEmpty()) { "A pharmacy must have its building number provided." }
+        require(zipCode.isNotEmpty()) { "A pharmacy must have its zip code provided." }
     }
 }

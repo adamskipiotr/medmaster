@@ -1,13 +1,9 @@
 package com.pada.medmaster.infrastructure.adapters.out.persistence.entity.patient
 
-import com.pada.medmaster.domain.model.medicament.Medicament
 import com.pada.medmaster.domain.model.patient.Patient
-import com.pada.medmaster.domain.model.treatment.Treatment
 import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.ingredient.IngredientEntity
-import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.medicament.PharmacyEntity
 import jakarta.persistence.*
 import java.time.LocalDate
-import java.time.LocalDateTime
 
 // Aggregate Root: Patient
 @Entity
@@ -17,6 +13,7 @@ class PatientEntity {
     lateinit var name: String
     lateinit var lastName: String
     lateinit var birthDate: LocalDate
+
     @Enumerated(EnumType.STRING)  // Use @Enumerated to map the enum
     lateinit var gender: Gender
 
@@ -57,4 +54,8 @@ class PatientEntity {
         specialHealthConditions,
         gender
     )
+
+    fun addTreatment(treatmentId: Long) {
+        treatmentsIds.add(treatmentId)
+    }
 }

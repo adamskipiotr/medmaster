@@ -6,23 +6,26 @@ import com.pada.medmaster.application.ports.`in`.GetAllTreatmentsUseCase
 import com.pada.medmaster.application.ports.`in`.GetTreatmentUseCase
 import com.pada.medmaster.application.ports.out.CreateTreatmentPort
 import com.pada.medmaster.application.ports.out.GetAllTreatmentsPort
-import com.pada.medmaster.application.ports.out.GetTreatmentPort
+import com.pada.medmaster.application.ports.out.GetActiveTreatmentsByCodePort
+import com.pada.medmaster.domain.events.TreatmentAddedEvent
 import com.pada.medmaster.domain.model.treatment.Treatment
 import jakarta.transaction.Transactional
+import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
 
 // Future refactoring target: Separate Services to handle defined Use Case
 // see: https://raatiniemi.se/thoughts/use-case-driven-development/
 @Service
 class TreatmentService(
-    val getTreatmentPort: GetTreatmentPort,
+    val getActiveTreatmentsByCodePort: GetActiveTreatmentsByCodePort,
     val getAllTreatmentsPort: GetAllTreatmentsPort,
-    val createTreatmentPort: CreateTreatmentPort
+    val createTreatmentPort: CreateTreatmentPort,
+    val eventPublisher: ApplicationEventPublisher
 ) : GetTreatmentUseCase, GetAllTreatmentsUseCase, CreateTreatmentUseCase {
 
 
     override fun getTreatment(code: String): Treatment {
-        return getTreatmentPort.getTreatment("Placeholder")
+        return getActiveTreatmentsByCodePort.get("Code").first()
     }
 
     @Transactional
@@ -33,6 +36,8 @@ class TreatmentService(
     @Transactional
     override fun createTreatment(treatmentRequestDTO: TreatmentRequestDTO) {
         val treatment = treatmentRequestDTO.toDomain()
-        createTreatmentPort.createTreatment(treatment)
+
+       val savedTreatment =  createTreatmentPort.createTreatment(treatment)
+        eventPublisher.publishEvent(TreatmentAddedEvent(treatmentRequestDTO.patientId, savedTreatment.id!!))
     }
 }

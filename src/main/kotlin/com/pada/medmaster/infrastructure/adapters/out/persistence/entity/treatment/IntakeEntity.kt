@@ -26,12 +26,12 @@ class IntakeEntity {
     var intakeLimit: Int = 0
 
     var medicamentId: Long? = null // Object inside Aggregate can have reference to other Aggregate under 2 conditions:
-                                             // 1. Only to Aggregate Root
-                                             // 2. Only by its ID
-                                             // see more: "Domain-Driven Design" by Evans, "Implementing Domain-Driven Design" by Vernon
+    // 1. Only to Aggregate Root
+    // 2. Only by its ID
+    // see more: "Domain-Driven Design" by Evans, "Implementing Domain-Driven Design" by Vernon
 
     @OneToMany(mappedBy = "intake", cascade = [CascadeType.ALL], fetch = FetchType.LAZY, orphanRemoval = true)
-    var intakeDates: MutableList<IntakeDateEntity>  = mutableListOf()
+    var intakeDates: MutableList<IntakeDateEntity> = mutableListOf()
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "treatment_id")

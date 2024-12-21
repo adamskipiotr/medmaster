@@ -10,7 +10,7 @@ class Treatment(
     val medicalProcedures: MutableList<MedicalProcedure> = mutableListOf(),
     val intakes: MutableList<Intake> = mutableListOf(),
     val beginDate: LocalDateTime,
-    val endDate: LocalDateTime,
+    val endDate: LocalDateTime
 ) {
     fun addMedicalProcedures(medicalProcedures: List<MedicalProcedure>) {
         this.medicalProcedures.addAll(medicalProcedures)
