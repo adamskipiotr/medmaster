@@ -11,4 +11,6 @@ interface TreatmentRepository :
 
     @Query("SELECT t FROM TreatmentEntity t WHERE t.code = :code AND t.endDate IS NULL")
     fun findByCode(code: String): List<TreatmentEntity>
+
+    fun findById(id: Long): TreatmentEntity
 }
