@@ -14,6 +14,7 @@ import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.treatme
 
 // Extension functions for mapping each part
 fun of(treatment: Treatment) = TreatmentEntity().apply {
+    id = treatment.id ?: 0
     disease = treatment.disease
     description = treatment.description
     code = treatment.code

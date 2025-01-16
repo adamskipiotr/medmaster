@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service
 // Future refactoring target: Separate Services to handle defined Use Case
 // see: https://raatiniemi.se/thoughts/use-case-driven-development/
 @Service
-class MedicamentService(
+class CreateMedicamentService(
     val createMedicamentPort: CreateMedicamentPort
 ) : CreateMedicamentUseCase {
 
