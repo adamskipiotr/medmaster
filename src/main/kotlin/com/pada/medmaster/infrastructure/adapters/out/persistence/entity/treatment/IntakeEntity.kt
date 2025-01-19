@@ -4,7 +4,7 @@ import com.pada.medmaster.domain.model.treatment.Intake
 import jakarta.persistence.*
 
 @Entity
-@Table(name = "intake")
+@Table(schema = "treatment_schema", name = "intake")
 class IntakeEntity {
     @Id
     @SequenceGenerator(name = "intake_id_sequence", sequenceName = "intake_id_seq", allocationSize = 1)

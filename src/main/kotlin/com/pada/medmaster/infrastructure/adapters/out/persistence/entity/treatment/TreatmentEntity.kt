@@ -9,7 +9,7 @@ import java.time.LocalDateTime
 // to do - also apply https://dzone.com/articles/bets-practices-of-using-jpa-with-kotlin
 // also https://medium.com/@goncharov.valentin/a-practical-point-of-view-on-kotlin-data-classes-and-jpa-hibernate-c69370b975e1
 @Entity
-@Table(name = "treatment")
+@Table(schema = "treatment_schema", name = "treatment")
 class TreatmentEntity {
 
     lateinit var code: String

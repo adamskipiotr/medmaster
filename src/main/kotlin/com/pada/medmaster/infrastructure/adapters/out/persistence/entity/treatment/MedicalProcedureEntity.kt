@@ -7,7 +7,7 @@ import java.time.LocalDateTime
 
 // Important see: https://stackoverflow.com/questions/45642181/kotlin-jpa-encapsulate-onetomany
 @Entity
-@Table(name = "medical_procedure")
+@Table(schema = "treatment_schema", name = "medical_procedure")
 class MedicalProcedureEntity {
     @Id
     @SequenceGenerator(

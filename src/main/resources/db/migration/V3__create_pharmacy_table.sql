@@ -1,6 +1,6 @@
 CREATE SEQUENCE IF NOT EXISTS pharmacy_id_seq START 1000 INCREMENT 1;
 
-CREATE TABLE IF NOT EXISTS pharmacy
+CREATE TABLE IF NOT EXISTS medicament_schema.pharmacy
 (
     id BIGINT NOT NULL PRIMARY KEY DEFAULT nextval('pharmacy_id_seq'),
     name VARCHAR(255),
@@ -14,12 +14,12 @@ CREATE TABLE IF NOT EXISTS pharmacy
     zip_code VARCHAR(255)
 );
 
-CREATE TABLE IF NOT EXISTS medicament__pharmacies
+CREATE TABLE IF NOT EXISTS medicament_schema.medicament__pharmacies
 (
     medicament_id BIGINT,
     pharmacy_id BIGINT
 );
 
-ALTER TABLE medicament
+ALTER TABLE medicament_schema.medicament
 ADD COLUMN producer VARCHAR(255),
 ADD COLUMN overdose_counteractions VARCHAR(255)

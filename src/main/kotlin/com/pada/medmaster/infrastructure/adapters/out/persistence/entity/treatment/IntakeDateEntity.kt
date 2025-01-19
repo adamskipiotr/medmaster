@@ -5,7 +5,7 @@ import jakarta.persistence.*
 import java.time.LocalDateTime
 
 @Entity
-@Table(name = "intake_date")
+@Table(schema = "treatment_schema", name = "intake_date")
 class IntakeDateEntity(
     @Id
     @SequenceGenerator(name = "intake_date_id_sequence", sequenceName = "intake_date_id_seq", allocationSize = 1)

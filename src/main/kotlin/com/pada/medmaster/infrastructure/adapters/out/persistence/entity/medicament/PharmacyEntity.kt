@@ -6,7 +6,7 @@ import jakarta.persistence.*
 
 //Aggregate Root: Medicament
 @Entity
-@Table(name = "pharmacy")
+@Table(schema = "medicament_schema", name="pharmacy")
 class PharmacyEntity(
     @Id
     @SequenceGenerator(name = "pharmacy_id_sequence", sequenceName = "pharmacy_id_seq", allocationSize = 1)

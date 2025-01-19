@@ -7,7 +7,7 @@ import java.time.LocalDate
 
 // Aggregate Root: Patient
 @Entity
-@Table(name = "patient")
+@Table(schema = "patient_schema", name = "patient")
 class PatientEntity {
 
     lateinit var name: String
@@ -24,6 +24,7 @@ class PatientEntity {
 
     @ElementCollection(targetClass = SpecialHealthConditions::class)
     @CollectionTable(
+        schema = "patient_schema",
         name = "patient_special_health_conditions",
         joinColumns = [JoinColumn(name = "patient_id")]
     )
@@ -32,6 +33,7 @@ class PatientEntity {
 
     @ElementCollection
     @CollectionTable(
+        schema = "shared_schema",
         name = "patient__treatments",
         joinColumns = [JoinColumn(name = "patient_id")]
     )
@@ -40,6 +42,7 @@ class PatientEntity {
 
     @ManyToMany(cascade = [CascadeType.PERSIST, CascadeType.MERGE], fetch = FetchType.LAZY)
     @JoinTable(
+        schema = "shared_schema",
         name = "patient__allergic_ingredients",
         joinColumns = [JoinColumn(name = "patient_id")],
         inverseJoinColumns = [JoinColumn(name = "allergic_ingredient_id")]

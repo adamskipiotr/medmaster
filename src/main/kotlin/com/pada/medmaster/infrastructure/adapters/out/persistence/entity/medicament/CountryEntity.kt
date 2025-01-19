@@ -6,7 +6,7 @@ import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.ingredi
 import jakarta.persistence.*
 
 @Entity
-@Table(name = "country")
+@Table(schema = "ingredient_schema", name = "country")
 class CountryEntity {
     @Id
     @SequenceGenerator(name = "country_id_sequence", sequenceName = "country_id_seq", allocationSize = 1)

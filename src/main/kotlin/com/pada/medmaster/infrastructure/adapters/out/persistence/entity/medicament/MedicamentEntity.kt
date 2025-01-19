@@ -6,7 +6,7 @@ import jakarta.persistence.*
 
 // Aggregate Root: Medicament
 @Entity
-@Table(name = "medicament")
+@Table(schema = "medicament_schema", name="medicament")
 class MedicamentEntity(                 // TODO: why class should be open for Hibernate - for extending by Proxy
     @Id
     @SequenceGenerator(name = "medicament_id_sequence", sequenceName = "medicament_id_seq", allocationSize = 1)
@@ -18,6 +18,7 @@ class MedicamentEntity(                 // TODO: why class should be open for Hi
 
     @ElementCollection
     @CollectionTable(
+        schema = "shared_schema",
         name = "medicament__ingredients",
         joinColumns = [JoinColumn(name = "medicament_id")]
     )
@@ -26,6 +27,7 @@ class MedicamentEntity(                 // TODO: why class should be open for Hi
 
     @ManyToMany(cascade = [CascadeType.PERSIST, CascadeType.MERGE], fetch = FetchType.LAZY)
     @JoinTable(
+        schema = "medicament_schema",
         name = "medicament__pharmacies",
         joinColumns = [JoinColumn(name = "medicament_id")],
         inverseJoinColumns = [JoinColumn(name = "pharmacy_id")]
