@@ -1,8 +1,8 @@
 package com.pada.medmaster.application.ports.`in`
 
-import com.pada.medmaster.application.dto.request.medicament.IngredientRequestDTO
+import com.pada.medmaster.application.dto.request.medicament.CreateIngredientRequest
 
 interface CreateIngredientUseCase {
 
-    fun create(ingredientRequestDTO: IngredientRequestDTO)
+    fun create(createIngredientRequest: CreateIngredientRequest)
 }

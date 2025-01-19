@@ -5,6 +5,9 @@ import jakarta.persistence.*
 import java.time.LocalDateTime
 
 // Aggregate Root: Treatment
+// To do - why entity should not be data class when using JPA
+// to do - also apply https://dzone.com/articles/bets-practices-of-using-jpa-with-kotlin
+// also https://medium.com/@goncharov.valentin/a-practical-point-of-view-on-kotlin-data-classes-and-jpa-hibernate-c69370b975e1
 @Entity
 @Table(name = "treatment")
 class TreatmentEntity {

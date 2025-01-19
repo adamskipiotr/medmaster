@@ -63,9 +63,18 @@ CREATE TABLE IF NOT EXISTS ingredient
     id  BIGINT NOT NULL PRIMARY KEY DEFAULT nextval('ingredient_id_seq'),
     name VARCHAR(255),
     medicament_id BIGINT,  -- Foreign key for the medicament
-    parent_id BIGINT,
     ingredient__prohibiting_country BIGINT,
     CONSTRAINT fk_medicament FOREIGN KEY (medicament_id) REFERENCES medicament(id)
+);
+
+CREATE TABLE ingredient_incompatibilities (
+    ingredient_id BIGINT NOT NULL,
+    incompatible_ingredient_id BIGINT NOT NULL,
+    PRIMARY KEY (ingredient_id, incompatible_ingredient_id),
+    CONSTRAINT fk_ingredient FOREIGN KEY (ingredient_id)
+        REFERENCES ingredient(id) ON DELETE CASCADE,
+    CONSTRAINT fk_incompatible_ingredient FOREIGN KEY (incompatible_ingredient_id)
+        REFERENCES ingredient(id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS ingredient__prohibiting_country

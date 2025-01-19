@@ -6,8 +6,8 @@ import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.treatme
 class Intake(
     val id: Long? = null,
     val medicamentId: Long?, // todo - call to Medicament Aggregate Root by Id or Reference here?
-    val form: IntakeForm,  // No need for @ManyToOne, this is an enum
-    val dosage: Int,
+    val form: IntakeForm,
+    val dosage: Int, // remove field from here
     val intakeFrequency: IntakeFrequency?,
     val intakeDates: MutableList<IntakeDate> = mutableListOf(),  // Initialize the list
     val intakeLimit: Int,
