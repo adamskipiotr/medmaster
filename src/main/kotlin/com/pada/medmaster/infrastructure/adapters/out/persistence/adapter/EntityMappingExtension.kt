@@ -1,6 +1,7 @@
 package com.pada.medmaster.infrastructure.adapters.out.persistence.adapter
 
-import com.pada.medmaster.domain.model.medicament.Ingredient
+import com.pada.medmaster.domain.model.ingredient.Country
+import com.pada.medmaster.domain.model.ingredient.Ingredient
 import com.pada.medmaster.domain.model.medicament.Medicament
 import com.pada.medmaster.domain.model.patient.Patient
 import com.pada.medmaster.domain.model.pharmacy.Pharmacy
@@ -68,9 +69,17 @@ fun of(pharmacy: Pharmacy) = PharmacyEntity().apply {
     zipCode = pharmacy.zipCode
 }
 
-fun of(ingredient: Ingredient) = IngredientEntity().apply {
-    name = ingredient.name
-    prohibitingCountries.addAll(ingredient.prohibitingCountries.map { of(it) })
+//fun of(ingredient: Ingredient) = IngredientEntity().apply {
+//    name = ingredient.name
+//    prohibitingCountries.addAll(ingredient.prohibitingCountries.map { of(it) })
+//}
+
+fun of(ingredient: Ingredient): IngredientEntity {
+    return IngredientEntity().apply {
+        id = ingredient.id ?: 0
+        name = ingredient.name
+        incompatibleIngredients.addAll(ingredient.incompatibleIngredients?.map { i -> of(i) }.orEmpty())
+    }
 }
 
 fun of(country: Country) = CountryEntity().apply {

@@ -1,6 +1,4 @@
-package com.pada.medmaster.domain.model.treatment
-
-import com.pada.medmaster.domain.model.medicament.Ingredient
+package com.pada.medmaster.domain.model.ingredient
 
 class Country(
     val id: Long? = null,

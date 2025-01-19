@@ -2,7 +2,7 @@ package com.pada.medmaster.domain.service.treatment
 
 import com.pada.medmaster.application.dto.request.treatment.TreatmentRequestDTO
 import com.pada.medmaster.application.ports.`in`.CreateTreatmentUseCase
-import com.pada.medmaster.application.ports.out.*
+import com.pada.medmaster.application.ports.out.treatment.CreateTreatmentPort
 import com.pada.medmaster.domain.events.TreatmentAddedEvent
 import com.pada.medmaster.domain.service.toDomain
 import jakarta.transaction.Transactional

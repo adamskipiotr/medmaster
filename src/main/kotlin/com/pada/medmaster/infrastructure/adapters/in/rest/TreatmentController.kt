@@ -29,7 +29,7 @@ class TreatmentController(
         createTreatmentUseCase.execute(treatmentRequestDTO)
     }
 
-    @PostMapping("/{it}/intakes")
+    @PostMapping("/{id}/intakes")
     fun addIntake(@PathVariable id: Long, @RequestBody addIntakeDTO: AddIntakeDTO) {
         addIntakeUseCase.addIntake(id, addIntakeDTO)
     }

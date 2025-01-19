@@ -1,7 +1,6 @@
 package com.pada.medmaster.infrastructure.adapters.out.persistence.adapter.treatment
 
-import com.pada.medmaster.application.ports.out.AddIntakePort
-import com.pada.medmaster.application.ports.out.CreateTreatmentPort
+import com.pada.medmaster.application.ports.out.treatment.AddIntakePort
 import com.pada.medmaster.domain.model.treatment.Treatment
 import com.pada.medmaster.infrastructure.adapters.out.persistence.adapter.of
 import com.pada.medmaster.infrastructure.adapters.out.persistence.repository.TreatmentRepository

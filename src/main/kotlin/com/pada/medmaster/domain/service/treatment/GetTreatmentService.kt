@@ -1,7 +1,7 @@
 package com.pada.medmaster.domain.service.treatment
 
 import com.pada.medmaster.application.ports.`in`.GetTreatmentUseCase
-import com.pada.medmaster.application.ports.out.*
+import com.pada.medmaster.application.ports.out.treatment.GetActiveTreatmentsByCodePort
 import com.pada.medmaster.domain.model.treatment.Treatment
 import org.springframework.stereotype.Service
 

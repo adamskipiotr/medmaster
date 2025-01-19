@@ -1,11 +1,12 @@
 package com.pada.medmaster.domain.service
 
-import com.pada.medmaster.application.dto.request.medicament.IngredientRequestDTO
+import com.pada.medmaster.application.dto.request.medicament.CreateIngredientRequest
 import com.pada.medmaster.application.dto.request.medicament.MedicamentRequestDTO
 import com.pada.medmaster.application.dto.request.medicament.PharmacyDTO
 import com.pada.medmaster.application.dto.request.patient.PatientRequestDTO
 import com.pada.medmaster.application.dto.request.treatment.*
-import com.pada.medmaster.domain.model.medicament.Ingredient
+import com.pada.medmaster.domain.model.ingredient.Country
+import com.pada.medmaster.domain.model.ingredient.Ingredient
 import com.pada.medmaster.domain.model.medicament.Medicament
 import com.pada.medmaster.domain.model.patient.Patient
 import com.pada.medmaster.domain.model.pharmacy.Pharmacy
@@ -88,15 +89,14 @@ fun PharmacyDTO.toDomain(): Pharmacy {
 }
 
 
-fun IngredientRequestDTO.toDomain(): Ingredient {
+fun CreateIngredientRequest.toDomain(): Ingredient {
     val ingredient = Ingredient(
         name = name,
         medicament = null,
-        parent = null,
-        mutuallyExclusive = mutableListOf(),
-        prohibitingCountries = prohibitingCountries.map { it.toDomain() }
+        prohibitingCountries = mutableListOf()
     )
-    this.mutuallyExclusive?.forEach { childDTO -> ingredient.addMutuallyExclusiveIngredient(childDTO.toDomain()) }
+    val prohibitingCountries = prohibitingCountries?.map { it.toDomain() }.orEmpty()
+    ingredient.addProhibitingCountries(prohibitingCountries)
     return ingredient
 }
 

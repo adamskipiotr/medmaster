@@ -1,8 +1,10 @@
 package com.pada.medmaster.infrastructure.adapters.out.persistence.entity.ingredient
 
-import com.pada.medmaster.domain.model.medicament.Ingredient
+import com.pada.medmaster.domain.model.ingredient.Ingredient
 import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.medicament.CountryEntity
 import jakarta.persistence.*
+import org.hibernate.annotations.OnDelete
+import org.hibernate.annotations.OnDeleteAction
 
 // Aggregate Root: Ingredient
 @Entity
@@ -17,12 +19,14 @@ class IngredientEntity {
 
     var medicamentId: Long? = null
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
-    @JoinColumn(name = "parent_id")
-    var parent: IngredientEntity? = null
-
-    @OneToMany(mappedBy = "parent", cascade = [CascadeType.ALL], orphanRemoval = true)
-    lateinit var mutuallyExclusive: List<IngredientEntity>
+    @ManyToMany
+    @JoinTable(
+        name = "ingredient_incompatibilities",
+        joinColumns = [JoinColumn(name = "ingredient_id")],
+        inverseJoinColumns = [JoinColumn(name = "incompatible_ingredient_id")]
+    )
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    val incompatibleIngredients: MutableSet<IngredientEntity> = mutableSetOf()
 
     @ManyToMany(cascade = [CascadeType.PERSIST, CascadeType.MERGE], fetch = FetchType.LAZY)
     @JoinTable(
@@ -38,7 +42,6 @@ class IngredientEntity {
             id,
             name,
             null, // changed from relation to ID - Ingredient as separate Aggregate Root
-            null,
             mutableListOf(),
             prohibitingCountries.map { it.asDomain() }.toMutableList()
         )

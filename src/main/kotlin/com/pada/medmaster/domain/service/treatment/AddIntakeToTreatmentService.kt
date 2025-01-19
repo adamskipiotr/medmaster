@@ -2,12 +2,10 @@ package com.pada.medmaster.domain.service.treatment
 
 import com.pada.medmaster.application.dto.request.treatment.AddIntakeDTO
 import com.pada.medmaster.application.ports.`in`.AddIntakeUseCase
-import com.pada.medmaster.application.ports.`in`.GetAllTreatmentsUseCase
-import com.pada.medmaster.application.ports.out.*
+import com.pada.medmaster.application.ports.out.treatment.AddIntakePort
+import com.pada.medmaster.application.ports.out.treatment.GetTreatmentPort
+import com.pada.medmaster.application.ports.out.treatment.UpdateTreatmentPort
 import com.pada.medmaster.domain.model.treatment.Intake
-import com.pada.medmaster.domain.model.treatment.Treatment
-import jakarta.transaction.Transactional
-import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
 
 // Future refactoring target: Separate Services to handle defined Use Case

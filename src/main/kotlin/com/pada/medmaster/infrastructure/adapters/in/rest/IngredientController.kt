@@ -1,6 +1,6 @@
 package com.pada.medmaster.infrastructure.adapters.`in`.rest
 
-import com.pada.medmaster.application.dto.request.medicament.IngredientRequestDTO
+import com.pada.medmaster.application.dto.request.medicament.CreateIngredientRequest
 import com.pada.medmaster.application.ports.`in`.CreateIngredientUseCase
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -14,7 +14,7 @@ class IngredientController(
 ) {
 
     @PostMapping
-    fun createTreatment(@RequestBody ingredientRequestDTO: IngredientRequestDTO) {
-        createIngredientUseCase.create(ingredientRequestDTO)
+    fun createTreatment(@RequestBody createIngredientRequest: CreateIngredientRequest) {
+        createIngredientUseCase.create(createIngredientRequest)
     }
 }

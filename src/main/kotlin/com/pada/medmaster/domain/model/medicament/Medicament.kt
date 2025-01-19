@@ -1,5 +1,6 @@
 package com.pada.medmaster.domain.model.medicament
 
+import com.pada.medmaster.domain.model.ingredient.Ingredient
 import com.pada.medmaster.domain.model.pharmacy.Pharmacy
 
 // About bidirectional relationship:

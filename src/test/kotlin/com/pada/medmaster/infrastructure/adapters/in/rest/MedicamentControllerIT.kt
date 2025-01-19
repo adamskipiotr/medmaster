@@ -1,7 +1,6 @@
 package com.pada.medmaster.infrastructure.adapters.`in`.rest
 
 import MedMasterApplicationTests
-import com.pada.medmaster.application.dto.request.medicament.IngredientRequestDTO
 import com.pada.medmaster.application.dto.request.medicament.MedicamentRequestDTO
 import com.pada.medmaster.application.dto.request.medicament.PharmacyDTO
 import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.ingredient.IngredientEntity
