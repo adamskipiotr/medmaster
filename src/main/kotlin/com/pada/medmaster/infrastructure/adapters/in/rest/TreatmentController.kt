@@ -1,7 +1,7 @@
 package com.pada.medmaster.infrastructure.adapters.`in`.rest
 
 import com.pada.medmaster.application.dto.request.treatment.AddIntakeDTO
-import com.pada.medmaster.application.dto.request.treatment.TreatmentRequestDTO
+import com.pada.medmaster.application.dto.request.treatment.CreateTreatmentRequest
 import com.pada.medmaster.application.ports.`in`.AddIntakeUseCase
 import com.pada.medmaster.application.ports.`in`.CreateTreatmentUseCase
 import com.pada.medmaster.application.ports.`in`.GetAllTreatmentsUseCase
@@ -67,8 +67,8 @@ class TreatmentController(
             )
         ]
     )
-    fun createTreatment(@RequestBody treatmentRequestDTO: TreatmentRequestDTO) {
-        createTreatmentUseCase.execute(treatmentRequestDTO)
+    fun createTreatment(@RequestBody createTreatmentRequest: CreateTreatmentRequest) {
+        createTreatmentUseCase.execute(createTreatmentRequest)
     }
 
     @PostMapping("/{id}/intakes")

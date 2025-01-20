@@ -9,7 +9,12 @@ import jakarta.persistence.*
 @Table(schema = "ingredient_schema", name = "country")
 class CountryEntity {
     @Id
-    @SequenceGenerator(name = "country_id_sequence", sequenceName = "country_id_seq", allocationSize = 1)
+    @SequenceGenerator(
+        schema = "ingredient_schema",
+        name = "country_id_sequence",
+        sequenceName = "country_id_seq",
+        allocationSize = 1
+    )
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "country_id_sequence")
     var id: Long = 0
     lateinit var name: String

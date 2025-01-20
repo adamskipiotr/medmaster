@@ -1,6 +1,6 @@
 package com.pada.medmaster.domain.service.treatment
 
-import com.pada.medmaster.application.dto.request.treatment.TreatmentRequestDTO
+import com.pada.medmaster.application.dto.request.treatment.CreateTreatmentRequest
 import com.pada.medmaster.application.ports.`in`.CreateTreatmentUseCase
 import com.pada.medmaster.application.ports.out.treatment.CreateTreatmentPort
 import com.pada.medmaster.domain.events.TreatmentAddedEvent
@@ -18,13 +18,13 @@ class CreateTreatmentService(
 ) : CreateTreatmentUseCase {
 
     @Transactional
-    override fun execute(treatmentRequestDTO: TreatmentRequestDTO) {
-        val treatment = treatmentRequestDTO.toDomain()
+    override fun execute(createTreatmentRequest: CreateTreatmentRequest) {
+        val treatment = createTreatmentRequest.toDomain()
 
         val savedTreatment = createTreatmentPort.createTreatment(treatment)
         eventPublisher.publishEvent(
             TreatmentAddedEvent(
-                treatmentRequestDTO.patientId,
+                createTreatmentRequest.patientId,
                 savedTreatment.id!!
             )
         ) // refactor - dependency to Spring here

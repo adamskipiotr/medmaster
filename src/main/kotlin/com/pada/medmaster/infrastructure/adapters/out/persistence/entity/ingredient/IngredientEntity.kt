@@ -11,7 +11,12 @@ import org.hibernate.annotations.OnDeleteAction
 @Table(schema = "ingredient_schema", name = "ingredient")
 class IngredientEntity {
     @Id
-    @SequenceGenerator(name = "ingredient_id_sequence", sequenceName = "ingredient_id_seq", allocationSize = 1)
+    @SequenceGenerator(
+        schema = "ingredient_schema",
+        name = "ingredient_id_sequence",
+        sequenceName = "ingredient_id_seq",
+        allocationSize = 1
+    )
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ingredient_id_sequence")
     var id: Long = 0
 

@@ -69,11 +69,6 @@ fun of(pharmacy: Pharmacy) = PharmacyEntity().apply {
     zipCode = pharmacy.zipCode
 }
 
-//fun of(ingredient: Ingredient) = IngredientEntity().apply {
-//    name = ingredient.name
-//    prohibitingCountries.addAll(ingredient.prohibitingCountries.map { of(it) })
-//}
-
 fun of(ingredient: Ingredient): IngredientEntity {
     return IngredientEntity().apply {
         id = ingredient.id ?: 0
@@ -92,4 +87,5 @@ fun of(patient: Patient) = PatientEntity().apply {
     birthDate = patient.birthDate
     gender = patient.gender
     specialHealthConditions = patient.specialHealthConditions
+    allergicIngredients.addAll(patient.allergicIngredients)
 }

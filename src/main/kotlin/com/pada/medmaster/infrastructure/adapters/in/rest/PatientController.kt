@@ -1,8 +1,7 @@
 package com.pada.medmaster.infrastructure.adapters.`in`.rest
 
-import com.pada.medmaster.application.dto.request.patient.PatientRequestDTO
+import com.pada.medmaster.application.dto.request.patient.CreatePatientRequest
 import com.pada.medmaster.application.ports.`in`.CreatePatientUseCase
-import com.pada.medmaster.domain.model.treatment.Treatment
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.HttpStatus
@@ -35,8 +34,8 @@ class PatientController(
             )
         ]
     )
-    fun createPatient(@RequestBody patientRequestDTO: PatientRequestDTO) {
-        createPatientUseCase.create(patientRequestDTO)
+    fun createPatient(@RequestBody createPatientRequest: CreatePatientRequest) {
+        createPatientUseCase.create(createPatientRequest)
     }
 
 

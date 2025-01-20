@@ -6,6 +6,7 @@ import jakarta.persistence.*
 import java.time.LocalDate
 
 // Aggregate Root: Patient
+// Relations with other Aggregates - by Id, no Reference (both entities and domain): https://medium.com/@aforank/domain-driven-design-aggregates-in-practice-bcced7d21ae5
 @Entity
 @Table(schema = "patient_schema", name = "patient")
 class PatientEntity {
@@ -18,7 +19,12 @@ class PatientEntity {
     lateinit var gender: Gender
 
     @Id
-    @SequenceGenerator(name = "patient_id_sequence", sequenceName = "patient_id_seq", allocationSize = 1)
+    @SequenceGenerator(
+        schema = "patient_schema",
+        name = "patient_id_sequence",
+        sequenceName = "patient_id_seq",
+        allocationSize = 1
+    )
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "patient_id_sequence")
     var id: Long = 0
 
@@ -40,14 +46,14 @@ class PatientEntity {
     @Column(name = "treatment_id")
     var treatmentsIds: MutableList<Long> = mutableListOf()
 
-    @ManyToMany(cascade = [CascadeType.PERSIST, CascadeType.MERGE], fetch = FetchType.LAZY)
-    @JoinTable(
+    @ElementCollection
+    @CollectionTable(
         schema = "shared_schema",
         name = "patient__allergic_ingredients",
-        joinColumns = [JoinColumn(name = "patient_id")],
-        inverseJoinColumns = [JoinColumn(name = "allergic_ingredient_id")]
+        joinColumns = [JoinColumn(name = "patient_id")]
     )
-    var allergicIngredients: MutableList<IngredientEntity> = mutableListOf()
+    @Column(name = "allergic_ingredient_id")
+    var allergicIngredients: MutableList<Long> = mutableListOf()
 
     fun asDomain() = Patient(
         id,

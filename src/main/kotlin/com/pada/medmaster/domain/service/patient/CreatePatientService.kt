@@ -1,7 +1,8 @@
 package com.pada.medmaster.domain.service.patient
 
-import com.pada.medmaster.application.dto.request.patient.PatientRequestDTO
+import com.pada.medmaster.application.dto.request.patient.CreatePatientRequest
 import com.pada.medmaster.application.ports.`in`.CreatePatientUseCase
+import com.pada.medmaster.application.ports.out.ingredient.GetIngredientsPort
 import com.pada.medmaster.application.ports.out.patient.AddTreatmentToPatientPort
 import com.pada.medmaster.application.ports.out.patient.CreatePatientPort
 import com.pada.medmaster.domain.events.TreatmentAddedEvent
@@ -19,8 +20,8 @@ class CreatePatientService(
 ) : CreatePatientUseCase {
 
     @Transactional
-    override fun create(patientRequestDTO: PatientRequestDTO) {
-        val patient = patientRequestDTO.toDomain()
+    override fun create(createPatientRequest: CreatePatientRequest) {
+        val patient = createPatientRequest.toDomain()
         createPatientPort.create(patient)
     }
 

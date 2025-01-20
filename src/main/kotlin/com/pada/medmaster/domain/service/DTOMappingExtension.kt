@@ -3,7 +3,7 @@ package com.pada.medmaster.domain.service
 import com.pada.medmaster.application.dto.request.medicament.CreateIngredientRequest
 import com.pada.medmaster.application.dto.request.medicament.MedicamentRequestDTO
 import com.pada.medmaster.application.dto.request.medicament.PharmacyDTO
-import com.pada.medmaster.application.dto.request.patient.PatientRequestDTO
+import com.pada.medmaster.application.dto.request.patient.CreatePatientRequest
 import com.pada.medmaster.application.dto.request.treatment.*
 import com.pada.medmaster.domain.model.ingredient.Country
 import com.pada.medmaster.domain.model.ingredient.Ingredient
@@ -13,7 +13,7 @@ import com.pada.medmaster.domain.model.pharmacy.Pharmacy
 import com.pada.medmaster.domain.model.treatment.*
 
 // Extension functions for mapping each part
-fun TreatmentRequestDTO.toDomain(): Treatment {
+fun CreateTreatmentRequest.toDomain(): Treatment {
     val treatment = Treatment(
         id = null,
         disease = disease,
@@ -105,13 +105,14 @@ fun CountryRequestDTO.toDomain(): Country = Country(
     name = name
 )
 
-fun PatientRequestDTO.toDomain(): Patient {
+fun CreatePatientRequest.toDomain(): Patient {
     val patient = Patient(
         name = name,
         lastName = lastName,
         birthDate = birthDate,
         specialHealthConditions = specialHealthConditions,
-        gender = gender
+        gender = gender,
+        allergicIngredients = allergicIngredients
 
     )
     return patient

@@ -7,7 +7,12 @@ import jakarta.persistence.*
 @Table(schema = "treatment_schema", name = "intake")
 class IntakeEntity {
     @Id
-    @SequenceGenerator(name = "intake_id_sequence", sequenceName = "intake_id_seq", allocationSize = 1)
+    @SequenceGenerator(
+        schema = "treatment_schema",
+        name = "intake_id_sequence",
+        sequenceName = "intake_id_seq",
+        allocationSize = 1
+    )
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "intake_id_sequence")
     var id: Long = 0
 

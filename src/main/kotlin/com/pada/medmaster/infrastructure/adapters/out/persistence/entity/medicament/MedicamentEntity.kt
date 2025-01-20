@@ -6,10 +6,15 @@ import jakarta.persistence.*
 
 // Aggregate Root: Medicament
 @Entity
-@Table(schema = "medicament_schema", name="medicament")
+@Table(schema = "medicament_schema", name = "medicament")
 class MedicamentEntity(                 // TODO: why class should be open for Hibernate - for extending by Proxy
     @Id
-    @SequenceGenerator(name = "medicament_id_sequence", sequenceName = "medicament_id_seq", allocationSize = 1)
+    @SequenceGenerator(
+        schema = "medicament_schema",
+        name = "medicament_id_sequence",
+        sequenceName = "medicament_id_seq",
+        allocationSize = 1
+    )
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "medicament_id_sequence")
     var id: Long = 0,
     var name: String = "", // to fix: Without default value - "No default constructor for entity" exception

@@ -19,7 +19,12 @@ class TreatmentEntity {
     lateinit var endDate: LocalDateTime
 
     @Id
-    @SequenceGenerator(name = "treatment_id_sequence", sequenceName = "treatment_id_seq", allocationSize = 1)
+    @SequenceGenerator(
+        schema = "treatment_schema",
+        name = "treatment_id_sequence",
+        sequenceName = "treatment_id_seq",
+        allocationSize = 1
+    )
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "treatment_id_sequence")
     var id: Long = 0
 

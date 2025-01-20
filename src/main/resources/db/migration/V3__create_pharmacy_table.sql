@@ -1,8 +1,8 @@
-CREATE SEQUENCE IF NOT EXISTS pharmacy_id_seq START 1000 INCREMENT 1;
+CREATE SEQUENCE IF NOT EXISTS medicament_schema.pharmacy_id_seq START 1000 INCREMENT 1;
 
 CREATE TABLE IF NOT EXISTS medicament_schema.pharmacy
 (
-    id BIGINT NOT NULL PRIMARY KEY DEFAULT nextval('pharmacy_id_seq'),
+    id BIGINT NOT NULL PRIMARY KEY DEFAULT nextval('medicament_schema.pharmacy_id_seq'),
     name VARCHAR(255),
     voivodeship VARCHAR(255),
     district VARCHAR(255),

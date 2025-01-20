@@ -11,6 +11,7 @@ import java.time.LocalDateTime
 class MedicalProcedureEntity {
     @Id
     @SequenceGenerator(
+        schema = "treatment_schema",
         name = "medical_procedure_id_sequence",
         sequenceName = "medical_procedure_id_seq",
         allocationSize = 1

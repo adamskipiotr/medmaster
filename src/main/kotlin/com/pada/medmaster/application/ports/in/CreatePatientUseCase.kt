@@ -1,8 +1,8 @@
 package com.pada.medmaster.application.ports.`in`
 
-import com.pada.medmaster.application.dto.request.patient.PatientRequestDTO
+import com.pada.medmaster.application.dto.request.patient.CreatePatientRequest
 
 interface CreatePatientUseCase {
 
-    fun create(patientRequestDTO: PatientRequestDTO)
+    fun create(createPatientRequest: CreatePatientRequest)
 }
