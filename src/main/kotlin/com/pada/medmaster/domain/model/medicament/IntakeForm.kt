@@ -1,4 +1,4 @@
-package com.pada.medmaster.domain.model.treatment
+package com.pada.medmaster.domain.model.medicament
 
 enum class IntakeForm {
     PILLS,

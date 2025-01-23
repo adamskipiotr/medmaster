@@ -1,14 +1,14 @@
-package com.pada.medmaster.infrastructure.adapters.out.persistence.entity.treatment
+package com.pada.medmaster.infrastructure.adapters.out.persistence.entity.patient
 
-import com.pada.medmaster.domain.model.treatment.Intake
+import com.pada.medmaster.domain.model.patient.Intake
 import jakarta.persistence.*
 
 @Entity
-@Table(schema = "treatment_schema", name = "intake")
+@Table(schema = "patient_schema", name = "intake")
 class IntakeEntity {
     @Id
     @SequenceGenerator(
-        schema = "treatment_schema",
+        schema = "patient_schema",
         name = "intake_id_sequence",
         sequenceName = "intake_id_seq",
         allocationSize = 1

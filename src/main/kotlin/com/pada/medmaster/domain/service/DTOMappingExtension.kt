@@ -5,12 +5,11 @@ import com.pada.medmaster.application.dto.request.medicament.MedicamentRequestDT
 import com.pada.medmaster.application.dto.request.medicament.PharmacyDTO
 import com.pada.medmaster.application.dto.request.patient.CreatePatientRequest
 import com.pada.medmaster.application.dto.request.treatment.*
-import com.pada.medmaster.domain.model.ingredient.Country
-import com.pada.medmaster.domain.model.ingredient.Ingredient
+import com.pada.medmaster.domain.model.medicament.Country
+import com.pada.medmaster.domain.model.medicament.Ingredient
 import com.pada.medmaster.domain.model.medicament.Medicament
-import com.pada.medmaster.domain.model.patient.Patient
+import com.pada.medmaster.domain.model.patient.*
 import com.pada.medmaster.domain.model.pharmacy.Pharmacy
-import com.pada.medmaster.domain.model.treatment.*
 
 // Extension functions for mapping each part
 fun CreateTreatmentRequest.toDomain(): Treatment {
@@ -61,19 +60,19 @@ fun IntakeDateRequestDTO.toDomain(): IntakeDate = IntakeDate(
 
 fun MedicamentRequestDTO.toDomain(): Medicament {
     val pharmacies = this.pharmacies.map { it.toDomain() }.toMutableList()
+    val ingredients = this.ingredientsIds.map { it.toDomain() }.toMutableList()
     val medicament = Medicament(
         id = null,
         name = name,
         producer = producer,
         overdoseCounteractions = overdoseCounteraction,
-        ingredientsIds = ingredientsIds,
+        ingredients = ingredients,
         pharmacies = pharmacies
     )
     return medicament
 }
 
 fun PharmacyDTO.toDomain(): Pharmacy {
-
     val pharmacy = Pharmacy(
         name = name,
         voivodeship = voivodeship,
@@ -87,7 +86,6 @@ fun PharmacyDTO.toDomain(): Pharmacy {
     )
     return pharmacy
 }
-
 
 fun CreateIngredientRequest.toDomain(): Ingredient {
     val ingredient = Ingredient(

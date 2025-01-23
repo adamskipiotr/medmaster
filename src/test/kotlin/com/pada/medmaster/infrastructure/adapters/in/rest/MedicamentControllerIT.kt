@@ -3,8 +3,7 @@ package com.pada.medmaster.infrastructure.adapters.`in`.rest
 import MedMasterApplicationTests
 import com.pada.medmaster.application.dto.request.medicament.MedicamentRequestDTO
 import com.pada.medmaster.application.dto.request.medicament.PharmacyDTO
-import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.ingredient.IngredientEntity
-import com.pada.medmaster.infrastructure.adapters.out.persistence.repository.IngredientRepository
+import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.medicament.IngredientEntity
 import com.pada.medmaster.infrastructure.adapters.out.persistence.repository.MedicamentRepository
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test

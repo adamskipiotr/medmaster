@@ -1,7 +1,7 @@
 package com.pada.medmaster.infrastructure.adapters.out.persistence.entity.patient
 
 import com.pada.medmaster.domain.model.patient.Patient
-import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.ingredient.IngredientEntity
+import com.pada.medmaster.domain.model.patient.Treatment
 import jakarta.persistence.*
 import java.time.LocalDate
 
@@ -37,14 +37,11 @@ class PatientEntity {
     @Enumerated(EnumType.STRING)
     lateinit var specialHealthConditions: MutableList<SpecialHealthConditions>
 
-    @ElementCollection
-    @CollectionTable(
-        schema = "shared_schema",
-        name = "patient__treatments",
-        joinColumns = [JoinColumn(name = "patient_id")]
+    @OneToMany(
+        mappedBy = "patient", cascade = [CascadeType.ALL],
+        fetch = FetchType.EAGER, orphanRemoval = true
     )
-    @Column(name = "treatment_id")
-    var treatmentsIds: MutableList<Long> = mutableListOf()
+    var treatments: MutableList<TreatmentEntity> = mutableListOf()
 
     @ElementCollection
     @CollectionTable(
@@ -61,10 +58,12 @@ class PatientEntity {
         lastName,
         birthDate,
         specialHealthConditions,
-        gender
+        gender,
+        mutableListOf(),
+        treatments.map { it.asDomain() }.toMutableList(),
     )
 
-    fun addTreatment(treatmentId: Long) {
-        treatmentsIds.add(treatmentId)
+    fun addTreatment(treatment: TreatmentEntity) {
+        treatments.add(treatment)
     }
 }

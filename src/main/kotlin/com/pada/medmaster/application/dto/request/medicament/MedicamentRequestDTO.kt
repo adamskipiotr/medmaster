@@ -7,6 +7,6 @@ class MedicamentRequestDTO(
     val producer: String,
     val overdoseCounteraction: String,
     @NotNull
-    val ingredientsIds: MutableList<Long> = mutableListOf(),  // Initialize to empty list
+    val ingredientsIds: MutableList<CreateIngredientRequest> = mutableListOf(),  // Initialize to empty list
     val pharmacies: List<PharmacyDTO> = mutableListOf()
 )

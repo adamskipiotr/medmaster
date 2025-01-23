@@ -5,7 +5,7 @@ import com.pada.medmaster.application.ports.`in`.AddIntakeUseCase
 import com.pada.medmaster.application.ports.out.treatment.AddIntakePort
 import com.pada.medmaster.application.ports.out.treatment.GetTreatmentPort
 import com.pada.medmaster.application.ports.out.treatment.UpdateTreatmentPort
-import com.pada.medmaster.domain.model.treatment.Intake
+import com.pada.medmaster.domain.model.patient.Intake
 import org.springframework.stereotype.Service
 
 // Future refactoring target: Separate Services to handle defined Use Case

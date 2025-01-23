@@ -1,17 +1,15 @@
 package com.pada.medmaster.infrastructure.adapters.out.persistence.adapter
 
-import com.pada.medmaster.domain.model.ingredient.Country
-import com.pada.medmaster.domain.model.ingredient.Ingredient
+import com.pada.medmaster.domain.model.medicament.Country
+import com.pada.medmaster.domain.model.medicament.Ingredient
 import com.pada.medmaster.domain.model.medicament.Medicament
-import com.pada.medmaster.domain.model.patient.Patient
+import com.pada.medmaster.domain.model.patient.*
 import com.pada.medmaster.domain.model.pharmacy.Pharmacy
-import com.pada.medmaster.domain.model.treatment.*
-import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.ingredient.IngredientEntity
+import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.medicament.IngredientEntity
 import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.medicament.CountryEntity
 import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.medicament.MedicamentEntity
 import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.medicament.PharmacyEntity
-import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.patient.PatientEntity
-import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.treatment.*
+import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.patient.*
 
 // Extension functions for mapping each part
 fun of(treatment: Treatment) = TreatmentEntity().apply {
@@ -54,7 +52,7 @@ fun of(medicament: Medicament) = MedicamentEntity().apply {
     producer = medicament.producer
     overdoseCounteractions = medicament.overdoseCounteractions
     pharmacies.addAll(medicament.pharmacies.map { i -> of(i) })
-    ingredientsIds.addAll(medicament.ingredientsIds)
+    ingredientsIds.addAll(medicament.ingredients.map { of(it) })
 }
 
 fun of(pharmacy: Pharmacy) = PharmacyEntity().apply {

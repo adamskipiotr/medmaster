@@ -13,5 +13,6 @@ class Patient(
     var birthDate: LocalDate,
     var specialHealthConditions: MutableList<SpecialHealthConditions> = mutableListOf(),
     var gender: Gender,
-    var allergicIngredients: MutableList<Long> = mutableListOf()
+    var allergicIngredients: MutableList<Long> = mutableListOf(),
+    var treatments: MutableList<Treatment> = mutableListOf()
 )

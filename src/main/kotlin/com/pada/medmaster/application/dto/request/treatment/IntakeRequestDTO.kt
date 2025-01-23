@@ -1,7 +1,7 @@
 package com.pada.medmaster.application.dto.request.treatment
 
-import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.treatment.IntakeForm
-import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.treatment.IntakeFrequency
+import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.patient.IntakeForm
+import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.patient.IntakeFrequency
 
 data class IntakeRequestDTO(
     val medicamentId: Long,

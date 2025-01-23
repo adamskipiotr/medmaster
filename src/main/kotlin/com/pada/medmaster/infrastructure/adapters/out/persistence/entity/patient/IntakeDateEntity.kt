@@ -1,15 +1,15 @@
-package com.pada.medmaster.infrastructure.adapters.out.persistence.entity.treatment
+package com.pada.medmaster.infrastructure.adapters.out.persistence.entity.patient
 
-import com.pada.medmaster.domain.model.treatment.IntakeDate
+import com.pada.medmaster.domain.model.patient.IntakeDate
 import jakarta.persistence.*
 import java.time.LocalDateTime
 
 @Entity
-@Table(schema = "treatment_schema", name = "intake_date")
+@Table(schema = "patient_schema", name = "intake_date")
 class IntakeDateEntity(
     @Id
     @SequenceGenerator(
-        schema = "treatment_schema",
+        schema = "patient_schema",
         name = "intake_date_id_sequence",
         sequenceName = "intake_date_id_seq",
         allocationSize = 1

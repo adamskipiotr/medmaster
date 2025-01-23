@@ -1,6 +1,6 @@
-package com.pada.medmaster.infrastructure.adapters.out.persistence.entity.treatment
+package com.pada.medmaster.infrastructure.adapters.out.persistence.entity.patient
 
-import com.pada.medmaster.domain.model.treatment.Treatment
+import com.pada.medmaster.domain.model.patient.Treatment
 import jakarta.persistence.*
 import java.time.LocalDateTime
 
@@ -9,7 +9,7 @@ import java.time.LocalDateTime
 // to do - also apply https://dzone.com/articles/bets-practices-of-using-jpa-with-kotlin
 // also https://medium.com/@goncharov.valentin/a-practical-point-of-view-on-kotlin-data-classes-and-jpa-hibernate-c69370b975e1
 @Entity
-@Table(schema = "treatment_schema", name = "treatment")
+@Table(schema = "patient_schema", name = "treatment")
 class TreatmentEntity {
 
     lateinit var code: String
@@ -20,7 +20,7 @@ class TreatmentEntity {
 
     @Id
     @SequenceGenerator(
-        schema = "treatment_schema",
+        schema = "patient_schema",
         name = "treatment_id_sequence",
         sequenceName = "treatment_id_seq",
         allocationSize = 1
@@ -33,6 +33,10 @@ class TreatmentEntity {
         fetch = FetchType.EAGER, orphanRemoval = true
     )
     var medicalProcedures: MutableList<MedicalProcedureEntity> = mutableListOf()
+
+    @ManyToOne
+    @JoinColumn(name = "patient_id")
+    var patient: PatientEntity? = null
 
     @OneToMany(
         mappedBy = "treatment", cascade = [CascadeType.ALL],

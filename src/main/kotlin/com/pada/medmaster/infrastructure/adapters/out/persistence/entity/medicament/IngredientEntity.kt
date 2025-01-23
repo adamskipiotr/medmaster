@@ -1,18 +1,17 @@
-package com.pada.medmaster.infrastructure.adapters.out.persistence.entity.ingredient
+package com.pada.medmaster.infrastructure.adapters.out.persistence.entity.medicament
 
-import com.pada.medmaster.domain.model.ingredient.Ingredient
-import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.medicament.CountryEntity
+import com.pada.medmaster.domain.model.medicament.Ingredient
 import jakarta.persistence.*
 import org.hibernate.annotations.OnDelete
 import org.hibernate.annotations.OnDeleteAction
 
 // Aggregate Root: Ingredient
 @Entity
-@Table(schema = "ingredient_schema", name = "ingredient")
+@Table(schema = "medicament_schema", name = "ingredient")
 class IngredientEntity {
     @Id
     @SequenceGenerator(
-        schema = "ingredient_schema",
+        schema = "medicament_schema",
         name = "ingredient_id_sequence",
         sequenceName = "ingredient_id_seq",
         allocationSize = 1
@@ -26,7 +25,7 @@ class IngredientEntity {
 
     @ManyToMany
     @JoinTable(
-        schema = "ingredient_schema",
+        schema = "medicament_schema",
         name = "ingredient_incompatibilities",
         joinColumns = [JoinColumn(name = "ingredient_id")],
         inverseJoinColumns = [JoinColumn(name = "incompatible_ingredient_id")]
@@ -36,7 +35,7 @@ class IngredientEntity {
 
     @ManyToMany(cascade = [CascadeType.PERSIST, CascadeType.MERGE], fetch = FetchType.LAZY)
     @JoinTable(
-        schema = "ingredient_schema",
+        schema = "medicament_schema",
         name = "ingredient__prohibiting_country",
         joinColumns = [JoinColumn(name = "ingredient_id")],
         inverseJoinColumns = [JoinColumn(name = "country_id")]

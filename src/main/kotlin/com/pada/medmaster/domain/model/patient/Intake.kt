@@ -1,13 +1,13 @@
-package com.pada.medmaster.domain.model.treatment
+package com.pada.medmaster.domain.model.patient
 
-import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.treatment.IntakeForm
-import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.treatment.IntakeFrequency
+import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.patient.IntakeForm
+import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.patient.IntakeFrequency
 
 class Intake(
     val id: Long? = null,
     val medicamentId: Long?, // todo - call to Medicament Aggregate Root by Id or Reference here?
-    val form: IntakeForm,
-    val dosage: Int, // remove field from here
+    val form: IntakeForm, // move to medicament
+    val dosage: Int, // change do String, provided by Medicament
     val intakeFrequency: IntakeFrequency?,
     val intakeDates: MutableList<IntakeDate> = mutableListOf(),  // Initialize the list
     val intakeLimit: Int,

@@ -1,14 +1,14 @@
 package com.pada.medmaster.infrastructure.adapters.out.persistence.adapter.treatment
 
 import com.pada.medmaster.application.ports.out.treatment.GetTreatmentPort
-import com.pada.medmaster.domain.model.treatment.Treatment
-import com.pada.medmaster.infrastructure.adapters.out.persistence.repository.TreatmentRepository
+import com.pada.medmaster.domain.model.patient.Treatment
 import org.springframework.stereotype.Component
+import java.time.LocalDateTime
 
 @Component
-class GetTreatmentAdapter(val treatmentRepository: TreatmentRepository) : GetTreatmentPort {
+class GetTreatmentAdapter() : GetTreatmentPort {
     override fun get(id: Long): Treatment {
-        return treatmentRepository.findById(id).asDomain()
+        return Treatment(1L,"dis", "desc", "code", mutableListOf(), mutableListOf(), LocalDateTime.now(), LocalDateTime.now() );//treatmentRepository.findById(id).asDomain()
     }
 
 }
