@@ -1,10 +1,9 @@
 package com.pada.medmaster.infrastructure.adapters.`in`.rest
 
 import MedMasterApplicationTests
-import com.pada.medmaster.application.dto.request.medicament.MedicamentRequestDTO
-import com.pada.medmaster.application.dto.request.medicament.PharmacyDTO
-import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.ingredient.IngredientEntity
-import com.pada.medmaster.infrastructure.adapters.out.persistence.repository.IngredientRepository
+import com.pada.medmaster.application.dto.request.medicament.CreateMedicamentRequest
+import com.pada.medmaster.application.dto.request.medicament.CreatePharmacyRequest
+import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.medicament.IngredientEntity
 import com.pada.medmaster.infrastructure.adapters.out.persistence.repository.MedicamentRepository
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
@@ -33,16 +32,16 @@ class MedicamentControllerIT : MedMasterApplicationTests(){
     fun should_createMedicament_when_ingredientsAndOverdoseCounteractionsAreProvided() {
         // given
         ingredientRepository.save(IngredientEntity())
-        val pharmacyDTO = PharmacyDTO("Pharmacy Name", "Voivodeship", "District", "Community",
+        val createPharmacyRequest = CreatePharmacyRequest("Pharmacy Name", "Voivodeship", "District", "Community",
             "Location", "Street", "123", "456", "12-345")
-        val medicamentRequestDTO = MedicamentRequestDTO("Medicament Name","Producer Name", "Overdose counteractions",
-            mutableListOf(1), listOf(pharmacyDTO))
+        val createMedicamentRequest = CreateMedicamentRequest("Medicament Name","Producer Name", "Overdose counteractions",
+            mutableListOf(1), listOf(createPharmacyRequest))
 
         //when
         val response: ResponseEntity<Unit> = restTemplate.exchange(
             "/medicaments",
             HttpMethod.POST,
-            HttpEntity(medicamentRequestDTO),
+            HttpEntity(createMedicamentRequest),
             Unit::class.java
         )
 

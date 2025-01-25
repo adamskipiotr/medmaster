@@ -1,30 +1,34 @@
 package com.pada.medmaster.domain.service.treatment
 
-import com.pada.medmaster.application.dto.request.treatment.AddIntakeDTO
-import com.pada.medmaster.application.ports.`in`.AddIntakeUseCase
-import com.pada.medmaster.application.ports.out.treatment.AddIntakePort
-import com.pada.medmaster.application.ports.out.treatment.GetTreatmentPort
-import com.pada.medmaster.application.ports.out.treatment.UpdateTreatmentPort
-import com.pada.medmaster.domain.model.treatment.Intake
+import com.pada.medmaster.application.dto.request.treatment.CreateIntakeRequest
+import com.pada.medmaster.application.ports.`in`.patient.AddIntakeUseCase
+import com.pada.medmaster.application.ports.out.patient.AddIntakePort
+import com.pada.medmaster.application.ports.out.patient.GetPatientPort
+import com.pada.medmaster.application.ports.out.patient.GetTreatmentPort
+import com.pada.medmaster.application.ports.out.patient.UpdatePatientPort
+import com.pada.medmaster.domain.model.patient.Intake
+import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 
 // Future refactoring target: Separate Services to handle defined Use Case
 // see: https://raatiniemi.se/thoughts/use-case-driven-development/
 @Service
 class AddIntakeToTreatmentService(
-    val getTreatmentPort: GetTreatmentPort,
-    val updateTreatmentPort: UpdateTreatmentPort,
-    val addIntakePort: AddIntakePort,
+    val getPatientPort: GetPatientPort,
+    val updatePatientPort: UpdatePatientPort,
 ) : AddIntakeUseCase {
 
 
-    override fun addIntake(id: Long, addIntakeDTO: AddIntakeDTO) {
-        val treatment = getTreatmentPort.get(id)
-        val intake = Intake(null, addIntakeDTO.medicamentId, addIntakeDTO.form, -1, null,
-            mutableListOf(), 0, null)
+    @Transactional
+    override fun addIntake(patientId: Long, treatmentId: Long,createIntakeRequest: CreateIntakeRequest) {
+        val patient = getPatientPort.get(patientId)
+        val intake = Intake(
+            null, createIntakeRequest.medicamentId, createIntakeRequest.form, createIntakeRequest.dosage,
+            createIntakeRequest.intakeFrequency, mutableListOf(), createIntakeRequest.intakeLimit, null
+        )
 
-        treatment.addIntakes(listOf(intake))
+        patient.addIntakeToTreatment(treatmentId, intake)
 
-        updateTreatmentPort.update(treatment)
+        updatePatientPort.update(patient)
     }
 }

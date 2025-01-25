@@ -8,8 +8,8 @@ import org.springframework.stereotype.Component
 class AddTreatmentToPatientAdapter(val patientRepository: PatientRepository) : AddTreatmentToPatientPort {
 
     override fun addTreatment(patientId: Long, treatmentId: Long) {
-        val patient = patientRepository.findById(patientId)
-        patient.addTreatment(treatmentId)
-        patientRepository.save(patient)
+//        val patient = patientRepository.findById(patientId)
+//        patient.addTreatment(treatmentId)
+//        patientRepository.save(patient)
     }
 }

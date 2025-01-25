@@ -1,16 +1,15 @@
 package com.pada.medmaster.infrastructure.adapters.out.persistence.entity.medicament
 
-import com.pada.medmaster.domain.model.ingredient.Country
-import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.ingredient.IngredientEntity
+import com.pada.medmaster.domain.model.medicament.Country
 
 import jakarta.persistence.*
 
 @Entity
-@Table(schema = "ingredient_schema", name = "country")
+@Table(schema = "medicament_schema", name = "country")
 class CountryEntity {
     @Id
     @SequenceGenerator(
-        schema = "ingredient_schema",
+        schema = "medicament_schema",
         name = "country_id_sequence",
         sequenceName = "country_id_seq",
         allocationSize = 1

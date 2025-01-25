@@ -1,7 +1,6 @@
 package com.pada.medmaster.infrastructure.adapters.out.persistence.entity.patient
 
 import com.pada.medmaster.domain.model.patient.Patient
-import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.ingredient.IngredientEntity
 import jakarta.persistence.*
 import java.time.LocalDate
 
@@ -37,14 +36,11 @@ class PatientEntity {
     @Enumerated(EnumType.STRING)
     lateinit var specialHealthConditions: MutableList<SpecialHealthConditions>
 
-    @ElementCollection
-    @CollectionTable(
-        schema = "shared_schema",
-        name = "patient__treatments",
-        joinColumns = [JoinColumn(name = "patient_id")]
+    @OneToMany(
+        mappedBy = "patient", cascade = [CascadeType.ALL],
+        fetch = FetchType.EAGER, orphanRemoval = true
     )
-    @Column(name = "treatment_id")
-    var treatmentsIds: MutableList<Long> = mutableListOf()
+    var treatments: MutableList<TreatmentEntity> = mutableListOf()
 
     @ElementCollection
     @CollectionTable(
@@ -56,15 +52,30 @@ class PatientEntity {
     var allergicIngredients: MutableList<Long> = mutableListOf()
 
     fun asDomain() = Patient(
-        id,
-        name,
-        lastName,
-        birthDate,
-        specialHealthConditions,
-        gender
+        id = id,
+        name = name,
+        lastName = lastName,
+        birthDate = birthDate,
+        specialHealthConditions = specialHealthConditions,
+        gender = gender,
+        allergicIngredients = allergicIngredients,
+        treatments = treatments.map { it.asDomain(this.asDomainWithoutTreatments()) }.toMutableList() // Pass the patient without treatments to avoid recursion
     )
 
-    fun addTreatment(treatmentId: Long) {
-        treatmentsIds.add(treatmentId)
+    // Helper method to create a Patient domain object without treatments (to avoid infinite recursion)
+    private fun asDomainWithoutTreatments() = Patient(
+        id = id,
+        name = name,
+        lastName = lastName,
+        birthDate = birthDate,
+        specialHealthConditions = specialHealthConditions,
+        gender = gender,
+        allergicIngredients = allergicIngredients,
+        treatments = mutableListOf() // No treatments here
+    )
+
+    fun addTreatment(treatment: TreatmentEntity) {
+        treatments.add(treatment)
+        treatment.patient = this
     }
 }

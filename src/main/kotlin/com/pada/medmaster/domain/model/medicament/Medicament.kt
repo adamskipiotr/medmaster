@@ -1,6 +1,5 @@
 package com.pada.medmaster.domain.model.medicament
 
-import com.pada.medmaster.domain.model.ingredient.Ingredient
 import com.pada.medmaster.domain.model.pharmacy.Pharmacy
 
 // About bidirectional relationship:
@@ -10,17 +9,16 @@ class Medicament(
     val name: String,
     var producer: String,
     var overdoseCounteractions: String,
-    var ingredientsIds: MutableList<Long> = mutableListOf(),  // Initialize to empty list
+    var ingredients: MutableList<Ingredient> = mutableListOf(),  // Initialize to empty list
     var pharmacies: MutableList<Pharmacy> = mutableListOf(),
 ) {
 
     init {
-        require(ingredientsIds.isNotEmpty()) { "A medicament must have at least one ingredient." }
+        require(ingredients.isNotEmpty()) { "A medicament must have at least one ingredient." }
         require(overdoseCounteractions.isNotEmpty()) { "A medicament must have its overdose counteractions provided" }
     }
 
-    fun addIngredients(ingredients: List<Ingredient>) {
-        val ingredientsIds = ingredients.mapNotNull { it.id }.toMutableList()
-        this.ingredientsIds.addAll(ingredientsIds)
+    fun addIngredients(newIngredients: List<Ingredient>) {
+        this.ingredients.addAll(newIngredients)
     }
 }

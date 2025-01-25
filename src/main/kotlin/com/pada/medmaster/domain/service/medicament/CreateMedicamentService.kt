@@ -1,7 +1,7 @@
 package com.pada.medmaster.domain.service.medicament
 
-import com.pada.medmaster.application.dto.request.medicament.MedicamentRequestDTO
-import com.pada.medmaster.application.ports.`in`.CreateMedicamentUseCase
+import com.pada.medmaster.application.dto.request.medicament.CreateMedicamentRequest
+import com.pada.medmaster.application.ports.`in`.medicament.CreateMedicamentUseCase
 import com.pada.medmaster.application.ports.out.medicament.CreateMedicamentPort
 import com.pada.medmaster.domain.service.toDomain
 import jakarta.transaction.Transactional
@@ -15,8 +15,8 @@ class CreateMedicamentService(
 ) : CreateMedicamentUseCase {
 
     @Transactional
-    override fun create(medicamentRequestDTO: MedicamentRequestDTO) {
-        val medicament = medicamentRequestDTO.toDomain()
+    override fun create(createMedicamentRequest: CreateMedicamentRequest) {
+        val medicament = createMedicamentRequest.toDomain()
         createMedicamentPort.createMedicament(medicament)
     }
 }

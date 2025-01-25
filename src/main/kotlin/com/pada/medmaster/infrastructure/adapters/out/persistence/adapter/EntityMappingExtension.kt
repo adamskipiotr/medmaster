@@ -1,45 +1,23 @@
 package com.pada.medmaster.infrastructure.adapters.out.persistence.adapter
 
-import com.pada.medmaster.domain.model.ingredient.Country
-import com.pada.medmaster.domain.model.ingredient.Ingredient
+import com.pada.medmaster.domain.model.medicament.Country
+import com.pada.medmaster.domain.model.medicament.Ingredient
 import com.pada.medmaster.domain.model.medicament.Medicament
-import com.pada.medmaster.domain.model.patient.Patient
+import com.pada.medmaster.domain.model.patient.*
 import com.pada.medmaster.domain.model.pharmacy.Pharmacy
-import com.pada.medmaster.domain.model.treatment.*
-import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.ingredient.IngredientEntity
 import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.medicament.CountryEntity
+import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.medicament.IngredientEntity
 import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.medicament.MedicamentEntity
 import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.medicament.PharmacyEntity
-import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.patient.PatientEntity
-import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.treatment.*
+import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.patient.*
 
 // Extension functions for mapping each part
-fun of(treatment: Treatment) = TreatmentEntity().apply {
-    id = treatment.id ?: 0
-    disease = treatment.disease
-    description = treatment.description
-    code = treatment.code
-    beginDate = treatment.beginDate
-    endDate = treatment.endDate
-    medicalProcedures.addAll(treatment.medicalProcedures.map { p -> of(p) })
-    intakes.addAll(treatment.intakes.map { i -> of(i) })
-}
 
 fun of(medicalProcedure: MedicalProcedure) = MedicalProcedureEntity().apply {
     name = medicalProcedure.name
     description = medicalProcedure.description
     procedureDate = medicalProcedure.procedureDate
     minimalRecoveryDate = medicalProcedure.minimalRecoveryDate
-}
-
-fun of(intake: Intake) = IntakeEntity().apply {
-    id = intake.id ?: 0
-    form = intake.form
-    dosage = intake.dosage
-    intakeFrequency = intake.intakeFrequency!!
-    intakeLimit = intake.intakeLimit
-    medicamentId = intake.medicamentId
-    intakeDates.addAll(intake.intakeDates.map { of(it) })
 }
 
 fun of(intakeDate: IntakeDate): IntakeDateEntity {
@@ -54,7 +32,7 @@ fun of(medicament: Medicament) = MedicamentEntity().apply {
     producer = medicament.producer
     overdoseCounteractions = medicament.overdoseCounteractions
     pharmacies.addAll(medicament.pharmacies.map { i -> of(i) })
-    ingredientsIds.addAll(medicament.ingredientsIds)
+    ingredients.addAll(medicament.ingredients.map { of(it) })
 }
 
 fun of(pharmacy: Pharmacy) = PharmacyEntity().apply {
@@ -82,10 +60,56 @@ fun of(country: Country) = CountryEntity().apply {
 }
 
 fun of(patient: Patient) = PatientEntity().apply {
+    id = patient.id ?: 0
     name = patient.name
     lastName = patient.lastName
     birthDate = patient.birthDate
     gender = patient.gender
     specialHealthConditions = patient.specialHealthConditions
     allergicIngredients.addAll(patient.allergicIngredients)
+    treatments.addAll(patient.treatments.map { i -> of(i, this) }) // Pass the PatientEntity
+}
+
+fun of(treatment: Treatment, patientEntity: PatientEntity) = TreatmentEntity().apply {
+    id = treatment.id ?: 0
+    disease = treatment.disease
+    description = treatment.description
+    code = treatment.code
+    beginDate = treatment.beginDate
+    endDate = treatment.endDate
+    medicalProcedures.addAll(treatment.medicalProcedures.map { p -> of(p) })
+    intakes.addAll(treatment.intakes.map { i -> of(i, this) })
+    this.patient = patientEntity // Set the PatientEntity
+}
+
+fun of(treatment: Treatment) = TreatmentEntity().apply {
+    id = treatment.id ?: 0
+    disease = treatment.disease
+    description = treatment.description
+    code = treatment.code
+    beginDate = treatment.beginDate
+    endDate = treatment.endDate
+    medicalProcedures.addAll(treatment.medicalProcedures.map { p -> of(p) })
+    intakes.addAll(treatment.intakes.map { i -> of(i) })
+}
+
+fun of(intake: Intake, treatmentEntity: TreatmentEntity) = IntakeEntity().apply {
+    id = intake.id ?: 0
+    form = intake.form
+    dosage = intake.dosage
+    intakeFrequency = intake.intakeFrequency!!
+    intakeLimit = intake.intakeLimit
+    medicamentId = intake.medicamentId
+    intakeDates.addAll(intake.intakeDates.map { of(it) })
+    this.treatment = treatmentEntity
+}
+
+fun of(intake: Intake) = IntakeEntity().apply {
+    id = intake.id ?: 0
+    form = intake.form
+    dosage = intake.dosage
+    intakeFrequency = intake.intakeFrequency!!
+    intakeLimit = intake.intakeLimit
+    medicamentId = intake.medicamentId
+    intakeDates.addAll(intake.intakeDates.map { of(it) })
 }
