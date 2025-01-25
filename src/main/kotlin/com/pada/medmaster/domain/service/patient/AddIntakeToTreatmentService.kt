@@ -1,10 +1,8 @@
-package com.pada.medmaster.domain.service.treatment
+package com.pada.medmaster.domain.service.patient
 
 import com.pada.medmaster.application.dto.request.treatment.CreateIntakeRequest
 import com.pada.medmaster.application.ports.`in`.patient.AddIntakeUseCase
-import com.pada.medmaster.application.ports.out.patient.AddIntakePort
 import com.pada.medmaster.application.ports.out.patient.GetPatientPort
-import com.pada.medmaster.application.ports.out.patient.GetTreatmentPort
 import com.pada.medmaster.application.ports.out.patient.UpdatePatientPort
 import com.pada.medmaster.domain.model.patient.Intake
 import jakarta.transaction.Transactional

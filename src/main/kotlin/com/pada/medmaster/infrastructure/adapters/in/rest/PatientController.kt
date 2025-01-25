@@ -4,7 +4,7 @@ import com.pada.medmaster.application.dto.request.patient.CreatePatientRequest
 import com.pada.medmaster.application.dto.request.treatment.CreateIntakeRequest
 import com.pada.medmaster.application.dto.request.treatment.CreateTreatmentRequest
 import com.pada.medmaster.application.ports.`in`.patient.AddIntakeUseCase
-import com.pada.medmaster.application.ports.`in`.patient.AddPatientTreatment
+import com.pada.medmaster.application.ports.`in`.patient.AddPatientTreatmentUseCase
 import com.pada.medmaster.application.ports.`in`.patient.CreatePatientUseCase
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*
 class PatientController(
     private val createPatientUseCase: CreatePatientUseCase,
     private val addIntakeUseCase: AddIntakeUseCase,
-    private val addTreatmentUseCase: AddPatientTreatment
+    private val addTreatmentUseCase: AddPatientTreatmentUseCase
 ) {
 
     @PostMapping

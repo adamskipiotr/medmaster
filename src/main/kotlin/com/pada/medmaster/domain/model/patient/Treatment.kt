@@ -8,7 +8,7 @@ class Treatment(
     val description: String,
     val code: String,
     val medicalProcedures: MutableList<MedicalProcedure> = mutableListOf(),
-    val patient: Patient?,
+    var patient: Patient?,
     val intakes: MutableList<Intake> = mutableListOf(),
     val beginDate: LocalDateTime,
     val endDate: LocalDateTime
