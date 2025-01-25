@@ -1,4 +1,4 @@
-package com.pada.medmaster.application.ports.out.treatment
+package com.pada.medmaster.application.ports.out.patient
 
 import com.pada.medmaster.domain.model.patient.Treatment
 

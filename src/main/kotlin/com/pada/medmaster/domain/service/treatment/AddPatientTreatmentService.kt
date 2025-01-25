@@ -1,8 +1,8 @@
 package com.pada.medmaster.domain.service.treatment
 
 import com.pada.medmaster.application.dto.request.treatment.CreateTreatmentRequest
-import com.pada.medmaster.application.ports.`in`.AddPatientTreatment
-import com.pada.medmaster.application.ports.out.treatment.AddTreatmentPort
+import com.pada.medmaster.application.ports.`in`.patient.AddPatientTreatment
+import com.pada.medmaster.application.ports.out.patient.AddTreatmentPort
 import com.pada.medmaster.domain.events.TreatmentAddedEvent
 import com.pada.medmaster.domain.service.toDomain
 import jakarta.transaction.Transactional
@@ -24,7 +24,7 @@ class AddPatientTreatmentService(
         addTreatmentPort.execute(id, treatment)
         eventPublisher.publishEvent(
             TreatmentAddedEvent(
-                createTreatmentRequest.patientId,
+                1000,
                 1000
             )
         ) // refactor - dependency to Spring here

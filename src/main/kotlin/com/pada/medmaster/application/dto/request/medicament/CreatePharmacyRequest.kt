@@ -1,6 +1,6 @@
 package com.pada.medmaster.application.dto.request.medicament
 
-class PharmacyDTO(
+class CreatePharmacyRequest(
     val name: String,
     val voivodeship: String,
     val district: String,

@@ -6,9 +6,8 @@ data class CreateTreatmentRequest(
     val disease: String,
     val description: String,
     val code: String,
-    val medicalProcedures: List<MedicalProcedureRequestDTO>,
-    val intakes: List<IntakeRequestDTO>,
+    val medicalProcedures: List<CreateMedicalProcedureRequest>,
+    val intakes: List<CreateIntakeRequest>,
     val beginDate: LocalDateTime,
     val endDate: LocalDateTime,
-    val patientId: Long,
 )

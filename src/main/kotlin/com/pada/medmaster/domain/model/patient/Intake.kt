@@ -11,7 +11,7 @@ class Intake(
     val intakeFrequency: IntakeFrequency?,
     val intakeDates: MutableList<IntakeDate> = mutableListOf(),  // Initialize the list
     val intakeLimit: Int,
-    val treatment: Treatment?
+    var treatment: Treatment?
 ) {
     fun addIntakeDates(intakeDates: List<IntakeDate>) {
         this.intakeDates.addAll(intakeDates)

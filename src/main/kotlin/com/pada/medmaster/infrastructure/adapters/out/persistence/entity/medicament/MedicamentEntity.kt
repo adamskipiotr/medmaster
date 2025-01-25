@@ -28,7 +28,7 @@ class MedicamentEntity(                 // TODO: why class should be open for Hi
         joinColumns = [JoinColumn(name = "medicament_id")],
         inverseJoinColumns = [JoinColumn(name = "ingredient_id")]
     )
-    var ingredientsIds: MutableList<IngredientEntity> = mutableListOf(),
+    var ingredients: MutableList<IngredientEntity> = mutableListOf(),
 
     @ManyToMany(cascade = [CascadeType.PERSIST, CascadeType.MERGE], fetch = FetchType.LAZY)
     @JoinTable(

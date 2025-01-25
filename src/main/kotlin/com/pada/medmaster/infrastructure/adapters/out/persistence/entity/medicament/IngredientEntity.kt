@@ -21,8 +21,6 @@ class IngredientEntity {
 
     lateinit var name: String
 
-    var medicamentId: Long? = null
-
     @ManyToMany
     @JoinTable(
         schema = "medicament_schema",

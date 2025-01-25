@@ -1,6 +1,7 @@
 package com.pada.medmaster.infrastructure.adapters.out.persistence.entity.patient
 
 import com.pada.medmaster.domain.model.patient.Intake
+import com.pada.medmaster.domain.model.patient.Treatment
 import jakarta.persistence.*
 
 @Entity
@@ -42,7 +43,7 @@ class IntakeEntity {
     @JoinColumn(name = "treatment_id")
     var treatment: TreatmentEntity? = null
 
-    fun asDomain(): Intake {
+    fun asDomain(mappedTreatment: Treatment): Intake {
         return Intake(
             id,
             null, // after change from relation to ID - expected behaviour is to fetch Medicament for Intake based on medicamentId
@@ -51,7 +52,7 @@ class IntakeEntity {
             intakeFrequency,
             intakeDates.map { it.asDomain() }.toMutableList(),
             intakeLimit,
-            null
+            mappedTreatment
         )
     }
 }

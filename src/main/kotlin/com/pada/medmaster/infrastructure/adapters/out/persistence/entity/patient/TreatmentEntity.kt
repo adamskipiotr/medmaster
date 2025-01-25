@@ -1,5 +1,6 @@
 package com.pada.medmaster.infrastructure.adapters.out.persistence.entity.patient
 
+import com.pada.medmaster.domain.model.patient.Patient
 import com.pada.medmaster.domain.model.patient.Treatment
 import jakarta.persistence.*
 import java.time.LocalDateTime
@@ -44,14 +45,28 @@ class TreatmentEntity {
     )
     var intakes: MutableList<IntakeEntity> = mutableListOf()
 
-    fun asDomain() = Treatment(
-        id,
-        disease,
-        description,
-        code,
-        medicalProcedures.map { it.asDomain() }.toMutableList(),
-        intakes.map { it.asDomain() }.toMutableList(),
-        beginDate,
-        endDate
+    fun asDomain(mappedPatient: Patient? = null) = Treatment(
+        id = id,
+        disease = disease,
+        description = description,
+        code = code,
+        medicalProcedures = medicalProcedures.map { it.asDomain() }.toMutableList(),
+        patient = mappedPatient,  // Pass the patient here
+        intakes = intakes.map { it.asDomain(this.asDomainWithoutIntakes()) }.toMutableList(),
+        beginDate = beginDate,
+        endDate = endDate
+    )
+
+
+    fun asDomainWithoutIntakes(mappedPatient: Patient? = null) = Treatment(
+        id = id,
+        disease = disease,
+        description = description,
+        code = code,
+        medicalProcedures = medicalProcedures.map { it.asDomain() }.toMutableList(),
+        patient = mappedPatient,  // Pass the patient here
+        intakes = mutableListOf(), // No treatments here
+        beginDate = beginDate,
+        endDate = endDate
     )
 }

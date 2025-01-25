@@ -1,11 +1,11 @@
 package com.pada.medmaster.infrastructure.adapters.`in`.rest
 
 import com.pada.medmaster.application.dto.request.patient.CreatePatientRequest
-import com.pada.medmaster.application.dto.request.treatment.AddIntakeDTO
+import com.pada.medmaster.application.dto.request.treatment.CreateIntakeRequest
 import com.pada.medmaster.application.dto.request.treatment.CreateTreatmentRequest
-import com.pada.medmaster.application.ports.`in`.AddIntakeUseCase
-import com.pada.medmaster.application.ports.`in`.CreatePatientUseCase
-import com.pada.medmaster.application.ports.`in`.AddPatientTreatment
+import com.pada.medmaster.application.ports.`in`.patient.AddIntakeUseCase
+import com.pada.medmaster.application.ports.`in`.patient.AddPatientTreatment
+import com.pada.medmaster.application.ports.`in`.patient.CreatePatientUseCase
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.HttpStatus
@@ -67,7 +67,7 @@ class PatientController(
         addTreatmentUseCase.execute(id, createTreatmentRequest)
     }
 
-    @PostMapping("/{id}/treatments/{treatmentID}/intakes")
+    @PostMapping("/{id}/treatments/{treatmentId}/intakes")
     @Operation(
         summary = "Add intake to an existing Treatment",
         description = "Adds a new intake to a treatment.",
@@ -89,9 +89,9 @@ class PatientController(
     fun addIntake(
         @PathVariable id: Long,
         @PathVariable treatmentId: Long,
-        @RequestBody addIntakeDTO: AddIntakeDTO
+        @RequestBody createIntakeRequest: CreateIntakeRequest
     ) {
-        addIntakeUseCase.addIntake(id, addIntakeDTO)
+        addIntakeUseCase.addIntake(id, treatmentId, createIntakeRequest)
     }
 
 

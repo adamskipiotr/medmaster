@@ -1,6 +1,6 @@
-package com.pada.medmaster.infrastructure.adapters.out.persistence.adapter.treatment
+package com.pada.medmaster.infrastructure.adapters.out.persistence.adapter.patient
 
-import com.pada.medmaster.application.ports.out.treatment.GetActiveTreatmentsByCodePort
+import com.pada.medmaster.application.ports.out.patient.GetActiveTreatmentsByCodePort
 import com.pada.medmaster.domain.model.patient.Treatment
 import org.springframework.stereotype.Component
 

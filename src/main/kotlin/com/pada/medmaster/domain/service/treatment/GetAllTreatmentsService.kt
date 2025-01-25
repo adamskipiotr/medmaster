@@ -1,7 +1,7 @@
 package com.pada.medmaster.domain.service.treatment
 
-import com.pada.medmaster.application.ports.`in`.GetAllTreatmentsUseCase
-import com.pada.medmaster.application.ports.out.treatment.GetAllTreatmentsPort
+import com.pada.medmaster.application.ports.`in`.patient.GetAllTreatmentsUseCase
+import com.pada.medmaster.application.ports.out.patient.GetAllTreatmentsPort
 import com.pada.medmaster.domain.model.patient.Treatment
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service

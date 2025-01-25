@@ -1,7 +1,7 @@
 package com.pada.medmaster.infrastructure.adapters.`in`.rest
 
-import com.pada.medmaster.application.dto.request.medicament.MedicamentRequestDTO
-import com.pada.medmaster.application.ports.`in`.CreateMedicamentUseCase
+import com.pada.medmaster.application.dto.request.medicament.CreateMedicamentRequest
+import com.pada.medmaster.application.ports.`in`.medicament.CreateMedicamentUseCase
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.HttpStatus
@@ -34,7 +34,7 @@ class MedicamentController(
             )
         ]
     )
-    fun createTreatment(@RequestBody medicamentRequestDTO: MedicamentRequestDTO) {
-        createMedicamentUseCase.create(medicamentRequestDTO)
+    fun createTreatment(@RequestBody createMedicamentRequest: CreateMedicamentRequest) {
+        createMedicamentUseCase.create(createMedicamentRequest)
     }
 }

@@ -1,7 +1,6 @@
 package com.pada.medmaster.infrastructure.adapters.out.persistence.entity.patient
 
 import com.pada.medmaster.domain.model.patient.Patient
-import com.pada.medmaster.domain.model.patient.Treatment
 import jakarta.persistence.*
 import java.time.LocalDate
 
@@ -53,17 +52,30 @@ class PatientEntity {
     var allergicIngredients: MutableList<Long> = mutableListOf()
 
     fun asDomain() = Patient(
-        id,
-        name,
-        lastName,
-        birthDate,
-        specialHealthConditions,
-        gender,
-        mutableListOf(),
-        treatments.map { it.asDomain() }.toMutableList(),
+        id = id,
+        name = name,
+        lastName = lastName,
+        birthDate = birthDate,
+        specialHealthConditions = specialHealthConditions,
+        gender = gender,
+        allergicIngredients = allergicIngredients,
+        treatments = treatments.map { it.asDomain(this.asDomainWithoutTreatments()) }.toMutableList() // Pass the patient without treatments to avoid recursion
+    )
+
+    // Helper method to create a Patient domain object without treatments (to avoid infinite recursion)
+    private fun asDomainWithoutTreatments() = Patient(
+        id = id,
+        name = name,
+        lastName = lastName,
+        birthDate = birthDate,
+        specialHealthConditions = specialHealthConditions,
+        gender = gender,
+        allergicIngredients = allergicIngredients,
+        treatments = mutableListOf() // No treatments here
     )
 
     fun addTreatment(treatment: TreatmentEntity) {
         treatments.add(treatment)
+        treatment.patient = this
     }
 }

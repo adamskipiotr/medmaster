@@ -15,4 +15,10 @@ class Patient(
     var gender: Gender,
     var allergicIngredients: MutableList<Long> = mutableListOf(),
     var treatments: MutableList<Treatment> = mutableListOf()
-)
+) {
+
+    fun addIntakeToTreatment(treatmentId : Long, intake: Intake){
+        val treatment = treatments.find { a -> a.id!! == treatmentId } ?: throw RuntimeException("Treatment with given Id not found")
+        treatment.addIntake(intake)
+    }
+}

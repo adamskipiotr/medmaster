@@ -1,16 +1,14 @@
-package com.pada.medmaster.infrastructure.adapters.out.persistence.adapter.treatment
+package com.pada.medmaster.infrastructure.adapters.out.persistence.adapter.patient
 
-import com.pada.medmaster.application.ports.out.treatment.AddTreatmentPort
+import com.pada.medmaster.application.ports.out.patient.AddIntakePort
 import com.pada.medmaster.domain.model.patient.Treatment
 import com.pada.medmaster.infrastructure.adapters.out.persistence.adapter.of
-import com.pada.medmaster.infrastructure.adapters.out.persistence.repository.PatientRepository
 import org.springframework.stereotype.Component
 
 @Component
-class AddTreatmentAdapter(val patientRepository: PatientRepository) : AddTreatmentPort {
+class AddIntakeAdapter() : AddIntakePort {
 
-    override fun execute(id: Long, treatment: Treatment) {
-        val patientEntity = patientRepository.findById(id)
+    override fun addIntake(treatment: Treatment) {
         val treatmentEntity = of(treatment)
         treatmentEntity.medicalProcedures.forEach { mp -> mp.treatment = treatmentEntity }
         treatmentEntity.intakes.forEach { intakeEntity -> intakeEntity.treatment = treatmentEntity }
@@ -19,7 +17,5 @@ class AddTreatmentAdapter(val patientRepository: PatientRepository) : AddTreatme
                 intakeDateEntity.intake = intakeEntity
             }
         }
-        patientEntity.addTreatment(treatmentEntity)
-        patientRepository.save(patientEntity)
     }
 }

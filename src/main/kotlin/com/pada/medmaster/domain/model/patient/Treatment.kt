@@ -8,6 +8,7 @@ class Treatment(
     val description: String,
     val code: String,
     val medicalProcedures: MutableList<MedicalProcedure> = mutableListOf(),
+    val patient: Patient?,
     val intakes: MutableList<Intake> = mutableListOf(),
     val beginDate: LocalDateTime,
     val endDate: LocalDateTime
@@ -18,5 +19,10 @@ class Treatment(
 
     fun addIntakes(intakes: List<Intake>) {
         this.intakes.addAll(intakes)
+    }
+
+    fun addIntake(intake: Intake){
+        intakes.add(intake)
+        intake.treatment = this
     }
 }
