@@ -4,7 +4,7 @@ import com.pada.medmaster.application.dto.request.treatment.CreateIntakeRequest
 import com.pada.medmaster.application.ports.`in`.patient.AddIntakeUseCase
 import com.pada.medmaster.application.ports.out.patient.GetPatientPort
 import com.pada.medmaster.application.ports.out.patient.UpdatePatientPort
-import com.pada.medmaster.domain.model.patient.Intake
+import com.pada.medmaster.domain.service.toDomain
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 
@@ -18,13 +18,10 @@ class AddIntakeToTreatmentService(
 
 
     @Transactional
-    override fun addIntake(patientId: Long, treatmentId: Long,createIntakeRequest: CreateIntakeRequest) {
-        val patient = getPatientPort.get(patientId)
-        val intake = Intake(
-            null, createIntakeRequest.medicamentId, createIntakeRequest.form, createIntakeRequest.dosage,
-            createIntakeRequest.intakeFrequency, mutableListOf(), createIntakeRequest.intakeLimit, null
-        )
+    override fun addIntake(patientId: Long, treatmentId: Long, createIntakeRequest: CreateIntakeRequest) {
+        val intake = createIntakeRequest.toDomain()
 
+        val patient = getPatientPort.get(patientId)
         patient.addIntakeToTreatment(treatmentId, intake)
 
         updatePatientPort.update(patient)

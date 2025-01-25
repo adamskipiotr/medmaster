@@ -48,8 +48,6 @@ fun CreateIntakeRequest.toDomain(): Intake {
         treatment = null,
         intakeLimit = intakeLimit,
     )
-    val intakeDates = this.intakeDates.map { it.toDomain() }
-    intake.addIntakeDates(intakeDates)
     return intake
 }
 
