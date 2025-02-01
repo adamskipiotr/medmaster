@@ -12,3 +12,4 @@
 11. Domain Events & Integration Events
 12. Application Service vs Domain Service
 13. https://raatiniemi.se/thoughts/use-case-driven-development/
+14. Try-Catch Block as an Expression

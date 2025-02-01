@@ -1,4 +1,6 @@
-package com.pada.medmaster.domain.model.medicament
+package com.pada.medmaster.domain.model.ingredient
+
+import com.pada.medmaster.domain.model.medicament.Medicament
 
 class Ingredient(
     val id: Long? = null,

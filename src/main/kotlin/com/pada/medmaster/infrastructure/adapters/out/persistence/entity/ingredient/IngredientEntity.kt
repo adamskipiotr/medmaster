@@ -1,11 +1,10 @@
-package com.pada.medmaster.infrastructure.adapters.out.persistence.entity.medicament
+package com.pada.medmaster.infrastructure.adapters.out.persistence.entity.ingredient
 
-import com.pada.medmaster.domain.model.medicament.Ingredient
+import com.pada.medmaster.domain.model.ingredient.Ingredient
 import jakarta.persistence.*
 import org.hibernate.annotations.OnDelete
 import org.hibernate.annotations.OnDeleteAction
 
-// Aggregate Root: Ingredient
 @Entity
 @Table(schema = "medicament_schema", name = "ingredient")
 class IngredientEntity {
@@ -51,5 +50,3 @@ class IngredientEntity {
         )
     }
 }
-
-

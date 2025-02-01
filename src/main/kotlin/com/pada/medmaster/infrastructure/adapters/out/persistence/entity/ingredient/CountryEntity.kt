@@ -1,6 +1,6 @@
-package com.pada.medmaster.infrastructure.adapters.out.persistence.entity.medicament
+package com.pada.medmaster.infrastructure.adapters.out.persistence.entity.ingredient
 
-import com.pada.medmaster.domain.model.medicament.Country
+import com.pada.medmaster.domain.model.ingredient.Country
 
 import jakarta.persistence.*
 

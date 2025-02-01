@@ -7,6 +7,6 @@ class CreateMedicamentRequest(
     val producer: String,
     val overdoseCounteraction: String,
     @NotNull
-    val ingredientsIds: MutableList<CreateIngredientRequest> = mutableListOf(),  // Initialize to empty list
+    val ingredients: MutableList<Long> = mutableListOf(),  // Initialize to empty list
     val pharmacies: List<CreatePharmacyRequest> = mutableListOf()
 )

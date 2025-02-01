@@ -21,7 +21,7 @@ class Treatment(
         this.intakes.addAll(intakes)
     }
 
-    fun addIntake(intake: Intake){
+    fun addIntake(intake: Intake) {
         intakes.add(intake)
         intake.treatment = this
     }

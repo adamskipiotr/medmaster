@@ -1,6 +1,7 @@
 package com.pada.medmaster.domain.service.patient
 
 import com.pada.medmaster.application.dto.request.treatment.CreateIntakeRequest
+import com.pada.medmaster.application.ports.`in`.medicament.ValidateIntakeMedicamentUseCase
 import com.pada.medmaster.application.ports.`in`.patient.AddIntakeUseCase
 import com.pada.medmaster.application.ports.out.patient.GetPatientPort
 import com.pada.medmaster.application.ports.out.patient.UpdatePatientPort
@@ -14,14 +15,19 @@ import org.springframework.stereotype.Service
 class AddIntakeToTreatmentService(
     val getPatientPort: GetPatientPort,
     val updatePatientPort: UpdatePatientPort,
+    val validateIntakeMedicamentUseCase: ValidateIntakeMedicamentUseCase
 ) : AddIntakeUseCase {
-
 
     @Transactional
     override fun addIntake(patientId: Long, treatmentId: Long, createIntakeRequest: CreateIntakeRequest) {
         val intake = createIntakeRequest.toDomain()
 
         val patient = getPatientPort.get(patientId)
+        val treatment = patient.treatments.find { i -> i.id == treatmentId } ?: throw RuntimeException("Treatment with given Id not found")
+        val medicamentsInUse = treatment.intakes.map { i -> i.medicamentId }
+        validateIntakeMedicamentUseCase.validateNewMedicamentNotConflictingWithInUse(intake.medicamentId!!, medicamentsInUse)
+
+
         patient.addIntakeToTreatment(treatmentId, intake)
 
         updatePatientPort.update(patient)

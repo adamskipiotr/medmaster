@@ -6,10 +6,13 @@ import com.pada.medmaster.application.dto.request.treatment.CreateTreatmentReque
 import com.pada.medmaster.application.ports.`in`.patient.AddIntakeUseCase
 import com.pada.medmaster.application.ports.`in`.patient.AddPatientTreatmentUseCase
 import com.pada.medmaster.application.ports.`in`.patient.CreatePatientUseCase
+import com.pada.medmaster.domain.exception.IncompatibleMedicamentException
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.server.ResponseStatusException
 
 @RestController
 @RequestMapping("/patients")
@@ -90,9 +93,12 @@ class PatientController(
         @PathVariable id: Long,
         @PathVariable treatmentId: Long,
         @RequestBody createIntakeRequest: CreateIntakeRequest
-    ) {
-        addIntakeUseCase.addIntake(id, treatmentId, createIntakeRequest)
-    }
-
-
+    ) : ResponseEntity<String>{
+        try {
+            addIntakeUseCase.addIntake(id, treatmentId, createIntakeRequest)
+            return ResponseEntity.status(HttpStatus.CREATED).build()
+        } catch(ex: IncompatibleMedicamentException) {
+            throw ResponseStatusException(HttpStatus.BAD_REQUEST, ex.localizedMessage, ex) // TODO: Consider other ways of handling errors
+        }                                                                                  //  like in https://theboreddev.com/exception-handling-in-spring-services/
+    }                                                                                      //  or in https://kotlincraft.dev/articles/error-handling-best-practices-in-spring-boot-with-kotlin
 }

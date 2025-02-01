@@ -1,12 +1,12 @@
 package com.pada.medmaster.domain.service
 
-import com.pada.medmaster.application.dto.request.medicament.CreateIngredientRequest
+import com.pada.medmaster.application.dto.request.ingredient.CreateIngredientRequest
 import com.pada.medmaster.application.dto.request.medicament.CreateMedicamentRequest
 import com.pada.medmaster.application.dto.request.medicament.CreatePharmacyRequest
 import com.pada.medmaster.application.dto.request.patient.CreatePatientRequest
 import com.pada.medmaster.application.dto.request.treatment.*
-import com.pada.medmaster.domain.model.medicament.Country
-import com.pada.medmaster.domain.model.medicament.Ingredient
+import com.pada.medmaster.domain.model.ingredient.Country
+import com.pada.medmaster.domain.model.ingredient.Ingredient
 import com.pada.medmaster.domain.model.medicament.Medicament
 import com.pada.medmaster.domain.model.patient.*
 import com.pada.medmaster.domain.model.pharmacy.Pharmacy
@@ -59,7 +59,6 @@ fun IntakeDateRequest.toDomain(): IntakeDate = IntakeDate(
 
 fun CreateMedicamentRequest.toDomain(): Medicament {
     val pharmacies = this.pharmacies.map { it.toDomain() }.toMutableList()
-    val ingredients = this.ingredientsIds.map { it.toDomain() }.toMutableList()
     val medicament = Medicament(
         id = null,
         name = name,
@@ -89,7 +88,7 @@ fun CreatePharmacyRequest.toDomain(): Pharmacy {
 fun CreateIngredientRequest.toDomain(): Ingredient {
     val ingredient = Ingredient(
         name = name,
-        medicament = null,
+        medicament = null,  // This will be set later if necessary
         prohibitingCountries = mutableListOf()
     )
     val prohibitingCountries = prohibitingCountries?.map { it.toDomain() }.orEmpty()
