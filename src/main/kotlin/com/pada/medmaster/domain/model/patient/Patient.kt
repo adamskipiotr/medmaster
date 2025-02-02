@@ -14,7 +14,8 @@ class Patient(
     var specialHealthConditions: MutableList<SpecialHealthConditions> = mutableListOf(),
     var gender: Gender,
     var allergicIngredients: MutableList<Long> = mutableListOf(),
-    var treatments: MutableList<Treatment> = mutableListOf()
+    var treatments: MutableList<Treatment> = mutableListOf(),
+    var address: PatientAddress?
 ) {
 
     fun addIntakeToTreatment(treatmentId : Long, intake: Intake){

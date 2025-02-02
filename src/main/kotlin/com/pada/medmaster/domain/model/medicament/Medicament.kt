@@ -1,8 +1,6 @@
 package com.pada.medmaster.domain.model.medicament
 
 import com.pada.medmaster.domain.exception.IncompatibleMedicamentException
-import com.pada.medmaster.domain.model.ingredient.Ingredient
-import com.pada.medmaster.domain.model.pharmacy.Pharmacy
 
 // About bidirectional relationship:
 // look at Domain Driven Design of Eric Evans - Chapter 5 - avoiding bidirectional relationship if there is no such need

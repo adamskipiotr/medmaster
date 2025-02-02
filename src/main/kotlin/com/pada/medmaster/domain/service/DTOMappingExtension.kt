@@ -3,13 +3,16 @@ package com.pada.medmaster.domain.service
 import com.pada.medmaster.application.dto.request.ingredient.CreateIngredientRequest
 import com.pada.medmaster.application.dto.request.medicament.CreateMedicamentRequest
 import com.pada.medmaster.application.dto.request.medicament.CreatePharmacyRequest
+import com.pada.medmaster.application.dto.request.medicament.CreatePharmacyAddressRequest
+import com.pada.medmaster.application.dto.request.patient.CreatePatientAddressRequest
 import com.pada.medmaster.application.dto.request.patient.CreatePatientRequest
 import com.pada.medmaster.application.dto.request.treatment.*
 import com.pada.medmaster.domain.model.ingredient.Country
 import com.pada.medmaster.domain.model.ingredient.Ingredient
 import com.pada.medmaster.domain.model.medicament.Medicament
+import com.pada.medmaster.domain.model.medicament.Pharmacy
+import com.pada.medmaster.domain.model.medicament.PharmacyAddress
 import com.pada.medmaster.domain.model.patient.*
-import com.pada.medmaster.domain.model.pharmacy.Pharmacy
 
 // Extension functions for mapping each part
 fun CreateTreatmentRequest.toDomain(): Treatment {
@@ -73,6 +76,13 @@ fun CreateMedicamentRequest.toDomain(): Medicament {
 fun CreatePharmacyRequest.toDomain(): Pharmacy {
     val pharmacy = Pharmacy(
         name = name,
+        address = address.toDomain()
+    )
+    return pharmacy
+}
+
+fun CreatePharmacyAddressRequest.toDomain(): PharmacyAddress {
+    val pharmacyAddress = PharmacyAddress(
         voivodeship = voivodeship,
         district = district,
         community = community,
@@ -82,7 +92,7 @@ fun CreatePharmacyRequest.toDomain(): Pharmacy {
         apartmentNumber = apartmentNumber,
         zipCode = zipCode
     )
-    return pharmacy
+    return pharmacyAddress
 }
 
 fun CreateIngredientRequest.toDomain(): Ingredient {
@@ -108,8 +118,22 @@ fun CreatePatientRequest.toDomain(): Patient {
         birthDate = birthDate,
         specialHealthConditions = specialHealthConditions,
         gender = gender,
+        address = address.toDomain(),
         allergicIngredients = allergicIngredients
-
     )
     return patient
+}
+
+fun CreatePatientAddressRequest.toDomain(): PatientAddress {
+    val patientAddress = PatientAddress(
+        voivodeship = voivodeship,
+        district = district,
+        community = community,
+        location = location,
+        street = street,
+        buildingNumber = buildingNumber,
+        apartmentNumber = apartmentNumber,
+        zipCode = zipCode
+    )
+    return patientAddress
 }

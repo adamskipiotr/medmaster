@@ -3,11 +3,13 @@ package com.pada.medmaster.infrastructure.adapters.out.persistence.adapter
 import com.pada.medmaster.domain.model.ingredient.Country
 import com.pada.medmaster.domain.model.ingredient.Ingredient
 import com.pada.medmaster.domain.model.medicament.Medicament
+import com.pada.medmaster.domain.model.medicament.Pharmacy
+import com.pada.medmaster.domain.model.medicament.PharmacyAddress
 import com.pada.medmaster.domain.model.patient.*
-import com.pada.medmaster.domain.model.pharmacy.Pharmacy
 import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.ingredient.CountryEntity
 import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.ingredient.IngredientEntity
 import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.medicament.MedicamentEntity
+import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.medicament.PharmacyAddressEntity
 import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.medicament.PharmacyEntity
 import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.patient.*
 
@@ -37,14 +39,19 @@ fun of(medicament: Medicament) = MedicamentEntity().apply {
 
 fun of(pharmacy: Pharmacy) = PharmacyEntity().apply {
     name = pharmacy.name
-    voivodeship = pharmacy.voivodeship
-    district = pharmacy.district
-    community = pharmacy.community
-    location = pharmacy.location
-    street = pharmacy.street
-    buildingNumber = pharmacy.buildingNumber
-    apartmentNumber = pharmacy.apartmentNumber
-    zipCode = pharmacy.zipCode
+    address = pharmacy.address?.let { of(it) }
+
+}
+
+fun of(pharmacyAddress: PharmacyAddress) = PharmacyAddressEntity().apply {
+    voivodeship = pharmacyAddress.voivodeship
+    district = pharmacyAddress.district
+    community = pharmacyAddress.community
+    location = pharmacyAddress.location
+    street = pharmacyAddress.street
+    buildingNumber = pharmacyAddress.buildingNumber
+    apartmentNumber = pharmacyAddress.apartmentNumber
+    zipCode = pharmacyAddress.zipCode
 }
 
 fun of(ingredient: Ingredient): IngredientEntity {
@@ -67,7 +74,19 @@ fun of(patient: Patient) = PatientEntity().apply {
     gender = patient.gender
     specialHealthConditions = patient.specialHealthConditions
     allergicIngredients.addAll(patient.allergicIngredients)
+    address = patient.address?.let { of(it) }
     treatments.addAll(patient.treatments.map { i -> of(i, this) }) // Pass the PatientEntity
+}
+
+fun of(patientAddress: PatientAddress) = PatientAddressEntity().apply {
+    voivodeship = patientAddress.voivodeship
+    district = patientAddress.district
+    community = patientAddress.community
+    location = patientAddress.location
+    street = patientAddress.street
+    buildingNumber = patientAddress.buildingNumber
+    apartmentNumber = patientAddress.apartmentNumber
+    zipCode = patientAddress.zipCode
 }
 
 fun of(treatment: Treatment, patientEntity: PatientEntity) = TreatmentEntity().apply {
