@@ -59,6 +59,7 @@ fun of(ingredient: Ingredient): IngredientEntity {
         id = ingredient.id ?: 0
         name = ingredient.name
         incompatibleIngredients.addAll(ingredient.incompatibleIngredients?.map { i -> of(i) }.orEmpty())
+        prohibitingCountries.addAll(ingredient.prohibitingCountries.map { i -> of(i) })
     }
 }
 
@@ -79,6 +80,7 @@ fun of(patient: Patient) = PatientEntity().apply {
 }
 
 fun of(patientAddress: PatientAddress) = PatientAddressEntity().apply {
+    country = patientAddress.country
     voivodeship = patientAddress.voivodeship
     district = patientAddress.district
     community = patientAddress.community

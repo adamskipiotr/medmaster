@@ -46,7 +46,8 @@ class MedicamentEntity(                 // TODO: why class should be open for Hi
             name,
             producer,
             overdoseCounteractions,
-            ingredientsIds
+            ingredientsIds,
+            pharmacies.map { it.asDomain() }.toMutableList()
         )
     }
 }

@@ -5,6 +5,7 @@ import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.patient
 import java.time.LocalDate
 
 class CreatePatientAddressRequest(
+    val country: String,
     val voivodeship: String,
     val district: String,
     val community: String,

@@ -17,6 +17,7 @@ class PatientAddressEntity(
     )
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "patient_address_id_sequence")
     var id: Long = 0,
+    var country: String = "",
     var voivodeship: String = "",
     var district: String = "",
     var community: String = "",
@@ -29,6 +30,7 @@ class PatientAddressEntity(
     fun asDomain(): PatientAddress {
         return PatientAddress(
             id,
+            country,
             voivodeship,
             district,
             community,

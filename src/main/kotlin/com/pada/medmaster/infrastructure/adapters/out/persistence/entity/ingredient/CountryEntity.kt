@@ -26,7 +26,7 @@ class CountryEntity {
 
     fun asDomain(): Country {
         return Country(
-            id, name, prohibitedIngredients.map { it.asDomain() }.toSet()
+            id, name
         )
     }
 }

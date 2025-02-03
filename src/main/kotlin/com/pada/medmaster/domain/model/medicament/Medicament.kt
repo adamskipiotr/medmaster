@@ -19,10 +19,6 @@ class Medicament(
         require(overdoseCounteractions.isNotEmpty()) { "A medicament must have its overdose counteractions provided" }
     }
 
-    fun addIngredients(newIngredients: List<Long>) {
-        this.ingredients.addAll(newIngredients)
-    }
-
     fun validateSafeWithNewMedicament(newMedicament: Medicament) {
         val newMedicamentIngredients = newMedicament.ingredients
         val hasIncompatibleCombination = newMedicamentIngredients.any { it in ingredients }
@@ -37,5 +33,6 @@ class Medicament(
             .find { it.voivodeship == patientAddressVoivodeship }
             ?: throw PharmacyNotFoundException("No pharmacy with medicament $name found in voivodeship: $patientAddressVoivodeship")
     }
+
 
 }

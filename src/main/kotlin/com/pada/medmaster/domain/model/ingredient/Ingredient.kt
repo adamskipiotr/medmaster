@@ -1,6 +1,7 @@
 package com.pada.medmaster.domain.model.ingredient
 
 import com.pada.medmaster.domain.model.medicament.Medicament
+import com.pada.medmaster.domain.exception.IngredientProhibitedInPatientCountryException
 
 class Ingredient(
     val id: Long? = null,
@@ -14,7 +15,12 @@ class Ingredient(
         this.incompatibleIngredients?.addAll(incompatibleIngredients)
     }
 
-    fun addProhibitingCountries(prohibitingCountries: List<Country>){
+    fun addProhibitingCountries(prohibitingCountries: List<Country>) {
         this.prohibitingCountries.addAll(prohibitingCountries)
+    }
+
+    fun isAllowedIn(patientAddressCountry: String?) {
+        prohibitingCountries.find { it.name == patientAddressCountry }
+            ?: throw IngredientProhibitedInPatientCountryException("Ingredient $name is prohibited in $patientAddressCountry")
     }
 }

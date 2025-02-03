@@ -38,4 +38,8 @@ class Patient(
     fun getVoivodeship() : String? {
         return address?.voivodeship
     }
+
+    fun getCountry() : String? {
+        return address?.country
+    }
 }

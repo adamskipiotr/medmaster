@@ -126,6 +126,7 @@ fun CreatePatientRequest.toDomain(): Patient {
 
 fun CreatePatientAddressRequest.toDomain(): PatientAddress {
     val patientAddress = PatientAddress(
+        country = country,
         voivodeship = voivodeship,
         district = district,
         community = community,
