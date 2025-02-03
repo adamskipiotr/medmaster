@@ -1,6 +1,7 @@
 package com.pada.medmaster.domain.model.medicament
 
 import com.pada.medmaster.domain.exception.IncompatibleMedicamentException
+import com.pada.medmaster.domain.exception.PharmacyNotFoundException
 
 // About bidirectional relationship:
 // look at Domain Driven Design of Eric Evans - Chapter 5 - avoiding bidirectional relationship if there is no such need
@@ -30,4 +31,11 @@ class Medicament(
             throw IncompatibleMedicamentException("${newMedicament.name} can't be used together with ${this.name} - incompatible Ingredients")
         }
     }
+
+    fun validateIsInVoivodeship(patientAddressVoivodeship: String?) {
+        pharmacies.mapNotNull { it.address }
+            .find { it.voivodeship == patientAddressVoivodeship }
+            ?: throw PharmacyNotFoundException("No pharmacy with medicament $name found in voivodeship: $patientAddressVoivodeship")
+    }
+
 }

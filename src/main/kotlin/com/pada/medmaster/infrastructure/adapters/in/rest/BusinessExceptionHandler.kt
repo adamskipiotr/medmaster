@@ -1,6 +1,7 @@
 package com.pada.medmaster.infrastructure.adapters.`in`.rest
 
 import com.pada.medmaster.domain.exception.IncompatibleMedicamentException
+import com.pada.medmaster.domain.exception.PharmacyNotFoundException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -17,7 +18,20 @@ class BusinessExceptionHandler {
     ) : ResponseEntity<ApiError> {
         val error = ApiError(
             status = HttpStatus.BAD_REQUEST,
-            message = exception.message ?: "Medicament can't be prescripted due to incomplatiblibty with medicaments already in use",
+            message = exception.message ?: "Medicament can't be prescribed due to incompatibility with medicaments already in use",
+            path = (request as ServletWebRequest).request.requestURI
+        )
+        return ResponseEntity(error, HttpStatus.BAD_REQUEST)
+    }
+
+    @ExceptionHandler(PharmacyNotFoundException::class)
+    fun handlePharmacyNotFound(
+        exception: PharmacyNotFoundException,
+        request: WebRequest
+    ) : ResponseEntity<ApiError> {
+        val error = ApiError(
+            status = HttpStatus.BAD_REQUEST,
+            message = exception.message ?: "Medicament can't be prescribed - no pharmacy in patient's voivodeship has it in stock",
             path = (request as ServletWebRequest).request.requestURI
         )
         return ResponseEntity(error, HttpStatus.BAD_REQUEST)
