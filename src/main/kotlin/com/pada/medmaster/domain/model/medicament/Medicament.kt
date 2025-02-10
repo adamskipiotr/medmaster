@@ -33,6 +33,4 @@ class Medicament(
             .find { it.voivodeship == patientAddressVoivodeship }
             ?: throw PharmacyNotFoundException("No pharmacy with medicament $name found in voivodeship: $patientAddressVoivodeship")
     }
-
-
 }

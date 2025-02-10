@@ -49,6 +49,10 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-testcontainers")
     testImplementation("org.testcontainers:junit-jupiter:1.17.6")
     testImplementation("org.testcontainers:postgresql:1.18.3")
+
+    testImplementation("org.mockito:mockito-core:5.10.0")
+    testImplementation("org.mockito:mockito-inline:5.0.0") // For mocking final classes
+    testImplementation("org.mockito.kotlin:mockito-kotlin:5.2.1") // Mockito Kotlin
 }
 
 kotlin {
