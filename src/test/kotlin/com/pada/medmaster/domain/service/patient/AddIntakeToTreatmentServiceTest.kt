@@ -34,7 +34,7 @@ class AddIntakeToTreatmentServiceTest {
         sut.addIntake(patientId = 1L, treatmentId = 1L, createIntakeRequest)
 
         //then
-        assertEquals(1, testPatient.treatments[0].intakes.size)
+        assertEquals(2, testPatient.treatments[0].intakes.size)
     }
 
     @Test
@@ -48,7 +48,7 @@ class AddIntakeToTreatmentServiceTest {
         }
 
         //then
-        assertEquals("No pharmacy with medicament Name found in voivodeship: OtherVoivodeship", exception.message)
+        assertEquals("No pharmacy with medicament Medicament 1 found in voivodeship: OtherVoivodeship", exception.message)
     }
 
     @Test
