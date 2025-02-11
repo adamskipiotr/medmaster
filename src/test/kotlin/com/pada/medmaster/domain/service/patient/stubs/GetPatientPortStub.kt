@@ -1,4 +1,4 @@
-package com.pada.medmaster.domain.service.patient
+package com.pada.medmaster.domain.service.patient.stubs
 
 import com.pada.medmaster.application.ports.out.patient.GetPatientPort
 import com.pada.medmaster.domain.model.patient.Patient
@@ -9,7 +9,7 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.Month
 
-class GetFakePatientPort() : GetPatientPort {
+class GetPatientPortStub() : GetPatientPort {
 
     private val treatment = createStubTreatment()
 
@@ -17,7 +17,7 @@ class GetFakePatientPort() : GetPatientPort {
 
     private val secondTreatment = createStubTreatment(2L)
 
-    private val secondAddress = createStubPatientAddress(2L,"OtherVoivodeship")
+    private val secondAddress = createStubPatientAddress(2L, "OtherVoivodeship")
 
     private val patients = mutableMapOf(
         createStubPatient(1L, treatment, patientAddress),
@@ -35,7 +35,7 @@ class GetFakePatientPort() : GetPatientPort {
             )
             )
 
-    private fun createStubPatientAddress(id: Long = 1L,voivodeship: String = "Voivodeship") = PatientAddress(
+    private fun createStubPatientAddress(id: Long = 1L, voivodeship: String = "Voivodeship") = PatientAddress(
         id, "Country", voivodeship, "District", "Community", "Location",
         "Street", "10A", "5B", "40200"
     )

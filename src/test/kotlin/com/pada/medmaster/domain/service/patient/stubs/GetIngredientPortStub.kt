@@ -1,10 +1,10 @@
-package com.pada.medmaster.domain.service.patient
+package com.pada.medmaster.domain.service.patient.stubs
 
 import com.pada.medmaster.application.ports.out.ingredient.GetIngredientsPort
 import com.pada.medmaster.domain.model.ingredient.Country
 import com.pada.medmaster.domain.model.ingredient.Ingredient
 
-class GetFakeIngredientPort() : GetIngredientsPort {
+class GetIngredientPortStub() : GetIngredientsPort {
 
     private val prohibitingCountry = Country(1L, "Country", mutableSetOf())
     private val ingredients = mutableMapOf(
@@ -19,7 +19,6 @@ class GetFakeIngredientPort() : GetIngredientsPort {
         if (foundIngredients.size != ids.size) {
             throw NoSuchElementException("Some ingredients not found: ${ids - ingredients.keys}")
         }
-
         return foundIngredients
     }
 }

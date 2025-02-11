@@ -1,11 +1,11 @@
-package com.pada.medmaster.domain.service.patient
+package com.pada.medmaster.domain.service.patient.stubs
 
 import com.pada.medmaster.application.ports.out.medicament.GetMedicamentPort
 import com.pada.medmaster.domain.model.medicament.Medicament
 import com.pada.medmaster.domain.model.medicament.Pharmacy
 import com.pada.medmaster.domain.model.medicament.PharmacyAddress
 
-class GetFakeMedicamentPort() : GetMedicamentPort {
+class GetMedicamentPortStub() : GetMedicamentPort {
 
     private val pharmacyAddress = PharmacyAddress(
         1L, "Voivodeship", "District", "Community",

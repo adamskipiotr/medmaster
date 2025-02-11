@@ -1,26 +1,23 @@
 package com.pada.medmaster.domain.service.patient
 
 import com.pada.medmaster.application.dto.request.treatment.CreateIntakeRequest
-import com.pada.medmaster.application.ports.`in`.medicament.ValidateNewIntakeForPatient
 import com.pada.medmaster.domain.exception.IngredientProhibitedInPatientCountryException
 import com.pada.medmaster.domain.exception.PharmacyNotFoundException
 import com.pada.medmaster.domain.service.medicament.ValidateNewIntakeMedicamentService
+import com.pada.medmaster.domain.service.patient.stubs.*
 import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.patient.IntakeForm
 import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.patient.IntakeFrequency
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.extension.ExtendWith
-import org.mockito.InjectMocks
-import org.mockito.junit.jupiter.MockitoExtension
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.assertThrows
 
 class AddIntakeToTreatmentServiceTest {
 
-    private val getPatientPort = GetFakePatientPort()
-    private val updatePatientPort = UpdateFakePatientPort()
-    private val getMedicamentPort = GetFakeMedicamentPort()
-    private val getMultipleMedicamentByIdPort = GetMultipleFakeMedicamentPort()
-    private val getIngredientsPort = GetFakeIngredientPort()
+    private val getPatientPort = GetPatientPortStub()
+    private val updatePatientPort = UpdatePatientPortStub()
+    private val getMedicamentPort = GetMedicamentPortStub()
+    private val getMultipleMedicamentByIdPort = GetMultipleMedicamentPortStub()
+    private val getIngredientsPort = GetIngredientPortStub()
     private val validateNewIntakeForPatient =
         ValidateNewIntakeMedicamentService(getMedicamentPort, getMultipleMedicamentByIdPort, getIngredientsPort)
     private val sut = AddIntakeToTreatmentService(getPatientPort, updatePatientPort, validateNewIntakeForPatient)

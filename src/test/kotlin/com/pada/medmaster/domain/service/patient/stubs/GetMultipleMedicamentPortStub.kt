@@ -1,16 +1,16 @@
-package com.pada.medmaster.domain.service.patient
+package com.pada.medmaster.domain.service.patient.stubs
 
 import com.pada.medmaster.application.ports.out.medicament.GetMultipleMedicamentByIdPort
 import com.pada.medmaster.domain.model.medicament.Medicament
 
-class GetMultipleFakeMedicamentPort() : GetMultipleMedicamentByIdPort {
+class GetMultipleMedicamentPortStub() : GetMultipleMedicamentByIdPort {
 
     private val medicaments = mutableMapOf(
-        1L to Medicament(1L,"Name", "Producer", "Counteractions",
-            mutableListOf(1L), mutableListOf())
+        1L to Medicament(
+            1L, "Name", "Producer", "Counteractions",
+            mutableListOf(1L), mutableListOf()
+        )
     )
-
-
 
     override fun get(ids: List<Long?>): List<Medicament> {
         val foundMedicaments = ids.mapNotNull { medicaments[it] }
@@ -18,8 +18,6 @@ class GetMultipleFakeMedicamentPort() : GetMultipleMedicamentByIdPort {
         if (foundMedicaments.size != ids.size) {
             throw NoSuchElementException("Some ingredients not found: ${ids - medicaments.keys}")
         }
-
         return foundMedicaments
     }
-
 }
