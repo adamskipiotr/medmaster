@@ -20,7 +20,8 @@ class Ingredient(
     }
 
     fun isAllowedIn(patientAddressCountry: String?) {
-        prohibitingCountries.find { it.name == patientAddressCountry }
-            ?: throw IngredientProhibitedInPatientCountryException("Ingredient $name is prohibited in $patientAddressCountry")
+        if (prohibitingCountries.any { it.name == patientAddressCountry }) {
+            throw IngredientProhibitedInPatientCountryException("Ingredient $name is prohibited in $patientAddressCountry")
+        }
     }
 }

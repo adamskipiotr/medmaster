@@ -6,6 +6,6 @@ import com.pada.medmaster.domain.model.patient.Patient
 class UpdateFakePatientPort() : UpdatePatientPort {
 
     override fun update(patient: Patient) {
-        TODO("Not yet implemented")
+        println("Update Patient Stub")
     }
 }
