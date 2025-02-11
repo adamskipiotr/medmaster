@@ -2,6 +2,7 @@ package com.pada.medmaster.domain.service.patient
 
 import com.pada.medmaster.application.dto.request.treatment.CreateIntakeRequest
 import com.pada.medmaster.application.ports.`in`.medicament.ValidateNewIntakeForPatient
+import com.pada.medmaster.domain.exception.IngredientProhibitedInPatientCountryException
 import com.pada.medmaster.domain.exception.PharmacyNotFoundException
 import com.pada.medmaster.domain.service.medicament.ValidateNewIntakeMedicamentService
 import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.patient.IntakeForm
@@ -29,10 +30,7 @@ class AddIntakeToTreatmentServiceTest {
     fun shouldAddIntakeToTreatmentWhenValidationPasses() {
         //given
         val testPatient = getPatientPort.get(1L)
-        val createIntakeRequest = CreateIntakeRequest(
-            1L, IntakeForm.PILLS, 5,
-            IntakeFrequency.ONCE_A_DAY, emptyList(), 6
-        )
+        val createIntakeRequest = createIntakeRequest()
 
         //when
         sut.addIntake(patientId = 1L, treatmentId = 1L, createIntakeRequest)
@@ -43,26 +41,34 @@ class AddIntakeToTreatmentServiceTest {
 
     @Test
     fun shouldThrowPharmacyNotFoundExceptionWhenNewIntakeHasMedicamentNotAvailableInPatientsVoivodeship() {
+        //given
+        val createIntakeRequest = createIntakeRequest()
 
-        val createIntakeRequest = CreateIntakeRequest(
-            1L, IntakeForm.PILLS, 5,
-            IntakeFrequency.ONCE_A_DAY, emptyList(), 6
-        )
-
+        //when
         val exception = assertThrows<PharmacyNotFoundException> {
+            sut.addIntake(patientId = 2L, treatmentId = 2L, createIntakeRequest)
+        }
+
+        //then
+        assertEquals("No pharmacy with medicament Name found in voivodeship: OtherVoivodeship", exception.message)
+    }
+
+    @Test
+    fun shouldThrowIngredientProhibitedInPatientCountryExceptionWhenNewIntakeHasMedicamentWithIngredientNotAllowedInPatientsCountry() {
+        //given
+        val createIntakeRequest = createIntakeRequest(2L)
+
+        //when
+        val exception = assertThrows<IngredientProhibitedInPatientCountryException> {
             sut.addIntake(patientId = 1L, treatmentId = 1L, createIntakeRequest)
         }
 
-        assert(exception.message == "No pharmacy with medicament Name found in voivodeship: Voivodeship")
+        //then
+        assertEquals("Ingredient Second Name is prohibited in Country", exception.message)
     }
 
-//    @Test
-//    fun shouldThrowIngredientProhibitedInPatientCountryExceptionWhenNewIntakeHasMedicamentWithIngredientNotAllowedInPatientsCountry() {
-//        val createIntakeRequest = CreateIntakeRequest(
-//            1L, IntakeForm.PILLS, 5,
-//            IntakeFrequency.ONCE_A_DAY, emptyList(), 6
-//        )
-//
-//        sut.addIntake(patientId = 1L, treatmentId = 2L, createIntakeRequest)
-//    }
+    private fun createIntakeRequest(medicamentId: Long = 1L) = CreateIntakeRequest(
+        medicamentId, IntakeForm.PILLS, 5,
+        IntakeFrequency.ONCE_A_DAY, emptyList(), 6
+    )
 }

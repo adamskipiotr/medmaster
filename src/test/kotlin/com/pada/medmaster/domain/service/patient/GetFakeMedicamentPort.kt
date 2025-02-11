@@ -16,6 +16,10 @@ class GetFakeMedicamentPort() : GetMedicamentPort {
         1L to Medicament(
             1L, "Name", "Producer",
             "Counteractions", mutableListOf(1L), mutableListOf(pharmacy)
+        ),
+        2L to Medicament(
+            2L, "Name", "Producer",
+            "Counteractions", mutableListOf(2L), mutableListOf(pharmacy)
         )
     )
 
