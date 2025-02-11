@@ -19,12 +19,11 @@ class Medicament(
         require(overdoseCounteractions.isNotEmpty()) { "A medicament must have its overdose counteractions provided" }
     }
 
-    fun validateSafeWithNewMedicament(newMedicament: Medicament) {
-        val newMedicamentIngredients = newMedicament.ingredients
+    fun validateSafeWithNewMedicament(newMedicamentIngredients: List<Long?>, newMedicamentName :String ) {
         val hasIncompatibleCombination = newMedicamentIngredients.any { it in ingredients }
 
         if (hasIncompatibleCombination) {
-            throw IncompatibleMedicamentException("${newMedicament.name} can't be used together with ${this.name} - incompatible Ingredients")
+            throw IncompatibleMedicamentException("${newMedicamentName} can't be used together with ${this.name} - incompatible Ingredients")
         }
     }
 

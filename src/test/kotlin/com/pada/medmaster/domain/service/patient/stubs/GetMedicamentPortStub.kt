@@ -14,12 +14,20 @@ class GetMedicamentPortStub() : GetMedicamentPort {
     private val pharmacy = Pharmacy(1L, "Pharmacy", pharmacyAddress)
     private val medicaments = mutableMapOf(
         1L to Medicament(
-            1L, "Name", "Producer",
+            1L, "Medicament 1", "Producer",
             "Counteractions", mutableListOf(1L), mutableListOf(pharmacy)
         ),
         2L to Medicament(
-            2L, "Name", "Producer",
+            2L, "Medicament 2", "Producer",
             "Counteractions", mutableListOf(2L), mutableListOf(pharmacy)
+        ),
+        3L to Medicament(
+            3L, "Medicament 3", "Producer",
+            "Counteractions", mutableListOf(3L), mutableListOf(pharmacy)
+        ),
+        4L to Medicament(
+            4L, "Medicament 4", "Producer",
+            "Counteractions", mutableListOf(4L), mutableListOf(pharmacy)
         )
     )
 

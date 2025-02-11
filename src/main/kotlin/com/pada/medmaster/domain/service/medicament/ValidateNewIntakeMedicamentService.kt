@@ -24,9 +24,16 @@ class ValidateNewIntakeMedicamentService(
         val inUseMedicament = getMultipleMedicamentByIdPort.get(inUseMedicamentIds)
         val treatmentNewMedicament = getMedicamentPort.get(medicamentId)
         treatmentNewMedicament.validateIsInVoivodeship(patientAddressVoivodeship)
-        val ingredients = getIngredientsPort.get(treatmentNewMedicament.ingredients)
-        ingredients.forEach { it.isAllowedIn(patientAddressCountry) }
-        inUseMedicament.forEach { medicament -> medicament.validateSafeWithNewMedicament(treatmentNewMedicament) }
+        val newTreatmentIngredients = getIngredientsPort.get(treatmentNewMedicament.ingredients)
+        newTreatmentIngredients.forEach { it.isAllowedIn(patientAddressCountry) }
+        val invalidIngredients = newTreatmentIngredients
+            .flatMap { i -> i.incompatibleIngredients?.map { k -> k.id } ?: emptyList() }
+            .toList()
+        inUseMedicament.forEach { medicament ->
+            medicament.validateSafeWithNewMedicament(
+                invalidIngredients,
+                treatmentNewMedicament.name
+            )
+        }
     }
-
 }

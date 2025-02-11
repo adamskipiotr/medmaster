@@ -1,6 +1,7 @@
 package com.pada.medmaster.domain.service.patient
 
 import com.pada.medmaster.application.dto.request.treatment.CreateIntakeRequest
+import com.pada.medmaster.domain.exception.IncompatibleMedicamentException
 import com.pada.medmaster.domain.exception.IngredientProhibitedInPatientCountryException
 import com.pada.medmaster.domain.exception.PharmacyNotFoundException
 import com.pada.medmaster.domain.service.medicament.ValidateNewIntakeMedicamentService
@@ -62,6 +63,20 @@ class AddIntakeToTreatmentServiceTest {
 
         //then
         assertEquals("Ingredient Second Name is prohibited in Country", exception.message)
+    }
+
+    @Test
+    fun shouldThrowIncompatibleMedicamentExceptionWhenNewIntakeHasMedicamentNotAllowedToMixWithMedicamentInUse() {
+        //given
+        val createIntakeRequest = createIntakeRequest(4L)
+
+        //when
+        val exception = assertThrows<IncompatibleMedicamentException> {
+            sut.addIntake(patientId = 1L, treatmentId = 1L, createIntakeRequest)
+        }
+
+        //then
+        assertEquals("Medicament 4 can't be used together with Medicament 3 - incompatible Ingredients", exception.message)
     }
 
     private fun createIntakeRequest(medicamentId: Long = 1L) = CreateIntakeRequest(

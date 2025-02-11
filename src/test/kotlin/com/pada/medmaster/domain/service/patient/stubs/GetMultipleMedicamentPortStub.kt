@@ -7,8 +7,20 @@ class GetMultipleMedicamentPortStub() : GetMultipleMedicamentByIdPort {
 
     private val medicaments = mutableMapOf(
         1L to Medicament(
-            1L, "Name", "Producer", "Counteractions",
+            1L, "Medicament 1", "Producer", "Counteractions",
             mutableListOf(1L), mutableListOf()
+        ),
+        2L to Medicament(
+            2L, "Medicament 2", "Producer", "Counteractions",
+            mutableListOf(2L), mutableListOf()
+        ),
+        3L to Medicament(
+            3L, "Medicament 3", "Producer", "Counteractions",
+            mutableListOf(3L), mutableListOf()
+        ),
+        4L to Medicament(
+            4L, "Medicament 4", "Producer", "Counteractions",
+            mutableListOf(4L), mutableListOf()
         )
     )
 
