@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component
 class UpdatePatientAdapter(val patientRepository: PatientRepository) : UpdatePatientPort {
 
     override fun update(patient: Patient){
-        val patientEntity = of(patient)
+        val patientEntity = of(patient)  // TODO: Updating patient's address should result in re-validating medicaments (if they are allowed & available in new country)
         patientRepository.save(patientEntity)
     }
 }

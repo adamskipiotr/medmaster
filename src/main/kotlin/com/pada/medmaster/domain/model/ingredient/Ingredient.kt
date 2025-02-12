@@ -6,7 +6,7 @@ import com.pada.medmaster.domain.exception.IngredientProhibitedInPatientCountryE
 class Ingredient(
     val id: Long? = null,
     val name: String,
-    val medicament: Medicament?,
+    val medicament: Medicament?, // fix this relation
     val incompatibleIngredients: MutableList<Ingredient>? = mutableListOf(),
     val prohibitingCountries: MutableList<Country> = mutableListOf()
     // Add: side effect information, excluded

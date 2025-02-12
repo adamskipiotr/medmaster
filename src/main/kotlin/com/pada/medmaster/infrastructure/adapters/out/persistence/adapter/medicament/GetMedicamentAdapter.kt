@@ -11,6 +11,6 @@ import org.springframework.stereotype.Component
 class GetMedicamentAdapter(val medicamentRepository: MedicamentRepository) : GetMedicamentPort {
 
     override fun get(id: Long) : Medicament{
-       return medicamentRepository.findById(id).orElseThrow { RuntimeException("No medicament with Id $id was found") }.asDomain()
+       return medicamentRepository.findById(id).orElseThrow { RuntimeException("No medicament with Id $id was found") }.asDomain() // replace RuntimeException
     }
 }
