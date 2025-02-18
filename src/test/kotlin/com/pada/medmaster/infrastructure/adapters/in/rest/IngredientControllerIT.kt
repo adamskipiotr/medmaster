@@ -4,7 +4,6 @@ import MedMasterApplicationTests
 import com.pada.medmaster.application.dto.request.ingredient.CreateIngredientRequest
 import com.pada.medmaster.infrastructure.adapters.out.persistence.repository.IngredientRepository
 import com.pada.medmaster.infrastructure.adapters.out.persistence.repository.MedicamentRepository
-import com.pada.medmaster.infrastructure.adapters.out.persistence.repository.PatientRepository
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired

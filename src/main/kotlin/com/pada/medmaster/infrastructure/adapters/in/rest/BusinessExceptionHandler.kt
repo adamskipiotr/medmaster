@@ -5,7 +5,8 @@ import com.pada.medmaster.domain.exception.IngredientProhibitedInPatientCountryE
 import com.pada.medmaster.domain.exception.PharmacyNotFoundException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.ExceptionHandler
+import org.springframework.web.bind.annotation.RestControllerAdvice
 import org.springframework.web.context.request.ServletWebRequest
 import org.springframework.web.context.request.WebRequest
 

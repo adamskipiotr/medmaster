@@ -2,12 +2,10 @@ package com.pada.medmaster.infrastructure.adapters.out.persistence.adapter.patie
 
 import com.pada.medmaster.MedMasterApplication
 import com.pada.medmaster.infrastructure.adapters.out.persistence.repository.PatientRepository
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.InjectMocks
 import org.mockito.Mock
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.junit.jupiter.SpringExtension
 

@@ -8,8 +8,8 @@ import com.pada.medmaster.domain.service.medicament.ValidateNewIntakeMedicamentS
 import com.pada.medmaster.domain.service.patient.stubs.*
 import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.patient.IntakeForm
 import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.patient.IntakeFrequency
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.assertThrows
 
 class AddIntakeToTreatmentServiceTest {

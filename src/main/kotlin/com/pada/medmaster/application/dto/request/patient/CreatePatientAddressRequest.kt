@@ -1,9 +1,5 @@
 package com.pada.medmaster.application.dto.request.patient
 
-import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.patient.Gender
-import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.patient.SpecialHealthConditions
-import java.time.LocalDate
-
 class CreatePatientAddressRequest(
     val country: String,
     val voivodeship: String,

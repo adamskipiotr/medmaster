@@ -5,9 +5,9 @@ import com.pada.medmaster.application.dto.request.patient.CreatePatientAddressRe
 import com.pada.medmaster.application.dto.request.patient.CreatePatientRequest
 import com.pada.medmaster.application.dto.request.treatment.CreateIntakeRequest
 import com.pada.medmaster.application.dto.request.treatment.CreateTreatmentRequest
-import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.medicament.MedicamentEntity
-import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.patient.*
-import com.pada.medmaster.infrastructure.adapters.out.persistence.repository.MedicamentRepository
+import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.patient.Gender
+import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.patient.IntakeForm
+import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.patient.IntakeFrequency
 import com.pada.medmaster.infrastructure.adapters.out.persistence.repository.PatientRepository
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
