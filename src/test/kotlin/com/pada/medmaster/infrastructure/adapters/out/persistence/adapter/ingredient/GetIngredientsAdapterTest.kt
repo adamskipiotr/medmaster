@@ -1,33 +1,56 @@
 package com.pada.medmaster.infrastructure.adapters.out.persistence.adapter.ingredient
 
-import com.pada.medmaster.infrastructure.adapters.out.persistence.adapter.medicament.CreateMedicamentAdapter
+import com.pada.medmaster.MedMasterApplication
+import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.ingredient.IngredientEntity
 import com.pada.medmaster.infrastructure.adapters.out.persistence.repository.IngredientRepository
-import com.pada.medmaster.infrastructure.adapters.out.persistence.repository.MedicamentRepository
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.extension.ExtendWith
+import org.mockito.InjectMocks
+import org.mockito.Mock
+import org.mockito.kotlin.whenever
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.test.context.junit.jupiter.SpringExtension
 
+@ExtendWith(SpringExtension::class)
+@SpringBootTest(classes = [MedMasterApplication::class])
 class GetIngredientsAdapterTest {
 
-    @Autowired
+    @Mock
     private lateinit var ingredientRepository: IngredientRepository
-    private val getIngredientsAdapter = GetIngredientsAdapter(ingredientRepository)
+    @InjectMocks
+    private lateinit var getIngredientsAdapter: GetIngredientsAdapter
 
     @Test
-    fun should_returnSingleIngredient_whenOnlyOneIdHasEntityInDb() {
+    fun shouldGetIngredientsMappedToDomain() {
+        val ingredientEntities = createIngredientEntities()
+        whenever(
+            ingredientRepository.findAllById(
+                listOf(
+                    100L,
+                    101L
+                )
+            )
+        ).thenReturn(ingredientEntities) // no when in Kotlin
 
-        val result = getIngredientsAdapter.get(listOf(100L))
+        //when
+        val result = getIngredientsAdapter.get(listOf(100, 101))
+        //then
+        assertEquals(2, result.size)
+        assertEquals("Ingredient100", result.first().name)   // refactor assertions
     }
 
-    @Test
-    fun should_getMultipleIngredients_whenAllIdsHaveEntitiesInDb() {
-
-        val result = getIngredientsAdapter.get(listOf(100L, 101L, 102L))
-    }
-
-    @Test
-    fun should_getEmptyList_whenNoEntityFoundForGivenIdsInDb() {
-
-        val result = getIngredientsAdapter.get(listOf(999L, 998L, 997L))
+    private fun createIngredientEntities(): List<IngredientEntity> {
+        return listOf(
+            IngredientEntity().apply {
+                id = 100L
+                name = "Ingredient100"
+            },
+            IngredientEntity().apply {
+                id = 101L
+                name = "Ingredient101"
+            })
     }
 }

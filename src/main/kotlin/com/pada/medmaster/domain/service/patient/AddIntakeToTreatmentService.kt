@@ -25,7 +25,7 @@ class AddIntakeToTreatmentService(
         val patient = getPatientPort.get(patientId)
         val medicamentsInUse = patient.getMedicamentsInTreatment(treatmentId)
         val patientAddressVoivodeship = patient.getVoivodeship()
-        val patientAddressCountry = patient.getCountry()
+        val patientAddressCountry = patient.getCountry() // ok
 
         validateNewIntakeForPatient.validate(
             intake.medicamentId!!,

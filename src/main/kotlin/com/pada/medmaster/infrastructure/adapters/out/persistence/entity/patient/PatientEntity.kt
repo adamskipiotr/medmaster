@@ -85,4 +85,17 @@ class PatientEntity {
         treatments.add(treatment)
         treatment.patient = this
     }
+
+    fun updateFromDomain(patient: Patient) {  // refactor - move to Extensions?
+        this.name = patient.name
+        this.lastName = patient.lastName
+        this.birthDate = patient.birthDate
+        this.gender = patient.gender
+        this.specialHealthConditions = patient.specialHealthConditions.toMutableList()
+        this.allergicIngredients = patient.allergicIngredients.toMutableList()
+
+        // Update treatments by replacing them completely
+
+        // Update or replace address
+    }
 }

@@ -48,6 +48,7 @@ class PatientController(
     }
 
     @PostMapping("/{id}/treatments")
+    @ResponseStatus(HttpStatus.CREATED)
     @Operation(
         summary = "Create a new treatment",
         description = "Adds a new treatment.",
@@ -71,6 +72,7 @@ class PatientController(
     }
 
     @PostMapping("/{id}/treatments/{treatmentId}/intakes")
+    @ResponseStatus(HttpStatus.CREATED)
     @Operation(
         summary = "Add intake to an existing Treatment",
         description = "Adds a new intake to a treatment.",

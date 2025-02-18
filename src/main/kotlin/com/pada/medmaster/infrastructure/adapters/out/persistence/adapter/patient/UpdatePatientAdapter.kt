@@ -10,7 +10,10 @@ import org.springframework.stereotype.Component
 class UpdatePatientAdapter(val patientRepository: PatientRepository) : UpdatePatientPort {
 
     override fun update(patient: Patient){
-        val patientEntity = of(patient)  // TODO: Updating patient's address should result in re-validating medicaments (if they are allowed & available in new country)
+        val patientEntity = patientRepository.findById(patient.id!!) // TODO: Updating patient's address should result in re-validating medicaments (if they are allowed & available in new country)
+                                                                   // TODO Refactor to throw well described exception here
+        patientEntity.updateFromDomain(patient)
+
         patientRepository.save(patientEntity)
     }
 }

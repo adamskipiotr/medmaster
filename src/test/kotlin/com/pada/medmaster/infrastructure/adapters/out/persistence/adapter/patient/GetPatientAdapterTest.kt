@@ -1,33 +1,51 @@
 package com.pada.medmaster.infrastructure.adapters.out.persistence.adapter.patient
 
+import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.patient.Gender
+import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.patient.PatientEntity
 import com.pada.medmaster.infrastructure.adapters.out.persistence.repository.PatientRepository
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
-import org.springframework.beans.factory.annotation.Autowired
+import org.junit.jupiter.api.extension.ExtendWith
+import org.mockito.InjectMocks
+import org.mockito.Mock
+import org.mockito.kotlin.whenever
+import org.springframework.test.context.junit.jupiter.SpringExtension
+import java.time.LocalDate
 
+@ExtendWith(SpringExtension::class)
 class GetPatientAdapterTest {
 
-    @Autowired
+    @Mock
     private lateinit var patientRepository: PatientRepository
-    private val getPatientAdapter = GetPatientAdapter(patientRepository)
+
+    @InjectMocks
+    private lateinit var getPatientAdapter: GetPatientAdapter
+
 
     @Test
-    fun should_returnPatient_whenIfHasItEntityInDb(){
-
-        val result = getPatientAdapter.get(100L)
-    }
-
-    @Test
-    fun should_throwException_whenIfHasNoEntityInDb(){
+    fun shouldGetPatientMappedToDomain() {
+        val patientEntity = createPatientEntity()
+        whenever(patientRepository.findById(100L)).thenReturn(patientEntity) // no when in Kotlin
 
         //when
-        val exception = assertThrows<RuntimeException> {
-            getPatientAdapter.get(999L)
-        }
+        val result = getPatientAdapter.get(100)
 
         //then
-        assertEquals("No pharmacy with medicament Medicament 1 found in voivodeship: OtherVoivodeship", exception.message)
+        assertEquals("Patient100", result.name)   // refactor assertions
+    }
 
+
+    private fun createPatientEntity(): PatientEntity {
+        return PatientEntity().apply {
+            id = 100L
+            name = "Patient100"
+            lastName = "Doe"
+            birthDate = LocalDate.of(1990, 5, 15)
+            gender = Gender.XY
+            specialHealthConditions = mutableListOf()
+            treatments = mutableListOf()
+            address = null
+            allergicIngredients = mutableListOf()
+        }
     }
 }

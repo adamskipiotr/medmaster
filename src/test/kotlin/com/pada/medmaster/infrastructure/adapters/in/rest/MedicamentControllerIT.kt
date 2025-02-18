@@ -18,7 +18,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class MedicamentControllerIT : MedMasterApplicationTests(){
+class MedicamentControllerIT : MedMasterApplicationTests() {
 
     @Autowired
     protected lateinit var restTemplate: TestRestTemplate
@@ -34,11 +34,15 @@ class MedicamentControllerIT : MedMasterApplicationTests(){
     fun should_createMedicament_when_ingredientsAndOverdoseCounteractionsAreProvided() {
         // given
         ingredientRepository.save(IngredientEntity())
-        val pharmacyAddressRequest= CreatePharmacyAddressRequest("Voivodeship", "District", "Community",
-            "Location", "Street", "123", "456", "12-345")
+        val pharmacyAddressRequest = CreatePharmacyAddressRequest(
+            "Voivodeship", "District", "Community",
+            "Location", "Street", "123", "456", "12-345"
+        )
         val createPharmacyRequest = CreatePharmacyRequest("Pharmacy Name", pharmacyAddressRequest)
-        val createMedicamentRequest = CreateMedicamentRequest("Medicament Name","Producer Name", "Overdose counteractions",
-            mutableListOf(1), listOf(createPharmacyRequest))
+        val createMedicamentRequest = CreateMedicamentRequest(
+            "Medicament Name", "Producer Name", "Overdose counteractions",
+            mutableListOf(1), listOf(createPharmacyRequest)
+        )
 
         //when
         val response: ResponseEntity<Unit> = restTemplate.exchange(

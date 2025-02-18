@@ -2,15 +2,10 @@ package com.pada.medmaster.infrastructure.adapters.`in`.rest
 
 import MedMasterApplicationTests
 import com.pada.medmaster.application.dto.request.ingredient.CreateIngredientRequest
-import com.pada.medmaster.application.dto.request.patient.CreatePatientAddressRequest
-import com.pada.medmaster.application.dto.request.patient.CreatePatientRequest
-import com.pada.medmaster.application.dto.request.treatment.CreateIntakeRequest
-import com.pada.medmaster.application.dto.request.treatment.CreateTreatmentRequest
-import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.medicament.MedicamentEntity
-import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.patient.*
+import com.pada.medmaster.infrastructure.adapters.out.persistence.repository.IngredientRepository
 import com.pada.medmaster.infrastructure.adapters.out.persistence.repository.MedicamentRepository
 import com.pada.medmaster.infrastructure.adapters.out.persistence.repository.PatientRepository
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -19,9 +14,6 @@ import org.springframework.http.HttpEntity
 import org.springframework.http.HttpMethod
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.Month
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class IngredientControllerIT : MedMasterApplicationTests() {
@@ -30,7 +22,7 @@ class IngredientControllerIT : MedMasterApplicationTests() {
     protected lateinit var restTemplate: TestRestTemplate
 
     @Autowired
-    private lateinit var patientRepository: PatientRepository
+    private lateinit var ingredientRepository: IngredientRepository
 
     @Autowired
     private lateinit var medicamentRepository: MedicamentRepository
@@ -51,7 +43,7 @@ class IngredientControllerIT : MedMasterApplicationTests() {
         )
 
         // then
-        assertEquals(HttpStatus.CREATED, response.statusCode)
-        assertEquals(1, patientRepository.count())
+        assertEquals(HttpStatus.OK, response.statusCode)
+        assertEquals(1, ingredientRepository.count())
     }
 }

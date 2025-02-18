@@ -1,33 +1,53 @@
 package com.pada.medmaster.infrastructure.adapters.out.persistence.adapter.medicament
 
-import com.pada.medmaster.domain.exception.IngredientProhibitedInPatientCountryException
+import com.pada.medmaster.MedMasterApplication
+import com.pada.medmaster.infrastructure.adapters.out.persistence.adapter.patient.CreatePatientAdapter
+import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.medicament.MedicamentEntity
+import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.patient.Gender
+import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.patient.PatientEntity
 import com.pada.medmaster.infrastructure.adapters.out.persistence.repository.MedicamentRepository
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
+import org.junit.jupiter.api.extension.ExtendWith
+import org.mockito.InjectMocks
+import org.mockito.Mock
+import org.mockito.kotlin.whenever
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.test.context.junit.jupiter.SpringExtension
+import java.time.LocalDate
+import java.util.Optional
 
+@ExtendWith(SpringExtension::class)
+@SpringBootTest(classes = [MedMasterApplication::class])
 class GetMedicamentAdapterTest {
 
-    @Autowired
+    @Mock
     private lateinit var medicamentRepository: MedicamentRepository
-    private val getMedicamentAdapter = GetMedicamentAdapter(medicamentRepository)
+   @InjectMocks
+    private lateinit var getMedicamentAdapter: GetMedicamentAdapter
 
     @Test
-    fun should_returnMedicament_whenIfHasItEntityInDb(){
-
-        val result = getMedicamentAdapter.get(100L)
-    }
-
-    @Test
-    fun should_throwException_whenIfHasNoEntityInDb(){
+    fun shouldGetMedicamentMappedToDomain() {
+        val medicamentEntity = createMedicamentEntity()
+        whenever(medicamentRepository.findById(100L)).thenReturn(Optional.of(medicamentEntity)) // no when in Kotlin
 
         //when
-        val exception = assertThrows<RuntimeException> {
-            getMedicamentAdapter.get(999L)
-        }
+        val result = getMedicamentAdapter.get(100)
 
         //then
-        assertEquals("No pharmacy with medicament Medicament 1 found in voivodeship: OtherVoivodeship", exception.message)
+        assertEquals("Medicament100", result.name)   // refactor assertions
+    }
+
+
+    private fun createMedicamentEntity(): MedicamentEntity {
+        return MedicamentEntity().apply {
+            id = 100L
+            name = "Medicament100"
+            overdoseCounteractions = "OverdoseCounteractions100"
+            ingredientsIds = mutableListOf(100)
+        }
     }
 }

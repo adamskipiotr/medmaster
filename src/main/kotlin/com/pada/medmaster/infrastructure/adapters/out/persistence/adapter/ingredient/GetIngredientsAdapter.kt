@@ -6,7 +6,7 @@ import com.pada.medmaster.infrastructure.adapters.out.persistence.repository.Ing
 import org.springframework.stereotype.Component
 
 @Component
-class GetIngredientsAdapter(val ingredientRepository: IngredientRepository) : GetIngredientsPort {
+class GetIngredientsAdapter(private val ingredientRepository: IngredientRepository) : GetIngredientsPort {
 
     override fun get(ids: List<Long>): List<Ingredient> {
         val ingredients = ingredientRepository.findAllById(ids)
