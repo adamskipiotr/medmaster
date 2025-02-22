@@ -1,6 +1,7 @@
 package com.pada.medmaster.domain.model.medicament
 
-import com.pada.medmaster.domain.model.pharmacy.Pharmacy
+import com.pada.medmaster.domain.exception.IncompatibleMedicamentException
+import com.pada.medmaster.domain.exception.PharmacyNotFoundException
 
 // About bidirectional relationship:
 // look at Domain Driven Design of Eric Evans - Chapter 5 - avoiding bidirectional relationship if there is no such need
@@ -9,7 +10,7 @@ class Medicament(
     val name: String,
     var producer: String,
     var overdoseCounteractions: String,
-    var ingredients: MutableList<Ingredient> = mutableListOf(),  // Initialize to empty list
+    var ingredients: MutableList<Long> = mutableListOf(),  // Initialize to empty list
     var pharmacies: MutableList<Pharmacy> = mutableListOf(),
 ) {
 
@@ -18,7 +19,17 @@ class Medicament(
         require(overdoseCounteractions.isNotEmpty()) { "A medicament must have its overdose counteractions provided" }
     }
 
-    fun addIngredients(newIngredients: List<Ingredient>) {
-        this.ingredients.addAll(newIngredients)
+    fun validateSafeWithNewMedicament(newMedicamentIngredients: List<Long?>, newMedicamentName :String ) {
+        val hasIncompatibleCombination = newMedicamentIngredients.any { it in ingredients }
+
+        if (hasIncompatibleCombination) {
+            throw IncompatibleMedicamentException("${newMedicamentName} can't be used together with ${this.name} - incompatible Ingredients")
+        }
+    }
+
+    fun validateIsInVoivodeship(patientAddressVoivodeship: String?) {
+        pharmacies.mapNotNull { it.address }
+            .find { it.voivodeship == patientAddressVoivodeship }
+            ?: throw PharmacyNotFoundException("No pharmacy with medicament $name found in voivodeship: $patientAddressVoivodeship")
     }
 }

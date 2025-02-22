@@ -1,15 +1,18 @@
 package com.pada.medmaster.domain.service
 
-import com.pada.medmaster.application.dto.request.medicament.CreateIngredientRequest
+import com.pada.medmaster.application.dto.request.ingredient.CreateIngredientRequest
 import com.pada.medmaster.application.dto.request.medicament.CreateMedicamentRequest
+import com.pada.medmaster.application.dto.request.medicament.CreatePharmacyAddressRequest
 import com.pada.medmaster.application.dto.request.medicament.CreatePharmacyRequest
+import com.pada.medmaster.application.dto.request.patient.CreatePatientAddressRequest
 import com.pada.medmaster.application.dto.request.patient.CreatePatientRequest
 import com.pada.medmaster.application.dto.request.treatment.*
-import com.pada.medmaster.domain.model.medicament.Country
-import com.pada.medmaster.domain.model.medicament.Ingredient
+import com.pada.medmaster.domain.model.ingredient.Country
+import com.pada.medmaster.domain.model.ingredient.Ingredient
 import com.pada.medmaster.domain.model.medicament.Medicament
+import com.pada.medmaster.domain.model.medicament.Pharmacy
+import com.pada.medmaster.domain.model.medicament.PharmacyAddress
 import com.pada.medmaster.domain.model.patient.*
-import com.pada.medmaster.domain.model.pharmacy.Pharmacy
 
 // Extension functions for mapping each part
 fun CreateTreatmentRequest.toDomain(): Treatment {
@@ -48,8 +51,6 @@ fun CreateIntakeRequest.toDomain(): Intake {
         treatment = null,
         intakeLimit = intakeLimit,
     )
-    val intakeDates = this.intakeDates.map { it.toDomain() }
-    intake.addIntakeDates(intakeDates)
     return intake
 }
 
@@ -61,7 +62,6 @@ fun IntakeDateRequest.toDomain(): IntakeDate = IntakeDate(
 
 fun CreateMedicamentRequest.toDomain(): Medicament {
     val pharmacies = this.pharmacies.map { it.toDomain() }.toMutableList()
-    val ingredients = this.ingredientsIds.map { it.toDomain() }.toMutableList()
     val medicament = Medicament(
         id = null,
         name = name,
@@ -76,6 +76,13 @@ fun CreateMedicamentRequest.toDomain(): Medicament {
 fun CreatePharmacyRequest.toDomain(): Pharmacy {
     val pharmacy = Pharmacy(
         name = name,
+        address = address.toDomain()
+    )
+    return pharmacy
+}
+
+fun CreatePharmacyAddressRequest.toDomain(): PharmacyAddress {
+    val pharmacyAddress = PharmacyAddress(
         voivodeship = voivodeship,
         district = district,
         community = community,
@@ -85,13 +92,13 @@ fun CreatePharmacyRequest.toDomain(): Pharmacy {
         apartmentNumber = apartmentNumber,
         zipCode = zipCode
     )
-    return pharmacy
+    return pharmacyAddress
 }
 
 fun CreateIngredientRequest.toDomain(): Ingredient {
     val ingredient = Ingredient(
         name = name,
-        medicament = null,
+        medicament = null,  // This will be set later if necessary
         prohibitingCountries = mutableListOf()
     )
     val prohibitingCountries = prohibitingCountries?.map { it.toDomain() }.orEmpty()
@@ -111,8 +118,23 @@ fun CreatePatientRequest.toDomain(): Patient {
         birthDate = birthDate,
         specialHealthConditions = specialHealthConditions,
         gender = gender,
+        address = address.toDomain(),
         allergicIngredients = allergicIngredients
-
     )
     return patient
+}
+
+fun CreatePatientAddressRequest.toDomain(): PatientAddress {
+    val patientAddress = PatientAddress(
+        country = country,
+        voivodeship = voivodeship,
+        district = district,
+        community = community,
+        location = location,
+        street = street,
+        buildingNumber = buildingNumber,
+        apartmentNumber = apartmentNumber,
+        zipCode = zipCode
+    )
+    return patientAddress
 }

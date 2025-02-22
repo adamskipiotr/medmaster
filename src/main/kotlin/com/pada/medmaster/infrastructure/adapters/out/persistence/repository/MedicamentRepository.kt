@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface MedicamentRepository :
-    JpaRepository<MedicamentEntity, String> { //TODO should be replaced wih CoroutineCrudRepository?
+    JpaRepository<MedicamentEntity, Long> { //TODO should be replaced wih CoroutineCrudRepository?
 }

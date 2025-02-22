@@ -42,6 +42,10 @@ class PatientEntity {
     )
     var treatments: MutableList<TreatmentEntity> = mutableListOf()
 
+    @OneToOne(cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.LAZY)
+    @JoinColumn(name = "address_id", referencedColumnName = "id")
+    var address: PatientAddressEntity? = null
+
     @ElementCollection
     @CollectionTable(
         schema = "shared_schema",
@@ -59,7 +63,9 @@ class PatientEntity {
         specialHealthConditions = specialHealthConditions,
         gender = gender,
         allergicIngredients = allergicIngredients,
-        treatments = treatments.map { it.asDomain(this.asDomainWithoutTreatments()) }.toMutableList() // Pass the patient without treatments to avoid recursion
+        treatments = treatments.map { it.asDomain(this.asDomainWithoutTreatments()) }
+            .toMutableList(), // Pass the patient without treatments to avoid recursion
+        address = address?.asDomain()
     )
 
     // Helper method to create a Patient domain object without treatments (to avoid infinite recursion)
@@ -71,11 +77,25 @@ class PatientEntity {
         specialHealthConditions = specialHealthConditions,
         gender = gender,
         allergicIngredients = allergicIngredients,
-        treatments = mutableListOf() // No treatments here
+        treatments = mutableListOf(), // No treatments here
+        address = address?.asDomain()
     )
 
     fun addTreatment(treatment: TreatmentEntity) {
         treatments.add(treatment)
         treatment.patient = this
+    }
+
+    fun updateFromDomain(patient: Patient) {  // refactor - move to Extensions?
+        this.name = patient.name
+        this.lastName = patient.lastName
+        this.birthDate = patient.birthDate
+        this.gender = patient.gender
+        this.specialHealthConditions = patient.specialHealthConditions.toMutableList()
+        this.allergicIngredients = patient.allergicIngredients.toMutableList()
+
+        // Update treatments by replacing them completely
+
+        // Update or replace address
     }
 }

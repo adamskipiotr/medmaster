@@ -2,8 +2,10 @@ package com.pada.medmaster.infrastructure.adapters.`in`.rest
 
 import MedMasterApplicationTests
 import com.pada.medmaster.application.dto.request.medicament.CreateMedicamentRequest
+import com.pada.medmaster.application.dto.request.medicament.CreatePharmacyAddressRequest
 import com.pada.medmaster.application.dto.request.medicament.CreatePharmacyRequest
-import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.medicament.IngredientEntity
+import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.ingredient.IngredientEntity
+import com.pada.medmaster.infrastructure.adapters.out.persistence.repository.IngredientRepository
 import com.pada.medmaster.infrastructure.adapters.out.persistence.repository.MedicamentRepository
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
@@ -16,7 +18,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class MedicamentControllerIT : MedMasterApplicationTests(){
+class MedicamentControllerIT : MedMasterApplicationTests() {
 
     @Autowired
     protected lateinit var restTemplate: TestRestTemplate
@@ -32,10 +34,15 @@ class MedicamentControllerIT : MedMasterApplicationTests(){
     fun should_createMedicament_when_ingredientsAndOverdoseCounteractionsAreProvided() {
         // given
         ingredientRepository.save(IngredientEntity())
-        val createPharmacyRequest = CreatePharmacyRequest("Pharmacy Name", "Voivodeship", "District", "Community",
-            "Location", "Street", "123", "456", "12-345")
-        val createMedicamentRequest = CreateMedicamentRequest("Medicament Name","Producer Name", "Overdose counteractions",
-            mutableListOf(1), listOf(createPharmacyRequest))
+        val pharmacyAddressRequest = CreatePharmacyAddressRequest(
+            "Voivodeship", "District", "Community",
+            "Location", "Street", "123", "456", "12-345"
+        )
+        val createPharmacyRequest = CreatePharmacyRequest("Pharmacy Name", pharmacyAddressRequest)
+        val createMedicamentRequest = CreateMedicamentRequest(
+            "Medicament Name", "Producer Name", "Overdose counteractions",
+            mutableListOf(1), listOf(createPharmacyRequest)
+        )
 
         //when
         val response: ResponseEntity<Unit> = restTemplate.exchange(

@@ -46,7 +46,7 @@ class IntakeEntity {
     fun asDomain(mappedTreatment: Treatment): Intake {
         return Intake(
             id,
-            null, // after change from relation to ID - expected behaviour is to fetch Medicament for Intake based on medicamentId
+            medicamentId, // after change from relation to ID - expected behaviour is to fetch Medicament for Intake based on medicamentId
             form,
             dosage,
             intakeFrequency,

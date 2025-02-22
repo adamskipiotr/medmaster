@@ -17,6 +17,6 @@ class CreateMedicamentService(
     @Transactional
     override fun create(createMedicamentRequest: CreateMedicamentRequest) {
         val medicament = createMedicamentRequest.toDomain()
-        createMedicamentPort.createMedicament(medicament)
+        createMedicamentPort.create(medicament)
     }
 }

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component
 @Component
 class CreateMedicamentAdapter(val medicamentRepository: MedicamentRepository) : CreateMedicamentPort {
 
-    override fun createMedicament(medicament: Medicament) {
+    override fun create(medicament: Medicament) {
         val medicamentEntity = of(medicament)
         medicamentRepository.save(medicamentEntity)
     }

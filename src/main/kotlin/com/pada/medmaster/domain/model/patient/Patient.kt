@@ -14,16 +14,32 @@ class Patient(
     var specialHealthConditions: MutableList<SpecialHealthConditions> = mutableListOf(),
     var gender: Gender,
     var allergicIngredients: MutableList<Long> = mutableListOf(),
-    var treatments: MutableList<Treatment> = mutableListOf()
+    var treatments: MutableList<Treatment> = mutableListOf(),
+    var address: PatientAddress?
 ) {
 
-    fun addIntakeToTreatment(treatmentId : Long, intake: Intake){
-        val treatment = treatments.find { a -> a.id!! == treatmentId } ?: throw RuntimeException("Treatment with given Id not found")
-        treatment.addIntake(intake)
+    fun addIntakeToTreatment(treatmentId: Long, intake: Intake) {
+            val treatment = treatments.find { a -> a.id!! == treatmentId }
+                ?: throw RuntimeException("Treatment with given Id not found")
+            treatment.addIntake(intake)
     }
 
-    fun addTreatment(treatment: Treatment){
+    fun addTreatment(treatment: Treatment) {
         treatments.add(treatment)
         treatment.patient = this
+    }
+
+    fun getMedicamentsInTreatment(treatmentId: Long): List<Long?> {
+        val treatment = treatments.find { i -> i.id == treatmentId }
+            ?: throw RuntimeException("Treatment with given Id not found")
+        return  treatment.intakes.map { i -> i.medicamentId }
+    }
+
+    fun getVoivodeship() : String? {
+        return address?.voivodeship
+    }
+
+    fun getCountry() : String? {
+        return address?.country
     }
 }

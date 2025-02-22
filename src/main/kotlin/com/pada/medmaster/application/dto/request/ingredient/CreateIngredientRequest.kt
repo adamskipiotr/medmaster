@@ -1,4 +1,4 @@
-package com.pada.medmaster.application.dto.request.medicament
+package com.pada.medmaster.application.dto.request.ingredient
 
 import com.pada.medmaster.application.dto.request.treatment.CountryRequest
 

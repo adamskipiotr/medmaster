@@ -21,10 +21,7 @@ CREATE TABLE IF NOT EXISTS medicament_schema.medicament
 CREATE TABLE IF NOT EXISTS medicament_schema.ingredient
 (
     id  BIGINT NOT NULL PRIMARY KEY DEFAULT nextval('medicament_schema.ingredient_id_seq'),
-    name VARCHAR(255),
-    medicament_id BIGINT,  -- Foreign key for the medicament
-    ingredient__prohibiting_country BIGINT,
-    CONSTRAINT fk_medicament FOREIGN KEY (medicament_id) REFERENCES medicament_schema.medicament(id)
+    name VARCHAR(255)
 );
 
 CREATE TABLE medicament_schema.ingredient_incompatibilities (
@@ -44,9 +41,8 @@ CREATE TABLE IF NOT EXISTS medicament_schema.ingredient__prohibiting_country
 );
 
 
-
-CREATE TABLE IF NOT EXISTS medicament_schema.medicament__ingredients
+CREATE TABLE IF NOT EXISTS shared_schema.medicament__ingredients
 (
     medicament_id BIGINT,
-    ingredient_id BIGINT
+    ingredients_ids BIGINT
 );

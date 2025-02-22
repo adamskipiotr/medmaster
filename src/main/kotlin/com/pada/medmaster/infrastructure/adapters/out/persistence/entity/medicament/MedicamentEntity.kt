@@ -21,14 +21,14 @@ class MedicamentEntity(                 // TODO: why class should be open for Hi
     var producer: String = "",
     var overdoseCounteractions: String = "",
 
-    @ManyToMany(cascade = [CascadeType.PERSIST, CascadeType.MERGE], fetch = FetchType.LAZY)
-    @JoinTable(
-        schema = "medicament_schema",
+    @ElementCollection
+    @CollectionTable(
+        schema = "shared_schema",
         name = "medicament__ingredients",
-        joinColumns = [JoinColumn(name = "medicament_id")],
-        inverseJoinColumns = [JoinColumn(name = "ingredient_id")]
+        joinColumns = [JoinColumn(name = "medicament_id")]
     )
-    var ingredients: MutableList<IngredientEntity> = mutableListOf(),
+    @Column(name = "ingredients_ids")
+    var ingredientsIds: MutableList<Long> = mutableListOf(),
 
     @ManyToMany(cascade = [CascadeType.PERSIST, CascadeType.MERGE], fetch = FetchType.LAZY)
     @JoinTable(
@@ -44,7 +44,9 @@ class MedicamentEntity(                 // TODO: why class should be open for Hi
             id,
             name,
             producer,
-            overdoseCounteractions
+            overdoseCounteractions,
+            ingredientsIds,
+            pharmacies.map { it.asDomain() }.toMutableList()
         )
     }
 }
