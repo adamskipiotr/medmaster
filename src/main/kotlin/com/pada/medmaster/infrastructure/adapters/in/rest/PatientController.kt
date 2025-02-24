@@ -139,7 +139,4 @@ class PatientController(
             throw ResponseStatusException(HttpStatus.BAD_REQUEST, ex.localizedMessage, ex)
         }
     }
-
-
-
 }

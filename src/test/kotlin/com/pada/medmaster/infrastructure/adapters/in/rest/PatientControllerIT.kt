@@ -4,6 +4,7 @@ import MedMasterApplicationTests
 import com.pada.medmaster.application.dto.request.patient.CreatePatientAddressRequest
 import com.pada.medmaster.application.dto.request.patient.CreatePatientRequest
 import com.pada.medmaster.application.dto.request.treatment.CreateIntakeRequest
+import com.pada.medmaster.application.dto.request.treatment.CreateMedicalProcedureRequest
 import com.pada.medmaster.application.dto.request.treatment.CreateTreatmentRequest
 import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.patient.Gender
 import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.patient.IntakeForm
@@ -24,7 +25,10 @@ import java.time.LocalDateTime
 import java.time.Month
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@Sql(scripts = ["/patients.sql", "/treatments.sql", "/medicaments.sql", "/ingredients.sql"], executionPhase = Sql.ExecutionPhase.BEFORE_TEST_CLASS)
+@Sql(
+    scripts = ["/patients.sql", "/treatments.sql", "/medicaments.sql", "/ingredients.sql"],
+    executionPhase = Sql.ExecutionPhase.BEFORE_TEST_CLASS
+)
 class PatientControllerIT : MedMasterApplicationTests() {
 
     @Autowired
@@ -105,5 +109,28 @@ class PatientControllerIT : MedMasterApplicationTests() {
         val patientEntity = patientRepository.findById(100)
         assertEquals(HttpStatus.CREATED, response.statusCode)
         assertEquals(1, patientEntity.treatments.size)
+    }
+
+    @Test
+    fun should_addMedicalProcedureToPatientsTreatment_when_newMedicalProcedureDataProvided() {
+        // given
+        val createMedicalProcedureRequest = CreateMedicalProcedureRequest(
+            "Medical Procedure", "Description",
+            LocalDateTime.of(2025, Month.FEBRUARY, 10, 12, 30),
+            LocalDateTime.of(2025, Month.FEBRUARY, 15, 12, 30)
+        )
+
+        //when
+        val response: ResponseEntity<Unit> = restTemplate.exchange(
+            "/patients/100/treatments/100/medical-procedures",
+            HttpMethod.POST,
+            HttpEntity(createMedicalProcedureRequest),
+            Unit::class.java
+        )
+
+        // then
+        val patientEntity = patientRepository.findById(100)
+        assertEquals(HttpStatus.CREATED, response.statusCode)
+        assertEquals(1, patientEntity.treatments[0].medicalProcedures.size)
     }
 }
