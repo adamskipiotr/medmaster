@@ -32,8 +32,9 @@ class Treatment(
                 throw MedicalProcedureScheduledOnExpectedRecoveryTimeException("Medical procedure can't be scheduled on $procedureDate: Other medical procedure is scheduled during the recovery time of the new medical procedure")
 
             medicalProcedures.any {
-                val existingDate = it.procedureDate.toLocalDate()
-                procedureDate.isAfter(existingDate) && procedureDate.isBefore(existingDate)
+                val existingProcedureDate = it.procedureDate.toLocalDate()
+                val existingRecoveryDate = it.minimalRecoveryDate.toLocalDate()
+                procedureDate.isAfter(existingProcedureDate) && procedureDate.isBefore(existingRecoveryDate)
             } ->
                 throw MedicalProcedureScheduledOnRecoveryTimeException("Medical procedure can't be scheduled on $procedureDate: Patient will be in recovery after a previously scheduled procedure")
         }

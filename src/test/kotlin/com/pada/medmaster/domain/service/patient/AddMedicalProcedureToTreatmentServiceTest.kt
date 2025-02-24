@@ -1,16 +1,16 @@
 package com.pada.medmaster.domain.service.patient
 
-import com.pada.medmaster.application.dto.request.treatment.CreateIntakeRequest
-import com.pada.medmaster.domain.exception.IncompatibleMedicamentException
-import com.pada.medmaster.domain.exception.IngredientProhibitedInPatientCountryException
-import com.pada.medmaster.domain.exception.PharmacyNotFoundException
-import com.pada.medmaster.domain.service.medicament.ValidateNewIntakeMedicamentService
-import com.pada.medmaster.domain.service.patient.stubs.*
-import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.patient.IntakeForm
-import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.patient.IntakeFrequency
+import com.pada.medmaster.application.dto.request.treatment.CreateMedicalProcedureRequest
+import com.pada.medmaster.domain.exception.MedicalProcedureScheduledOnExpectedRecoveryTimeException
+import com.pada.medmaster.domain.exception.MedicalProcedureScheduledOnRecoveryTimeException
+import com.pada.medmaster.domain.exception.MedicalProcedureScheduledOnTheSameDayException
+import com.pada.medmaster.domain.service.patient.stubs.GetPatientPortStub
+import com.pada.medmaster.domain.service.patient.stubs.UpdatePatientPortStub
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
+import java.time.LocalDateTime
+import java.time.Month
 
 class AddMedicalProcedureToTreatmentServiceTest {
 
@@ -19,64 +19,87 @@ class AddMedicalProcedureToTreatmentServiceTest {
     private val sut = AddMedicalProcedureToTreatmentService(getPatientPort, updatePatientPort)
 
     @Test
-    fun shouldAddIntakeToTreatmentWhenValidationPasses() {
+    fun shouldAddMedicalProcedureToTreatmentWhenValidationPasses() {
         //given
         val testPatient = getPatientPort.get(1L)
-        val createIntakeRequest = createIntakeRequest()
+        val createMedicalProcedureRequest =
+            createMedicalProcedureRequest(
+                LocalDateTime.of(2026, Month.JANUARY, 10, 11, 45),
+                LocalDateTime.of(2026, Month.FEBRUARY, 10, 11, 45)
+            )
 
         //when
-        sut.add(patientId = 1L, treatmentId = 1L, createIntakeRequest)
+        sut.add(patientId = 1L, treatmentId = 1L, createMedicalProcedureRequest)
 
         //then
-        assertEquals(2, testPatient.treatments[0].intakes.size)
+        assertEquals(3, testPatient.treatments[0].medicalProcedures.size)
     }
 
     @Test
-    fun shouldThrowPharmacyNotFoundExceptionWhenNewIntakeHasMedicamentNotAvailableInPatientsVoivodeship() {
+    fun shouldThrowMedicalProcedureScheduledOnTheSameDayExceptionWhenPatientHasOtherMedicalProcedureScheduledOnThisDay() {
         //given
-        val createIntakeRequest = createIntakeRequest()
+        val createMedicalProcedureRequest =
+            createMedicalProcedureRequest(
+                LocalDateTime.of(2025, Month.APRIL, 10, 11, 45),
+                LocalDateTime.of(2025, Month.APRIL, 11, 11, 45)
+            )
 
         //when
-        val exception = assertThrows<PharmacyNotFoundException> {
-            sut.add(patientId = 2L, treatmentId = 2L, createIntakeRequest)
+        val exception = assertThrows<MedicalProcedureScheduledOnTheSameDayException> {
+            sut.add(patientId = 2L, treatmentId = 2L, createMedicalProcedureRequest)
         }
 
         //then
-        assertEquals("No pharmacy with medicament Medicament 1 found in voivodeship: OtherVoivodeship", exception.message)
+        assertEquals(
+            "Medical procedure can't be scheduled on 2025-04-10: Other medical procedure is already scheduled for the date",
+            exception.message
+        )
     }
 
     @Test
-    fun shouldThrowIngredientProhibitedInPatientCountryExceptionWhenNewIntakeHasMedicamentWithIngredientNotAllowedInPatientsCountry() {
+    fun shouldThrowMedicalProcedureScheduledOnExpectedRecoveryTimeExceptionWhenPatientHasOtherMedicalProcedureScheduledInRecoverTime() {
         //given
-        val createIntakeRequest = createIntakeRequest(2L)
+        val createMedicalProcedureRequest =
+            createMedicalProcedureRequest(
+                LocalDateTime.of(2025, Month.MARCH, 10, 11, 45),
+                LocalDateTime.of(2025, Month.APRIL, 2, 11, 45)
+            )
 
         //when
-        val exception = assertThrows<IngredientProhibitedInPatientCountryException> {
-            sut.add(patientId = 1L, treatmentId = 1L, createIntakeRequest)
+        val exception = assertThrows<MedicalProcedureScheduledOnExpectedRecoveryTimeException> {
+            sut.add(patientId = 1L, treatmentId = 1L, createMedicalProcedureRequest)
         }
 
         //then
-        assertEquals("Ingredient Second Name is prohibited in Country", exception.message)
+        assertEquals(
+            "Medical procedure can't be scheduled on 2025-03-10: Other medical procedure is scheduled during the recovery time of the new medical procedure",
+            exception.message
+        )
     }
 
     @Test
-    fun shouldThrowIncompatibleMedicamentExceptionWhenNewIntakeHasMedicamentNotAllowedToMixWithMedicamentInUse() {
+    fun shouldThrowMedicalProcedureScheduledOnRecoveryTimeExceptionWhenNewProcedureScheduledOnRecoveryTime() {
         //given
-        val createIntakeRequest = createIntakeRequest(4L)
+        val createMedicalProcedureRequest =
+            createMedicalProcedureRequest(
+                LocalDateTime.of(2025, Month.APRIL, 12, 11, 45),
+                LocalDateTime.of(2025, Month.APRIL, 13, 11, 45)
+            )
 
         //when
-        val exception = assertThrows<IncompatibleMedicamentException> {
-            sut.add(patientId = 1L, treatmentId = 1L, createIntakeRequest)
+        val exception = assertThrows<MedicalProcedureScheduledOnRecoveryTimeException> {
+            sut.add(patientId = 1L, treatmentId = 1L, createMedicalProcedureRequest)
         }
 
         //then
-        assertEquals("Medicament 4 can't be used together with Medicament 3 - incompatible Ingredients", exception.message)
+        assertEquals(
+            "Medical procedure can't be scheduled on 2025-04-12: Patient will be in recovery after a previously scheduled procedure",
+            exception.message
+        )
     }
 
-    private fun createIntakeRequest(medicamentId: Long = 1L) = CreateIntakeRequest(
-        medicamentId, IntakeForm.PILLS, 5,
-        IntakeFrequency.ONCE_A_DAY, emptyList(), 6
-    )
-
-
+    private fun createMedicalProcedureRequest(procedureDate: LocalDateTime, recoveryDate: LocalDateTime) =
+        CreateMedicalProcedureRequest(
+            "Medical Procedure Name", "Description", procedureDate, recoveryDate
+        )
 }

@@ -47,7 +47,10 @@ class AddIntakeToTreatmentServiceTest {
         }
 
         //then
-        assertEquals("No pharmacy with medicament Medicament 1 found in voivodeship: OtherVoivodeship", exception.message)
+        assertEquals(
+            "No pharmacy with medicament Medicament 1 found in voivodeship: OtherVoivodeship",
+            exception.message
+        )
     }
 
     @Test
@@ -75,7 +78,10 @@ class AddIntakeToTreatmentServiceTest {
         }
 
         //then
-        assertEquals("Medicament 4 can't be used together with Medicament 3 - incompatible Ingredients", exception.message)
+        assertEquals(
+            "Medicament 4 can't be used together with Medicament 3 - incompatible Ingredients",
+            exception.message
+        )
     }
 
     private fun createIntakeRequest(medicamentId: Long = 1L) = CreateIntakeRequest(
