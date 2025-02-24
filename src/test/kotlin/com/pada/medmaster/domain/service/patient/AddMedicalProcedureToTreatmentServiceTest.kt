@@ -12,16 +12,11 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
-class AddIntakeToTreatmentServiceTest {
+class AddMedicalProcedureToTreatmentServiceTest {
 
     private val getPatientPort = GetPatientPortStub()
     private val updatePatientPort = UpdatePatientPortStub()
-    private val getMedicamentPort = GetMedicamentPortStub()
-    private val getMultipleMedicamentByIdPort = GetMultipleMedicamentPortStub()
-    private val getIngredientsPort = GetIngredientPortStub()
-    private val validateNewIntakeForPatient =
-        ValidateNewIntakeMedicamentService(getMedicamentPort, getMultipleMedicamentByIdPort, getIngredientsPort)
-    private val sut = AddIntakeToTreatmentService(getPatientPort, updatePatientPort, validateNewIntakeForPatient)
+    private val sut = AddMedicalProcedureToTreatmentService(getPatientPort, updatePatientPort)
 
     @Test
     fun shouldAddIntakeToTreatmentWhenValidationPasses() {
@@ -30,7 +25,7 @@ class AddIntakeToTreatmentServiceTest {
         val createIntakeRequest = createIntakeRequest()
 
         //when
-        sut.addIntake(patientId = 1L, treatmentId = 1L, createIntakeRequest)
+        sut.add(patientId = 1L, treatmentId = 1L, createIntakeRequest)
 
         //then
         assertEquals(2, testPatient.treatments[0].intakes.size)
@@ -43,7 +38,7 @@ class AddIntakeToTreatmentServiceTest {
 
         //when
         val exception = assertThrows<PharmacyNotFoundException> {
-            sut.addIntake(patientId = 2L, treatmentId = 2L, createIntakeRequest)
+            sut.add(patientId = 2L, treatmentId = 2L, createIntakeRequest)
         }
 
         //then
@@ -57,7 +52,7 @@ class AddIntakeToTreatmentServiceTest {
 
         //when
         val exception = assertThrows<IngredientProhibitedInPatientCountryException> {
-            sut.addIntake(patientId = 1L, treatmentId = 1L, createIntakeRequest)
+            sut.add(patientId = 1L, treatmentId = 1L, createIntakeRequest)
         }
 
         //then
@@ -71,7 +66,7 @@ class AddIntakeToTreatmentServiceTest {
 
         //when
         val exception = assertThrows<IncompatibleMedicamentException> {
-            sut.addIntake(patientId = 1L, treatmentId = 1L, createIntakeRequest)
+            sut.add(patientId = 1L, treatmentId = 1L, createIntakeRequest)
         }
 
         //then
@@ -82,4 +77,6 @@ class AddIntakeToTreatmentServiceTest {
         medicamentId, IntakeForm.PILLS, 5,
         IntakeFrequency.ONCE_A_DAY, emptyList(), 6
     )
+
+
 }

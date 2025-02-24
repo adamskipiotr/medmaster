@@ -24,6 +24,13 @@ class Patient(
             treatment.addIntake(intake)
     }
 
+    fun addMedicalProcedureToTreatment(treatmentId: Long, medicalProcedure: MedicalProcedure) {
+        val treatment = treatments.find { a -> a.id!! == treatmentId }
+            ?: throw RuntimeException("Treatment with given Id not found")
+
+        treatment.addMedicalProcedure(medicalProcedure)
+    }
+
     fun addTreatment(treatment: Treatment) {
         treatments.add(treatment)
         treatment.patient = this
