@@ -133,4 +133,28 @@ class PatientControllerIT : MedMasterApplicationTests() {
         assertEquals(HttpStatus.CREATED, response.statusCode)
         assertEquals(1, patientEntity.treatments[0].medicalProcedures.size)
     }
+
+    @Test
+    fun should_returnBadRequestResponse_when_newMedicalProcedureHasInvalidRecoveryDate() {
+        // given
+        val createMedicalProcedureRequest = CreateMedicalProcedureRequest(
+            "Medical Procedure", "Description",
+            LocalDateTime.of(2025, Month.FEBRUARY, 10, 12, 30),
+            LocalDateTime.of(2024, Month.FEBRUARY, 15, 12, 30)
+        )
+
+        //when
+        val response: ResponseEntity<ApiError> = restTemplate.exchange(
+            "/patients/100/treatments/100/medical-procedures",
+            HttpMethod.POST,
+            HttpEntity(createMedicalProcedureRequest),
+            ApiError::class.java
+        )
+
+        // then
+        val patientEntity = patientRepository.findById(100)
+        assertEquals(HttpStatus.BAD_REQUEST, response.statusCode)
+        assertEquals("Minimal recovery date must be after procedure date", response.body!!.message)
+        assertEquals(0, patientEntity.treatments[0].medicalProcedures.size)
+    }
 }

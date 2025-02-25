@@ -89,4 +89,18 @@ class BusinessExceptionHandler {
         )
         return ResponseEntity(error, HttpStatus.BAD_REQUEST)
     }
+
+
+    @ExceptionHandler(IllegalArgumentException::class)
+    fun handleIllegalArgumentException(
+        exception: IllegalArgumentException,
+        request: WebRequest
+    ) : ResponseEntity<ApiError> {
+        val error = ApiError(
+            status = HttpStatus.BAD_REQUEST,
+            message = exception.message ?: "Invalid input data - illegal argument value",
+            path = (request as ServletWebRequest).request.requestURI
+        )
+        return ResponseEntity(error, HttpStatus.BAD_REQUEST)
+    }
 }

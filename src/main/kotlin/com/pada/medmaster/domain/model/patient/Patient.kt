@@ -19,14 +19,12 @@ class Patient(
 ) {
 
     fun addIntakeToTreatment(treatmentId: Long, intake: Intake) {
-            val treatment = treatments.find { a -> a.id!! == treatmentId }
-                ?: throw RuntimeException("Treatment with given Id not found")
-            treatment.addIntake(intake)
+        val treatment = getTreatment(treatmentId)
+        treatment.addIntake(intake)
     }
 
     fun addMedicalProcedureToTreatment(treatmentId: Long, medicalProcedure: MedicalProcedure) {
-        val treatment = treatments.find { a -> a.id!! == treatmentId }
-            ?: throw RuntimeException("Treatment with given Id not found")
+        val treatment = getTreatment(treatmentId)
 
         treatment.addMedicalProcedure(medicalProcedure)
     }
@@ -37,16 +35,18 @@ class Patient(
     }
 
     fun getMedicamentsInTreatment(treatmentId: Long): List<Long?> {
-        val treatment = treatments.find { i -> i.id == treatmentId }
-            ?: throw RuntimeException("Treatment with given Id not found")
-        return  treatment.intakes.map { i -> i.medicamentId }
+        val treatment = getTreatment(treatmentId)
+        return treatment.intakes.map { intake -> intake.medicamentId }
     }
 
-    fun getVoivodeship() : String? {
+    fun getVoivodeship(): String? {
         return address?.voivodeship
     }
 
-    fun getCountry() : String? {
+    fun getCountry(): String? {
         return address?.country
     }
+
+    private fun getTreatment(treatmentId: Long) = (treatments.find { treatment -> treatment.id!! == treatmentId }
+        ?: throw RuntimeException("Treatment with given Id not found"))
 }
