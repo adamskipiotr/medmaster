@@ -15,6 +15,14 @@ import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.patient
 
 // Extension functions for mapping each part
 
+fun of(medicalProcedure: MedicalProcedure, treatmentEntity: TreatmentEntity) = MedicalProcedureEntity().apply {
+    name = medicalProcedure.name
+    description = medicalProcedure.description
+    procedureDate = medicalProcedure.procedureDate
+    minimalRecoveryDate = medicalProcedure.minimalRecoveryDate
+    this.treatment = treatmentEntity
+}
+
 fun of(medicalProcedure: MedicalProcedure) = MedicalProcedureEntity().apply {
     name = medicalProcedure.name
     description = medicalProcedure.description
@@ -98,7 +106,7 @@ fun of(treatment: Treatment, patientEntity: PatientEntity) = TreatmentEntity().a
     code = treatment.code
     beginDate = treatment.beginDate
     endDate = treatment.endDate
-    medicalProcedures.addAll(treatment.medicalProcedures.map { p -> of(p) })
+    medicalProcedures.addAll(treatment.medicalProcedures.map { p -> of(p, this) })
     intakes.addAll(treatment.intakes.map { i -> of(i, this) })
     this.patient = patientEntity // Set the PatientEntity
 }

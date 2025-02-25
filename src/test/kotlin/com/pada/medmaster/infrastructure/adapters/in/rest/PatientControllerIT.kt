@@ -87,7 +87,7 @@ class PatientControllerIT : MedMasterApplicationTests() {
         // then
         val patientEntity = patientRepository.findById(100)
         assertEquals(HttpStatus.CREATED, response.statusCode)
-        assertEquals(1, patientEntity.treatments.size)
+        assertEquals(2, patientEntity.treatments.size)
     }
 
     @Test
