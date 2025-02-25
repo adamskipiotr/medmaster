@@ -1,6 +1,7 @@
 package com.pada.medmaster.domain.model.patient
 
 import java.time.LocalDateTime
+import java.time.Clock
 
 class MedicalProcedure(
     val id: Long? = null,
@@ -8,11 +9,12 @@ class MedicalProcedure(
     val description: String,
     val procedureDate: LocalDateTime,
     val minimalRecoveryDate: LocalDateTime,
-    val treatment: Treatment?
+    val treatment: Treatment?,
+    clock: Clock = Clock.systemDefaultZone()
 ) {
     init {
-        require(procedureDate.isAfter(LocalDateTime.now())) { "Medical Procedure must be scheduled for a future" } // refactor now()
+        val now = LocalDateTime.now(clock)
+        require(procedureDate.isAfter(now)) { "Medical Procedure must be scheduled for a future" } // refactor now()
         require(minimalRecoveryDate.isAfter(procedureDate)) { "Minimal recovery date must be after procedure date" }
     }
-
 }
