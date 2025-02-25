@@ -11,6 +11,7 @@ class MedicalProcedure(
     val treatment: Treatment?
 ) {
     init {
+        require(procedureDate.isAfter(LocalDateTime.now())) { "Medical Procedure must be scheduled for a future" } // refactor now()
         require(minimalRecoveryDate.isAfter(procedureDate)) { "Minimal recovery date must be after procedure date" }
     }
 
