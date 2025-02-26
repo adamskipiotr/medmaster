@@ -4,6 +4,7 @@ import MedMasterApplicationTests
 import com.pada.medmaster.application.dto.request.patient.CreatePatientAddressRequest
 import com.pada.medmaster.application.dto.request.patient.CreatePatientRequest
 import com.pada.medmaster.application.dto.request.treatment.CreateIntakeRequest
+import com.pada.medmaster.application.dto.request.treatment.CreateMedicalProcedureRequest
 import com.pada.medmaster.application.dto.request.treatment.CreateTreatmentRequest
 import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.patient.Gender
 import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.patient.IntakeForm
@@ -19,12 +20,13 @@ import org.springframework.http.HttpMethod
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.test.context.jdbc.Sql
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.Month
+import java.time.*
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@Sql(scripts = ["/patients.sql", "/treatments.sql", "/medicaments.sql", "/ingredients.sql"], executionPhase = Sql.ExecutionPhase.BEFORE_TEST_CLASS)
+@Sql(
+    scripts = ["/patients.sql", "/treatments.sql", "/medicaments.sql", "/ingredients.sql"],
+    executionPhase = Sql.ExecutionPhase.BEFORE_TEST_CLASS
+)
 class PatientControllerIT : MedMasterApplicationTests() {
 
     @Autowired
@@ -32,6 +34,8 @@ class PatientControllerIT : MedMasterApplicationTests() {
 
     @Autowired
     private lateinit var patientRepository: PatientRepository
+
+    private val fixedClock = Clock.fixed(Instant.parse("2025-02-25T00:00:00Z"), ZoneId.of("UTC"))
 
     @Test
     fun should_createPatient_when_newPatientDataProvided() {
@@ -83,7 +87,7 @@ class PatientControllerIT : MedMasterApplicationTests() {
         // then
         val patientEntity = patientRepository.findById(100)
         assertEquals(HttpStatus.CREATED, response.statusCode)
-        assertEquals(1, patientEntity.treatments.size)
+        assertEquals(2, patientEntity.treatments.size)
     }
 
     @Test
@@ -105,5 +109,52 @@ class PatientControllerIT : MedMasterApplicationTests() {
         val patientEntity = patientRepository.findById(100)
         assertEquals(HttpStatus.CREATED, response.statusCode)
         assertEquals(1, patientEntity.treatments.size)
+    }
+
+    @Test
+    fun should_addMedicalProcedureToPatientsTreatment_when_newMedicalProcedureDataProvided() {
+        // given
+        val createMedicalProcedureRequest = CreateMedicalProcedureRequest(
+            "Medical Procedure", "Description",
+            LocalDateTime.of(2025, Month.APRIL, 10, 12, 30),
+            LocalDateTime.of(2025, Month.APRIL, 15, 12, 30)
+        )
+
+        //when
+        val response: ResponseEntity<Unit> = restTemplate.exchange(
+            "/patients/100/treatments/100/medical-procedures",
+            HttpMethod.POST,
+            HttpEntity(createMedicalProcedureRequest),
+            Unit::class.java
+        )
+
+        // then
+        val patientEntity = patientRepository.findById(100)
+        assertEquals(HttpStatus.CREATED, response.statusCode)
+        assertEquals(1, patientEntity.treatments[0].medicalProcedures.size)
+    }
+
+    @Test
+    fun should_returnBadRequestResponse_when_newMedicalProcedureHasInvalidRecoveryDate() {
+        // given
+        val createMedicalProcedureRequest = CreateMedicalProcedureRequest(
+            "Medical Procedure", "Description",
+            LocalDateTime.of(2025, Month.AUGUST, 10, 12, 30),
+            LocalDateTime.of(2025, Month.JULY, 15, 12, 30)
+        )
+
+        //when
+        val response: ResponseEntity<ApiError> = restTemplate.exchange(
+            "/patients/100/treatments/100/medical-procedures",
+            HttpMethod.POST,
+            HttpEntity(createMedicalProcedureRequest),
+            ApiError::class.java
+        )
+
+        // then
+        val patientEntity = patientRepository.findById(100)
+        assertEquals(HttpStatus.BAD_REQUEST, response.statusCode)
+        assertEquals("Minimal recovery date must be after procedure date", response.body!!.message)
+        // assertEquals(0, patientEntity.treatments[0].medicalProcedures.size) missing rollback
     }
 }

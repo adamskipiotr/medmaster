@@ -3,6 +3,7 @@ package com.pada.medmaster.infrastructure.adapters.out.persistence.entity.patien
 import com.pada.medmaster.domain.model.patient.Patient
 import jakarta.persistence.*
 import java.time.LocalDate
+import com.pada.medmaster.infrastructure.adapters.out.persistence.adapter.of
 
 // Aggregate Root: Patient
 // Relations with other Aggregates - by Id, no Reference (both entities and domain): https://medium.com/@aforank/domain-driven-design-aggregates-in-practice-bcced7d21ae5
@@ -94,7 +95,13 @@ class PatientEntity {
         this.specialHealthConditions = patient.specialHealthConditions.toMutableList()
         this.allergicIngredients = patient.allergicIngredients.toMutableList()
 
-        // Update treatments by replacing them completely
+        this.treatments.clear()
+        this.treatments.addAll(patient.treatments.map { of(it, this) })
+
+        this.address = patient.address?.let { of(it) }
+
+        // TODO HERE Update treatments by replacing them completely
+
 
         // Update or replace address
     }
