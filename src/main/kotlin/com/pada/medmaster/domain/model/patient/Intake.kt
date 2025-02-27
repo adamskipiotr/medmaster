@@ -1,5 +1,6 @@
 package com.pada.medmaster.domain.model.patient
 
+import com.pada.medmaster.application.dto.request.treatment.ReportIntakeRequest
 import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.patient.IntakeForm
 import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.patient.IntakeFrequency
 
@@ -15,5 +16,9 @@ class Intake(
 ) {
     fun addIntakeDates(intakeDates: List<IntakeDate>) {
         this.intakeDates.addAll(intakeDates)
+    }
+
+    fun reportIntake(reportIntakeRequest: ReportIntakeRequest) {
+        
     }
 }

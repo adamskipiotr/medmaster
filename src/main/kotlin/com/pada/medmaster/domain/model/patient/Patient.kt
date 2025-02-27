@@ -1,5 +1,6 @@
 package com.pada.medmaster.domain.model.patient
 
+import com.pada.medmaster.application.dto.request.treatment.ReportIntakeRequest
 import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.patient.Gender
 import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.patient.SpecialHealthConditions
 import java.time.LocalDate
@@ -49,4 +50,9 @@ class Patient(
 
     private fun getTreatment(treatmentId: Long) = (treatments.find { treatment -> treatment.id!! == treatmentId }
         ?: throw RuntimeException("Treatment with given Id not found"))
+
+    fun reportIntake(treatmentId: Long, intakeId: Long, reportIntakeRequest: ReportIntakeRequest) {
+        val treatment = getTreatment(treatmentId)
+        treatment.reportIntake(intakeId, reportIntakeRequest)
+    }
 }
