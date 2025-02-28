@@ -4,13 +4,13 @@ import com.pada.medmaster.application.dto.request.treatment.ReportIntakeRequest
 import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.patient.IntakeForm
 import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.patient.IntakeFrequency
 import java.time.Duration
-import java.time.LocalDateTime
+
 
 class Intake(
         val id: Long? = null,
-        val medicamentId: Long?, // todo - call to Medicament Aggregate Root by Id or Reference here?
-        val form: IntakeForm, // move to medicament
-        val dosage: Int, // change do String, provided by Medicament
+        val medicamentId: Long?,
+        val form: IntakeForm,
+        val dosage: Int,
         val intakeFrequency: IntakeFrequency?,
         val intakeDates: MutableList<IntakeDate> = mutableListOf(),  // Initialize the list
         val intakeLimit: Int,
@@ -24,7 +24,6 @@ class Intake(
         val intakeDate = IntakeDate(null, reportIntakeRequest.date, this)
         controlDosage(reportIntakeRequest);
         intakeDates.add(intakeDate)
-
     }
 
     private fun controlDosage(reportIntakeRequest: ReportIntakeRequest) {
@@ -34,38 +33,17 @@ class Intake(
 
         when (intakeFrequency) {
             IntakeFrequency.HOURLY -> {
-                if (gapBetweenLastIntake.toMinutes() > 70) {
-                    throw RuntimeException("Hourly intake missed")
-                }
-                else if (gapBetweenLastIntake.toHours() < 50) {
-                    throw RuntimeException("Hourly intake too early")
-                }
+                validateIntakeInTimeGap(IntakeControlCommand(70,50,"Twice a day", gapBetweenLastIntake.toMinutes()))
             }
-
             IntakeFrequency.TWICE_A_DAY -> {
-                if (gapBetweenLastIntake.toHours() > 13) {
-                    throw RuntimeException("Twice a day intake missed")
-                }
-                else if (gapBetweenLastIntake.toHours() < 11) {
-                    throw RuntimeException("Twice a day intake too early")
-                }
+                validateIntakeInTimeGap(IntakeControlCommand(13,11,"Twice a day", gapBetweenLastIntake.toHours()))
             }
-
             IntakeFrequency.THREE_TIMES_A_DAY -> {
-                if (gapBetweenLastIntake.toHours() > 7) {
-                    throw RuntimeException("Three times a day intake missed")
-                }
-                else if (gapBetweenLastIntake.toHours() < 5) {
-                    throw RuntimeException("Three times a day intake too early")
-                }
+                validateIntakeInTimeGap(IntakeControlCommand(7,5,"Three times a day", gapBetweenLastIntake.toHours()))
             }
-
             IntakeFrequency.ONCE_A_DAY -> {
-                if (gapBetweenLastIntake.toDays() > 1) {
-                    throw RuntimeException("Daily intake missed")
-                }
+                validateIntakeInTimeGap(IntakeControlCommand(1,1,"Daily", gapBetweenLastIntake.toDays()))
             }
-
             else -> return
         }
 
@@ -73,4 +51,18 @@ class Intake(
             throw RuntimeException("Single intake limit exceeded")
         }
     }
+    private fun validateIntakeInTimeGap(intakeControlCommand: IntakeControlCommand){
+        if (intakeControlCommand.gapBetweenLastIntake > intakeControlCommand.maxGap) {
+            throw RuntimeException("${intakeControlCommand.intakePeriodDescription} intake missed")
+        }
+        else if (intakeControlCommand.gapBetweenLastIntake < intakeControlCommand.minGap) {
+            throw RuntimeException("${intakeControlCommand.intakePeriodDescription} intake too early")
+        }
+    }
+    private data class IntakeControlCommand(
+            val maxGap: Int,
+            val minGap: Int,
+            val intakePeriodDescription: String,
+            val gapBetweenLastIntake: Long
+    )
 }
