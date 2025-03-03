@@ -66,7 +66,14 @@ class GetPatientPortStub() : GetPatientPort {
     )
 
     private fun createStubIntake() = Intake(
-        1L, 3L, IntakeForm.SHOT, 3, IntakeFrequency.ONCE_A_DAY, mutableListOf(), 4, null
+        1L,
+        3L,
+        IntakeForm.SHOT,
+        3,
+        IntakeFrequency.ONCE_A_DAY,
+        mutableListOf(IntakeDate(1L, LocalDateTime.of(2025, Month.MARCH, 1, 10, 0, 0), null)),
+        4,
+        null
     )
 
     private fun createStubMedicalProcedure(id: Long, procedureDate: LocalDateTime, minimalRecoveryDate: LocalDateTime) =

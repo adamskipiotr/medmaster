@@ -77,9 +77,7 @@ internal class ReportIntakeServiceTest {
         Assertions.assertEquals(LocalDateTime.of(2025,Month.MARCH,1,10,0,0),  intakeDates.last())
     }
 
-
-
     private fun createIntakeRequest(medicamentId: Long = 1L) = ReportIntakeRequest(
-            medicamentId, IntakeForm.PILLS,5, LocalDateTime.of(2025,Month.MARCH,1,10,0,0)
+            medicamentId, IntakeForm.SHOT,5, LocalDateTime.of(2025,Month.MARCH,2,10,0,0)
     )
 }

@@ -57,6 +57,10 @@ fun CreateIntakeRequest.toDomain(): Intake {
 fun IntakeDateRequest.toDomain(): IntakeDate = IntakeDate(
     id = null,
     date = date,
+    expectedDateMaxGap = null,
+    expectedDateMinGap = null,
+    intakeInTimeGap = true,
+    overdose = false,
     intake = null
 )
 

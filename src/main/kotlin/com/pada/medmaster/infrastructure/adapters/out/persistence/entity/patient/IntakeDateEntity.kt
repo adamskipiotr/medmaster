@@ -17,16 +17,19 @@ class IntakeDateEntity(
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "intake_date_id_sequence")
     var id: Long = 0,
     val date: LocalDateTime,
+    var expectedDateMinGap: LocalDateTime? = null,
+    var expectedDateMaxGap: LocalDateTime? = null,
+    var intakeInTimeGap: Boolean,
+    var overdose: Boolean,
     @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
     var intake: IntakeEntity? = null
 
 ) { // learn: internal in Kotlin vs package-in Java
 
-
-    fun asDomain(): IntakeDate { // why  fun asDomain(): MedicalProcedure { doesnt work here
+    fun asDomain(): IntakeDate {
         return IntakeDate(
             // to learn: what is Local Extension
-            id, date, null,
+            id, date, expectedDateMinGap, expectedDateMaxGap, intakeInTimeGap, overdose, null
         )
     }
 
