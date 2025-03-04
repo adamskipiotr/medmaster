@@ -18,7 +18,7 @@ internal class ReportIntakeServiceTest {
 
 
     @Test
-    fun shouldReportNewIntakeDateWhenValidationPasses() {
+    fun shouldReportNewIntakeInTimeGapAndNotOverdosedDateWhenValidationPasses() {
         //given
         val testPatient = getPatientPort.get(1L)
         val reportIntakeRequest = createIntakeRequest()
@@ -27,57 +27,66 @@ internal class ReportIntakeServiceTest {
         sut.report(patientId = 1L, treatmentId = 1L,  intakeId = 1L, reportIntakeRequest)
 
         //then
-        val intakeDates = testPatient.treatments.first().intakes.first().intakeDates.map { intakeDate -> intakeDate.date }
+        val intakeDates = testPatient.treatments.first().intakes.first().intakeDates
         Assertions.assertEquals(2, intakeDates.size)
-        Assertions.assertEquals(LocalDateTime.of(2025,Month.MARCH,1,10,0,0),  intakeDates.last())
+        Assertions.assertEquals(LocalDateTime.of(2025,Month.MARCH,2,10,0,0),  intakeDates.last().date)
+        Assertions.assertEquals(true,  intakeDates.last().intakeInTimeGap)
+        Assertions.assertEquals(false,  intakeDates.last().overdose)
+
     }
 
     @Test
-    fun shouldThrowExceptionWhenOverdoseDetected() {
+    fun shouldReportOverdosedIntakeInTimeGapWhenSingleDoseExceedsIntakeLimit() {
         //given
         val testPatient = getPatientPort.get(1L)
-        val reportIntakeRequest = createIntakeRequest()
+        val reportIntakeRequest = createIntakeRequest().copy(dosage = 10)
 
         //when
         sut.report(patientId = 1L, treatmentId = 1L,  intakeId = 1L, reportIntakeRequest)
 
         //then
-        val intakeDates = testPatient.treatments.first().intakes.first().intakeDates.map { intakeDate -> intakeDate.date }
+        val intakeDates = testPatient.treatments.first().intakes.first().intakeDates
         Assertions.assertEquals(2, intakeDates.size)
-        Assertions.assertEquals(LocalDateTime.of(2025,Month.MARCH,1,10,0,0),  intakeDates.last())
+        Assertions.assertEquals(true,  intakeDates.last().overdose)
     }
 
     @Test
-    fun shouldThrowExceptionWhenDailyIntakeTooEarly() {
+    fun shouldReportIntakeNotInTimeGapWhenDailyIntakeTooLate() {
         //given
         val testPatient = getPatientPort.get(1L)
-        val reportIntakeRequest = createIntakeRequest()
-
+        val reportIntakeRequest = createIntakeRequest().copy(date = LocalDateTime.of(2025, Month.MARCH, 3, 15, 0, 0))  //To learn: this is the best way to modify single value
+                                                                                                                                                            //don't try implementing any Builders unless it is really necessary
         //when
         sut.report(patientId = 1L, treatmentId = 1L,  intakeId = 1L, reportIntakeRequest)
 
         //then
-        val intakeDates = testPatient.treatments.first().intakes.first().intakeDates.map { intakeDate -> intakeDate.date }
+        val intakeDates = testPatient.treatments.first().intakes.first().intakeDates
         Assertions.assertEquals(2, intakeDates.size)
-        Assertions.assertEquals(LocalDateTime.of(2025,Month.MARCH,1,10,0,0),  intakeDates.last())
+        Assertions.assertEquals(LocalDateTime.of(2025,Month.MARCH,2,7,0,0),  intakeDates.last().expectedDateMinGap)
+        Assertions.assertEquals(LocalDateTime.of(2025,Month.MARCH,2,13,0,0),  intakeDates.last().expectedDateMaxGap)
+        Assertions.assertEquals(LocalDateTime.of(2025,Month.MARCH,3,15,0,0),  intakeDates.last().date)
+        Assertions.assertEquals(false,  intakeDates.last().intakeInTimeGap)
     }
 
     @Test
-    fun shouldThrowExceptionWhenDailyIntakeTooLate() {
+    fun shouldReportIntakeNotInTimeGapWhenDailyIntakeTooEarly() {
         //given
         val testPatient = getPatientPort.get(1L)
-        val reportIntakeRequest = createIntakeRequest()
-
+        val reportIntakeRequest = createIntakeRequest().copy(date = LocalDateTime.of(2025, Month.MARCH, 1, 23, 59, 0))  //To learn: this is the best way to modify single value
+        //don't try implementing any Builders unless it is really necessary
         //when
         sut.report(patientId = 1L, treatmentId = 1L,  intakeId = 1L, reportIntakeRequest)
 
         //then
-        val intakeDates = testPatient.treatments.first().intakes.first().intakeDates.map { intakeDate -> intakeDate.date }
+        val intakeDates = testPatient.treatments.first().intakes.first().intakeDates
         Assertions.assertEquals(2, intakeDates.size)
-        Assertions.assertEquals(LocalDateTime.of(2025,Month.MARCH,1,10,0,0),  intakeDates.last())
+        Assertions.assertEquals(LocalDateTime.of(2025,Month.MARCH,2,7,0,0),  intakeDates.last().expectedDateMinGap)
+        Assertions.assertEquals(LocalDateTime.of(2025,Month.MARCH,2,13,0,0),  intakeDates.last().expectedDateMaxGap)
+        Assertions.assertEquals(LocalDateTime.of(2025,Month.MARCH,1,23,59,0),  intakeDates.last().date)
+        Assertions.assertEquals(false,  intakeDates.last().intakeInTimeGap)
     }
 
     private fun createIntakeRequest(medicamentId: Long = 1L) = ReportIntakeRequest(
-            medicamentId, IntakeForm.SHOT,5, LocalDateTime.of(2025,Month.MARCH,2,10,0,0)
+            medicamentId, IntakeForm.SHOT,1, LocalDateTime.of(2025,Month.MARCH,2,10,0,0)
     )
 }

@@ -71,9 +71,19 @@ class GetPatientPortStub() : GetPatientPort {
         IntakeForm.SHOT,
         3,
         IntakeFrequency.ONCE_A_DAY,
-        mutableListOf(IntakeDate(1L, LocalDateTime.of(2025, Month.MARCH, 1, 10, 0, 0), null)),
+        mutableListOf(createIntakeDate()),
         4,
         null
+    )
+
+    private fun createIntakeDate() = IntakeDate(
+        1L,
+        date = LocalDateTime.of(2025, Month.MARCH, 1, 10, 0, 0),
+        expectedDateMaxGap = LocalDateTime.of(2025, Month.MARCH, 1, 10, 0, 0),
+        expectedDateMinGap = LocalDateTime.of(2025, Month.MARCH, 1, 10, 0, 0),
+        intakeInTimeGap = true,
+        overdose = false,
+        intake = null
     )
 
     private fun createStubMedicalProcedure(id: Long, procedureDate: LocalDateTime, minimalRecoveryDate: LocalDateTime) =

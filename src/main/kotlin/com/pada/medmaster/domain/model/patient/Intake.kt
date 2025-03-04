@@ -33,15 +33,14 @@ class Intake(
             newIntakeDate, newIntakeDate, true, overdose, null)
         
         val (minGap, maxGap) = when (intakeFrequency) {
-            IntakeFrequency.HOURLY -> lastIntake.plusMinutes(50) to lastIntake.plusMinutes(70)
+            IntakeFrequency.HOURLY -> lastIntake.plusHours(1) to lastIntake.plusHours(1)
             IntakeFrequency.TWICE_A_DAY -> lastIntake.plusHours(11) to lastIntake.plusHours(13)
             IntakeFrequency.THREE_TIMES_A_DAY -> lastIntake.plusHours(5) to lastIntake.plusHours(7)
-            IntakeFrequency.ONCE_A_DAY -> lastIntake.plusDays(1) to lastIntake.plusDays(1)
+            IntakeFrequency.ONCE_A_DAY -> lastIntake.plusDays(1).minusHours(3) to lastIntake.plusDays(1).plusHours(3)
             null -> return null
         }
 
         val inTimeGap = newIntakeDate in minGap..maxGap
-        return IntakeDate(null, newIntakeDate, minGap, maxGap, inTimeGap, overdose, null)
+        return IntakeDate(null, newIntakeDate, minGap, maxGap, inTimeGap, overdose, this)
     }
-
 }
