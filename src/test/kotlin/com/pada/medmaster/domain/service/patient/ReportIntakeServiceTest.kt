@@ -30,7 +30,7 @@ internal class ReportIntakeServiceTest {
         //then
         val intakeDates = testPatient.treatments.first().intakes.first().intakeDates
         Assertions.assertEquals(2, intakeDates.size)
-        Assertions.assertEquals(LocalDateTime.of(2025, Month.MARCH, 2, 10, 0, 0), intakeDates.last().date)
+        Assertions.assertEquals(LocalDateTime.of(2025, Month.MARCH, 2, 10, 0), intakeDates.last().date)
         Assertions.assertEquals(true, intakeDates.last().intakeInTimeGap)
         Assertions.assertEquals(false, intakeDates.last().overdose)
 
@@ -61,7 +61,6 @@ internal class ReportIntakeServiceTest {
                 Month.MARCH,
                 3,
                 15,
-                0,
                 0
             )
         )  //To learn: this is the best way to modify single value
@@ -72,9 +71,9 @@ internal class ReportIntakeServiceTest {
         //then
         val intakeDates = testPatient.treatments.first().intakes.first().intakeDates
         Assertions.assertEquals(2, intakeDates.size)
-        Assertions.assertEquals(LocalDateTime.of(2025, Month.MARCH, 2, 7, 0, 0), intakeDates.last().expectedDateMinGap)
-        Assertions.assertEquals(LocalDateTime.of(2025, Month.MARCH, 2, 13, 0, 0), intakeDates.last().expectedDateMaxGap)
-        Assertions.assertEquals(LocalDateTime.of(2025, Month.MARCH, 3, 15, 0, 0), intakeDates.last().date)
+        Assertions.assertEquals(LocalDateTime.of(2025, Month.MARCH, 2, 7, 0), intakeDates.last().expectedDateMinGap)
+        Assertions.assertEquals(LocalDateTime.of(2025, Month.MARCH, 2, 13, 0), intakeDates.last().expectedDateMaxGap)
+        Assertions.assertEquals(LocalDateTime.of(2025, Month.MARCH, 3, 15, 0), intakeDates.last().date)
         Assertions.assertEquals(false, intakeDates.last().intakeInTimeGap)
     }
 
@@ -88,8 +87,7 @@ internal class ReportIntakeServiceTest {
                 Month.MARCH,
                 1,
                 23,
-                59,
-                0
+                59
             )
         )  //To learn: this is the best way to modify single value
         //don't try implementing any Builders unless it is really necessary
@@ -99,9 +97,9 @@ internal class ReportIntakeServiceTest {
         //then
         val intakeDates = testPatient.treatments.first().intakes.first().intakeDates
         Assertions.assertEquals(2, intakeDates.size)
-        Assertions.assertEquals(LocalDateTime.of(2025, Month.MARCH, 2, 7, 0, 0), intakeDates.last().expectedDateMinGap)
-        Assertions.assertEquals(LocalDateTime.of(2025, Month.MARCH, 2, 13, 0, 0), intakeDates.last().expectedDateMaxGap)
-        Assertions.assertEquals(LocalDateTime.of(2025, Month.MARCH, 1, 23, 59, 0), intakeDates.last().date)
+        Assertions.assertEquals(LocalDateTime.of(2025, Month.MARCH, 2, 7, 0), intakeDates.last().expectedDateMinGap)
+        Assertions.assertEquals(LocalDateTime.of(2025, Month.MARCH, 2, 13, 0), intakeDates.last().expectedDateMaxGap)
+        Assertions.assertEquals(LocalDateTime.of(2025, Month.MARCH, 1, 23, 59), intakeDates.last().date)
         Assertions.assertEquals(false, intakeDates.last().intakeInTimeGap)
     }
 
@@ -115,24 +113,22 @@ internal class ReportIntakeServiceTest {
                 Month.MARCH,
                 1,
                 11,
-                30,
-                0
+                30
             )
-        )  //To learn: this is the best way to modify single value
-        // don't try implementing any Builders unless it is really necessary
+        )
+
         val originalIntake = testPatient.treatments.first().intakes.first()
         val modifiedIntake = Intake(
             originalIntake.id,
             originalIntake.medicamentId,
             originalIntake.form,
             originalIntake.dosage,
-            IntakeFrequency.HOURLY, // Change only this
+            IntakeFrequency.HOURLY,
             originalIntake.intakeDates,
             originalIntake.intakeLimit,
             originalIntake.treatment
         )
 
-        // Replace it in the patient's treatment
         testPatient.treatments.first().intakes[0] = modifiedIntake
 
         //when
@@ -141,9 +137,89 @@ internal class ReportIntakeServiceTest {
         //then
         val intakeDates = testPatient.treatments.first().intakes.first().intakeDates
         Assertions.assertEquals(2, intakeDates.size)
-        Assertions.assertEquals(LocalDateTime.of(2025, Month.MARCH, 1, 10, 50, 0), intakeDates.last().expectedDateMinGap)
-        Assertions.assertEquals(LocalDateTime.of(2025, Month.MARCH, 1, 11, 10, 0), intakeDates.last().expectedDateMaxGap)
-        Assertions.assertEquals(LocalDateTime.of(2025, Month.MARCH, 1, 11, 30, 0), intakeDates.last().date)
+        Assertions.assertEquals(LocalDateTime.of(2025, Month.MARCH, 1, 10, 50), intakeDates.last().expectedDateMinGap)
+        Assertions.assertEquals(LocalDateTime.of(2025, Month.MARCH, 1, 11, 10), intakeDates.last().expectedDateMaxGap)
+        Assertions.assertEquals(LocalDateTime.of(2025, Month.MARCH, 1, 11, 30), intakeDates.last().date)
+        Assertions.assertEquals(false, intakeDates.last().intakeInTimeGap)
+    }
+
+    @Test
+    fun shouldReportIntakeNotInTimeGapWhenTwiceADayIntakeTooEarly() {
+        //given
+        val testPatient = getPatientPort.get(1L)
+        val reportIntakeRequest = createIntakeRequest().copy(
+            date = LocalDateTime.of(
+                2025,
+                Month.MARCH,
+                1,
+                20,
+                59
+            )
+        )
+
+        val originalIntake = testPatient.treatments.first().intakes.first()
+        val modifiedIntake = Intake(
+            originalIntake.id,
+            originalIntake.medicamentId,
+            originalIntake.form,
+            originalIntake.dosage,
+            IntakeFrequency.TWICE_A_DAY,
+            originalIntake.intakeDates,
+            originalIntake.intakeLimit,
+            originalIntake.treatment
+        )
+
+        testPatient.treatments.first().intakes[0] = modifiedIntake
+
+        //when
+        sut.report(patientId = 1L, treatmentId = 1L, intakeId = 1L, reportIntakeRequest)
+
+        //then
+        val intakeDates = testPatient.treatments.first().intakes.first().intakeDates
+        Assertions.assertEquals(2, intakeDates.size)
+        Assertions.assertEquals(LocalDateTime.of(2025, Month.MARCH, 1, 21, 0), intakeDates.last().expectedDateMinGap)
+        Assertions.assertEquals(LocalDateTime.of(2025, Month.MARCH, 1, 23,0), intakeDates.last().expectedDateMaxGap)
+        Assertions.assertEquals(LocalDateTime.of(2025, Month.MARCH, 1, 20, 59), intakeDates.last().date)
+        Assertions.assertEquals(false, intakeDates.last().intakeInTimeGap)
+    }
+
+    @Test
+    fun shouldReportIntakeNotInTimeGapWhenThreeTimesADayIntakeTooEarly() {
+        //given
+        val testPatient = getPatientPort.get(1L)
+        val reportIntakeRequest = createIntakeRequest().copy(
+            date = LocalDateTime.of(
+                2025,
+                Month.MARCH,
+                1,
+                14,
+                45
+            )
+        )
+
+        val originalIntake = testPatient.treatments.first().intakes.first()
+        val modifiedIntake = Intake(
+            originalIntake.id,
+            originalIntake.medicamentId,
+            originalIntake.form,
+            originalIntake.dosage,
+            IntakeFrequency.THREE_TIMES_A_DAY,
+            originalIntake.intakeDates,
+            originalIntake.intakeLimit,
+            originalIntake.treatment
+        )
+
+        testPatient.treatments.first().intakes[0] = modifiedIntake
+
+        //when
+        sut.report(patientId = 1L, treatmentId = 1L, intakeId = 1L, reportIntakeRequest)
+
+        //then
+        val intakeDates = testPatient.treatments.first().intakes.first().intakeDates
+        Assertions.assertEquals(2, intakeDates.size)
+        Assertions.assertEquals(LocalDateTime.of(2025, Month.MARCH, 1, 15, 0), intakeDates.last().expectedDateMinGap)
+        Assertions.assertEquals(LocalDateTime.of(2025, Month.MARCH, 1, 17, 0), intakeDates.last().expectedDateMaxGap)
+        Assertions.assertEquals(LocalDateTime.of(2025, Month.MARCH, 1, 14, 45), intakeDates.last().date)
         Assertions.assertEquals(false, intakeDates.last().intakeInTimeGap)
     }
 

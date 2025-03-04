@@ -78,9 +78,9 @@ class GetPatientPortStub() : GetPatientPort {
 
     private fun createIntakeDate() = IntakeDate(
         1L,
-        date = LocalDateTime.of(2025, Month.MARCH, 1, 10, 0, 0),
-        expectedDateMaxGap = LocalDateTime.of(2025, Month.MARCH, 1, 10, 0, 0),
-        expectedDateMinGap = LocalDateTime.of(2025, Month.MARCH, 1, 10, 0, 0),
+        date = LocalDateTime.of(2025, Month.MARCH, 1, 10, 0),
+        expectedDateMaxGap = LocalDateTime.of(2025, Month.MARCH, 1, 10, 0),
+        expectedDateMinGap = LocalDateTime.of(2025, Month.MARCH, 1, 10, 0),
         intakeInTimeGap = true,
         overdose = false,
         intake = null
