@@ -1,6 +1,6 @@
 package com.pada.medmaster.domain.service.patient
 
-import com.pada.medmaster.application.dto.request.treatment.CreateTreatmentRequest
+import com.pada.medmaster.application.dto.request.patient.CreateTreatmentRequest
 import com.pada.medmaster.application.ports.`in`.patient.AddPatientTreatmentUseCase
 import com.pada.medmaster.application.ports.out.patient.GetPatientPort
 import com.pada.medmaster.application.ports.out.patient.UpdatePatientPort

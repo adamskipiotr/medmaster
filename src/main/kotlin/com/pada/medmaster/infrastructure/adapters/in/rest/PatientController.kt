@@ -1,10 +1,10 @@
 package com.pada.medmaster.infrastructure.adapters.`in`.rest
 
 import com.pada.medmaster.application.dto.request.patient.CreatePatientRequest
-import com.pada.medmaster.application.dto.request.treatment.CreateIntakeRequest
-import com.pada.medmaster.application.dto.request.treatment.ReportIntakeRequest
-import com.pada.medmaster.application.dto.request.treatment.CreateMedicalProcedureRequest
-import com.pada.medmaster.application.dto.request.treatment.CreateTreatmentRequest
+import com.pada.medmaster.application.dto.request.patient.CreateIntakeRequest
+import com.pada.medmaster.application.dto.request.patient.ReportIntakeRequest
+import com.pada.medmaster.application.dto.request.patient.CreateMedicalProcedureRequest
+import com.pada.medmaster.application.dto.request.patient.CreateTreatmentRequest
 import com.pada.medmaster.application.ports.`in`.patient.*
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag

@@ -47,9 +47,9 @@ class IntakeEntity {
         return Intake(
             id,
             medicamentId, // after change from relation to ID - expected behaviour is to fetch Medicament for Intake based on medicamentId
-            form,
+            com.pada.medmaster.domain.model.patient.IntakeForm.valueOf(form.name),
             dosage,
-            intakeFrequency,
+            com.pada.medmaster.domain.model.patient.IntakeFrequency.valueOf(intakeFrequency.name),
             intakeDates.map { it.asDomain() }.toMutableList(),
             intakeLimit,
             mappedTreatment

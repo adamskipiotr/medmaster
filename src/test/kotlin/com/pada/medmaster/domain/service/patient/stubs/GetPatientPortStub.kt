@@ -3,8 +3,8 @@ package com.pada.medmaster.domain.service.patient.stubs
 import com.pada.medmaster.application.ports.out.patient.GetPatientPort
 import com.pada.medmaster.domain.model.patient.*
 import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.patient.Gender
-import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.patient.IntakeForm
-import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.patient.IntakeFrequency
+import com.pada.medmaster.domain.model.patient.IntakeForm
+import com.pada.medmaster.domain.model.patient.IntakeFrequency
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.Month

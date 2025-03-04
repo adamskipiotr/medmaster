@@ -4,9 +4,7 @@ import com.pada.medmaster.application.dto.request.ingredient.CreateIngredientReq
 import com.pada.medmaster.application.dto.request.medicament.CreateMedicamentRequest
 import com.pada.medmaster.application.dto.request.medicament.CreatePharmacyAddressRequest
 import com.pada.medmaster.application.dto.request.medicament.CreatePharmacyRequest
-import com.pada.medmaster.application.dto.request.patient.CreatePatientAddressRequest
-import com.pada.medmaster.application.dto.request.patient.CreatePatientRequest
-import com.pada.medmaster.application.dto.request.treatment.*
+import com.pada.medmaster.application.dto.request.patient.*
 import com.pada.medmaster.domain.model.ingredient.Country
 import com.pada.medmaster.domain.model.ingredient.Ingredient
 import com.pada.medmaster.domain.model.medicament.Medicament

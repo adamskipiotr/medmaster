@@ -1,6 +1,6 @@
 package com.pada.medmaster.domain.model.patient
 
-import com.pada.medmaster.application.dto.request.treatment.ReportIntakeRequest
+import com.pada.medmaster.application.dto.request.patient.ReportIntakeRequest
 import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.patient.Gender
 import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.patient.SpecialHealthConditions
 import java.time.LocalDate

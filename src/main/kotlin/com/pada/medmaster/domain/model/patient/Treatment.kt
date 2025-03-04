@@ -1,6 +1,6 @@
 package com.pada.medmaster.domain.model.patient
 
-import com.pada.medmaster.application.dto.request.treatment.ReportIntakeRequest
+import com.pada.medmaster.application.dto.request.patient.ReportIntakeRequest
 import com.pada.medmaster.domain.exception.MedicalProcedureScheduledOnExpectedRecoveryTimeException
 import com.pada.medmaster.domain.exception.MedicalProcedureScheduledOnRecoveryTimeException
 import com.pada.medmaster.domain.exception.MedicalProcedureScheduledOnTheSameDayException

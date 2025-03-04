@@ -3,12 +3,12 @@ package com.pada.medmaster.infrastructure.adapters.`in`.rest
 import MedMasterApplicationTests
 import com.pada.medmaster.application.dto.request.patient.CreatePatientAddressRequest
 import com.pada.medmaster.application.dto.request.patient.CreatePatientRequest
-import com.pada.medmaster.application.dto.request.treatment.CreateIntakeRequest
-import com.pada.medmaster.application.dto.request.treatment.CreateMedicalProcedureRequest
-import com.pada.medmaster.application.dto.request.treatment.CreateTreatmentRequest
+import com.pada.medmaster.application.dto.request.patient.CreateIntakeRequest
+import com.pada.medmaster.application.dto.request.patient.CreateMedicalProcedureRequest
+import com.pada.medmaster.application.dto.request.patient.CreateTreatmentRequest
 import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.patient.Gender
-import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.patient.IntakeForm
-import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.patient.IntakeFrequency
+import com.pada.medmaster.domain.model.patient.IntakeForm
+import com.pada.medmaster.domain.model.patient.IntakeFrequency
 import com.pada.medmaster.infrastructure.adapters.out.persistence.repository.PatientRepository
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test

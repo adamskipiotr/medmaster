@@ -1,10 +1,6 @@
 package com.pada.medmaster.domain.model.patient
 
-import com.pada.medmaster.application.dto.request.treatment.ReportIntakeRequest
-import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.patient.IntakeForm
-import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.patient.IntakeFrequency
-import java.time.LocalDateTime
-
+import com.pada.medmaster.application.dto.request.patient.ReportIntakeRequest
 
 class Intake(
     val id: Long? = null,
@@ -33,7 +29,7 @@ class Intake(
             newIntakeDate, newIntakeDate, true, overdose, null)
         
         val (minGap, maxGap) = when (intakeFrequency) {
-            IntakeFrequency.HOURLY -> lastIntake.plusHours(1) to lastIntake.plusHours(1)
+            IntakeFrequency.HOURLY -> lastIntake.plusMinutes(50) to lastIntake.plusMinutes(70)
             IntakeFrequency.TWICE_A_DAY -> lastIntake.plusHours(11) to lastIntake.plusHours(13)
             IntakeFrequency.THREE_TIMES_A_DAY -> lastIntake.plusHours(5) to lastIntake.plusHours(7)
             IntakeFrequency.ONCE_A_DAY -> lastIntake.plusDays(1).minusHours(3) to lastIntake.plusDays(1).plusHours(3)
