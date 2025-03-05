@@ -11,6 +11,8 @@ import com.pada.medmaster.domain.model.medicament.Medicament
 import com.pada.medmaster.domain.model.medicament.Pharmacy
 import com.pada.medmaster.domain.model.medicament.PharmacyAddress
 import com.pada.medmaster.domain.model.patient.*
+import com.pada.medmaster.domain.model.patient.IntakeForm
+import com.pada.medmaster.domain.model.patient.IntakeFrequency
 
 // Extension functions for mapping each part
 fun CreateTreatmentRequest.toDomain(): Treatment {
@@ -43,9 +45,9 @@ fun CreateIntakeRequest.toDomain(): Intake {
     val intake = Intake(
         id = null,
         medicamentId = medicamentId,
-        form = form,
+        form = IntakeForm.valueOf(form.name),
         dosage = dosage,
-        intakeFrequency = intakeFrequency,
+        intakeFrequency = IntakeFrequency.valueOf(intakeFrequency.name),
         treatment = null,
         intakeLimit = intakeLimit,
     )

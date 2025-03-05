@@ -1,13 +1,13 @@
 package com.pada.medmaster.domain.service.patient
 
 import com.pada.medmaster.application.dto.request.patient.CreateIntakeRequest
+import com.pada.medmaster.application.dto.request.patient.IntakeForm
+import com.pada.medmaster.application.dto.request.patient.IntakeFrequency
 import com.pada.medmaster.domain.exception.IncompatibleMedicamentException
 import com.pada.medmaster.domain.exception.IngredientProhibitedInPatientCountryException
 import com.pada.medmaster.domain.exception.PharmacyNotFoundException
 import com.pada.medmaster.domain.service.medicament.ValidateNewIntakeMedicamentService
 import com.pada.medmaster.domain.service.patient.stubs.*
-import com.pada.medmaster.domain.model.patient.IntakeForm
-import com.pada.medmaster.domain.model.patient.IntakeFrequency
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows

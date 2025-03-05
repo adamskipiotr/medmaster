@@ -32,15 +32,13 @@ fun of(medicalProcedure: MedicalProcedure) = MedicalProcedureEntity().apply {
     minimalRecoveryDate = medicalProcedure.minimalRecoveryDate
 }
 
-fun of(intakeDate: IntakeDate): IntakeDateEntity {
-    return IntakeDateEntity(
-        intakeDate.id ?: 0,
-        intakeDate.date,
-        intakeDate.expectedDateMinGap,
-        intakeDate.expectedDateMaxGap,
-        intakeDate.intakeInTimeGap,
+fun of(intakeDate: IntakeDate) = IntakeDateEntity().apply {
+        intakeDate.id ?: 0
+        intakeDate.date
+        intakeDate.expectedDateMinGap
+        intakeDate.expectedDateMaxGap
+        intakeDate.intakeInTimeGap
         intakeDate.overdose
-    )
 }
 
 fun of(medicament: Medicament) = MedicamentEntity().apply {

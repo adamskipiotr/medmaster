@@ -1,14 +1,8 @@
 package com.pada.medmaster.infrastructure.adapters.`in`.rest
 
 import MedMasterApplicationTests
-import com.pada.medmaster.application.dto.request.patient.CreatePatientAddressRequest
-import com.pada.medmaster.application.dto.request.patient.CreatePatientRequest
-import com.pada.medmaster.application.dto.request.patient.CreateIntakeRequest
-import com.pada.medmaster.application.dto.request.patient.CreateMedicalProcedureRequest
-import com.pada.medmaster.application.dto.request.patient.CreateTreatmentRequest
+import com.pada.medmaster.application.dto.request.patient.*
 import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.patient.Gender
-import com.pada.medmaster.domain.model.patient.IntakeForm
-import com.pada.medmaster.domain.model.patient.IntakeFrequency
 import com.pada.medmaster.infrastructure.adapters.out.persistence.repository.PatientRepository
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
@@ -24,7 +18,7 @@ import java.time.*
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Sql(
-    scripts = ["/patients.sql", "/treatments.sql", "/medicaments.sql", "/ingredients.sql"],
+    scripts = ["/patients.sql", "/medicaments.sql", "/treatments.sql", "/ingredients.sql"],
     executionPhase = Sql.ExecutionPhase.BEFORE_TEST_CLASS
 )
 class PatientControllerIT : MedMasterApplicationTests() {
@@ -102,6 +96,27 @@ class PatientControllerIT : MedMasterApplicationTests() {
             "/patients/100/treatments/100/intakes",
             HttpMethod.POST,
             HttpEntity(createIntakeRequest),
+            Unit::class.java
+        )
+
+        // then
+        val patientEntity = patientRepository.findById(100)
+        assertEquals(HttpStatus.CREATED, response.statusCode)
+        assertEquals(1, patientEntity.treatments.size)
+    }
+
+    @Test
+    fun should_addNewIntakeDate_when_newIntakeReported() {
+        // given =
+        val reportIntakeRequest = ReportIntakeRequest(
+            100L, IntakeForm.SHOT, 2, LocalDateTime.of(2025, Month.APRIL, 15, 12, 0)
+        )
+
+        //when
+        val response: ResponseEntity<Unit> = restTemplate.exchange(
+            "/patients/100/treatments/100/intakes/100/report-intake",
+            HttpMethod.PUT,
+            HttpEntity(reportIntakeRequest),
             Unit::class.java
         )
 

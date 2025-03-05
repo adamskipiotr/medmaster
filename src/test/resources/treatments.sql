@@ -5,3 +5,7 @@ VALUES
     (102, 'TREAT003', 'Disease102', 'Description102', '2024-01-15 08:00:00', '2024-12-31 08:00:00', 102),
     (103, 'TREAT004', 'Disease103', 'Description103', '2024-01-20 09:00:00', '2024-07-20 09:00:00', 103),
     (104, 'TREAT005', 'Disease104', 'Description104', '2024-01-25 11:00:00', '2024-06-25 11:00:00', 104);
+
+
+INSERT INTO patient_schema.intake (id, form, dosage, intake_frequency, intake_limit, medicament_id, treatment_id)
+VALUES (100, 'SHOT', 10, 'ONCE_A_DAY', 5, 100, 100);

@@ -6,7 +6,7 @@ import java.time.LocalDateTime
 
 @Entity
 @Table(schema = "patient_schema", name = "intake_date")
-class IntakeDateEntity(
+class IntakeDateEntity{
     @Id
     @SequenceGenerator(
         schema = "patient_schema",
@@ -15,16 +15,16 @@ class IntakeDateEntity(
         allocationSize = 1
     )
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "intake_date_id_sequence")
-    var id: Long = 0,
-    val date: LocalDateTime,
-    var expectedDateMinGap: LocalDateTime? = null,
-    var expectedDateMaxGap: LocalDateTime? = null,
-    var intakeInTimeGap: Boolean,
-    var overdose: Boolean,
+    var id: Long = 0
+    lateinit var date: LocalDateTime
+    var expectedDateMinGap: LocalDateTime? = null
+    var expectedDateMaxGap: LocalDateTime? = null
+    var intakeInTimeGap: Boolean = false
+    var overdose: Boolean = false
     @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
     var intake: IntakeEntity? = null
 
-) { // learn: internal in Kotlin vs package-in Java
+  // learn: internal in Kotlin vs package-in Java
 
     fun asDomain(): IntakeDate {
         return IntakeDate(
