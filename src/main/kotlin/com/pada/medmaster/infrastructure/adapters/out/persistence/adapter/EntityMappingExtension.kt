@@ -12,6 +12,8 @@ import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.medicam
 import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.medicament.PharmacyAddressEntity
 import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.medicament.PharmacyEntity
 import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.patient.*
+import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.patient.IntakeForm
+import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.patient.IntakeFrequency
 
 // Extension functions for mapping each part
 
@@ -30,11 +32,13 @@ fun of(medicalProcedure: MedicalProcedure) = MedicalProcedureEntity().apply {
     minimalRecoveryDate = medicalProcedure.minimalRecoveryDate
 }
 
-fun of(intakeDate: IntakeDate): IntakeDateEntity {
-    return IntakeDateEntity(
-        intakeDate.id ?: 0,
+fun of(intakeDate: IntakeDate) = IntakeDateEntity().apply {
+        intakeDate.id ?: 0
         intakeDate.date
-    )
+        intakeDate.expectedDateMinGap
+        intakeDate.expectedDateMaxGap
+        intakeDate.intakeInTimeGap
+        intakeDate.overdose
 }
 
 fun of(medicament: Medicament) = MedicamentEntity().apply {
@@ -124,9 +128,9 @@ fun of(treatment: Treatment) = TreatmentEntity().apply {
 
 fun of(intake: Intake, treatmentEntity: TreatmentEntity) = IntakeEntity().apply {
     id = intake.id ?: 0
-    form = intake.form
+    form = IntakeForm.valueOf(intake.form.name) // check this
     dosage = intake.dosage
-    intakeFrequency = intake.intakeFrequency!!
+    intakeFrequency = IntakeFrequency.valueOf(intake.intakeFrequency!!.name)
     intakeLimit = intake.intakeLimit
     medicamentId = intake.medicamentId
     intakeDates.addAll(intake.intakeDates.map { of(it) })
@@ -135,9 +139,9 @@ fun of(intake: Intake, treatmentEntity: TreatmentEntity) = IntakeEntity().apply 
 
 fun of(intake: Intake) = IntakeEntity().apply {
     id = intake.id ?: 0
-    form = intake.form
+    form = IntakeForm.valueOf(intake.form.name)
     dosage = intake.dosage
-    intakeFrequency = intake.intakeFrequency!!
+    intakeFrequency = IntakeFrequency.valueOf(intake.intakeFrequency!!.name)
     intakeLimit = intake.intakeLimit
     medicamentId = intake.medicamentId
     intakeDates.addAll(intake.intakeDates.map { of(it) })

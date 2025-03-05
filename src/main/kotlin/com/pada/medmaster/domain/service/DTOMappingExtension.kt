@@ -4,15 +4,15 @@ import com.pada.medmaster.application.dto.request.ingredient.CreateIngredientReq
 import com.pada.medmaster.application.dto.request.medicament.CreateMedicamentRequest
 import com.pada.medmaster.application.dto.request.medicament.CreatePharmacyAddressRequest
 import com.pada.medmaster.application.dto.request.medicament.CreatePharmacyRequest
-import com.pada.medmaster.application.dto.request.patient.CreatePatientAddressRequest
-import com.pada.medmaster.application.dto.request.patient.CreatePatientRequest
-import com.pada.medmaster.application.dto.request.treatment.*
+import com.pada.medmaster.application.dto.request.patient.*
 import com.pada.medmaster.domain.model.ingredient.Country
 import com.pada.medmaster.domain.model.ingredient.Ingredient
 import com.pada.medmaster.domain.model.medicament.Medicament
 import com.pada.medmaster.domain.model.medicament.Pharmacy
 import com.pada.medmaster.domain.model.medicament.PharmacyAddress
 import com.pada.medmaster.domain.model.patient.*
+import com.pada.medmaster.domain.model.patient.IntakeForm
+import com.pada.medmaster.domain.model.patient.IntakeFrequency
 
 // Extension functions for mapping each part
 fun CreateTreatmentRequest.toDomain(): Treatment {
@@ -45,9 +45,9 @@ fun CreateIntakeRequest.toDomain(): Intake {
     val intake = Intake(
         id = null,
         medicamentId = medicamentId,
-        form = form,
+        form = IntakeForm.valueOf(form.name),
         dosage = dosage,
-        intakeFrequency = intakeFrequency,
+        intakeFrequency = IntakeFrequency.valueOf(intakeFrequency.name),
         treatment = null,
         intakeLimit = intakeLimit,
     )
@@ -57,6 +57,10 @@ fun CreateIntakeRequest.toDomain(): Intake {
 fun IntakeDateRequest.toDomain(): IntakeDate = IntakeDate(
     id = null,
     date = date,
+    expectedDateMaxGap = null,
+    expectedDateMinGap = null,
+    intakeInTimeGap = true,
+    overdose = false,
     intake = null
 )
 

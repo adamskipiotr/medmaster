@@ -1,5 +1,6 @@
 package com.pada.medmaster.domain.model.patient
 
+import com.pada.medmaster.application.dto.request.patient.ReportIntakeRequest
 import com.pada.medmaster.domain.exception.MedicalProcedureScheduledOnExpectedRecoveryTimeException
 import com.pada.medmaster.domain.exception.MedicalProcedureScheduledOnRecoveryTimeException
 import com.pada.medmaster.domain.exception.MedicalProcedureScheduledOnTheSameDayException
@@ -54,4 +55,13 @@ class Treatment(
         intakes.add(intake)
         intake.treatment = this
     }
+
+    fun reportIntake(intakeId: Long, reportIntakeRequest: ReportIntakeRequest) {
+        val intake = getIntake(intakeId)
+        intake.reportIntake(reportIntakeRequest)
+    }
+
+    private fun getIntake(intakeId: Long) = (intakes.find { intake -> intake.id!! == intakeId }
+        ?: throw RuntimeException("Intake with given Id not found"))
+
 }

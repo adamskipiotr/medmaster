@@ -3,8 +3,8 @@ package com.pada.medmaster.domain.service.patient.stubs
 import com.pada.medmaster.application.ports.out.patient.GetPatientPort
 import com.pada.medmaster.domain.model.patient.*
 import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.patient.Gender
-import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.patient.IntakeForm
-import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.patient.IntakeFrequency
+import com.pada.medmaster.domain.model.patient.IntakeForm
+import com.pada.medmaster.domain.model.patient.IntakeFrequency
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.Month
@@ -66,7 +66,24 @@ class GetPatientPortStub() : GetPatientPort {
     )
 
     private fun createStubIntake() = Intake(
-        1L, 3L, IntakeForm.SHOT, 3, IntakeFrequency.ONCE_A_DAY, mutableListOf(), 4, null
+        1L,
+        3L,
+        IntakeForm.SHOT,
+        3,
+        IntakeFrequency.ONCE_A_DAY,
+        mutableListOf(createIntakeDate()),
+        4,
+        null
+    )
+
+    private fun createIntakeDate() = IntakeDate(
+        1L,
+        date = LocalDateTime.of(2025, Month.MARCH, 1, 10, 0),
+        expectedDateMaxGap = LocalDateTime.of(2025, Month.MARCH, 1, 10, 0),
+        expectedDateMinGap = LocalDateTime.of(2025, Month.MARCH, 1, 10, 0),
+        intakeInTimeGap = true,
+        overdose = false,
+        intake = null
     )
 
     private fun createStubMedicalProcedure(id: Long, procedureDate: LocalDateTime, minimalRecoveryDate: LocalDateTime) =

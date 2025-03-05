@@ -1,7 +1,7 @@
 package com.pada.medmaster.domain.model.patient
 
-import java.time.LocalDateTime
 import java.time.Clock
+import java.time.LocalDateTime
 
 class MedicalProcedure(
     val id: Long? = null,
