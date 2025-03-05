@@ -12,11 +12,8 @@ class Intake(
     val intakeLimit: Int,
     var treatment: Treatment?
 ) {
-    fun addIntakeDates(intakeDates: List<IntakeDate>) {
-        this.intakeDates.addAll(intakeDates)
-    }
 
-    fun reportIntake(reportIntakeRequest: ReportIntakeRequest) {
+    fun reportIntake(reportIntakeRequest: ReportIntakeRequest) { // refactor - can ReportIntakeRequest be ued inside domain?
         val intakeDate = createIntakeDate(reportIntakeRequest);
         intakeDate?.let { intakeDates.add(intakeDate) }
     }
