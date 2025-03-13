@@ -2,6 +2,7 @@ package com.pada.medmaster.infrastructure.adapters.out.persistence.entity.patien
 
 import com.pada.medmaster.domain.model.patient.MedicalProcedure
 import jakarta.persistence.*
+import java.time.Clock
 import java.time.LocalDateTime
 
 
@@ -33,7 +34,8 @@ class MedicalProcedureEntity {
             description,
             procedureDate,
             minimalRecoveryDate,
-            null
+            null,
+            Clock.systemDefaultZone()
         )
     }
 }

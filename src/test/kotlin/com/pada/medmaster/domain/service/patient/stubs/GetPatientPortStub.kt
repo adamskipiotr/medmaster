@@ -5,12 +5,14 @@ import com.pada.medmaster.domain.model.patient.*
 import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.patient.Gender
 import com.pada.medmaster.domain.model.patient.IntakeForm
 import com.pada.medmaster.domain.model.patient.IntakeFrequency
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.Month
+import java.time.*
 
-class GetPatientPortStub() : GetPatientPort {
+class GetPatientPortStub : GetPatientPort {
 
+    val fixedClock = Clock.fixed(
+        Instant.parse("2025-01-01T11:45:00Z"), // Fixed "now" in tests
+        ZoneId.systemDefault()
+    )
     private val intake = createStubIntake()
 
     private val firstMedicalProcedure = createStubMedicalProcedure(
@@ -88,7 +90,7 @@ class GetPatientPortStub() : GetPatientPort {
 
     private fun createStubMedicalProcedure(id: Long, procedureDate: LocalDateTime, minimalRecoveryDate: LocalDateTime) =
         MedicalProcedure(
-            id, "Name", "Description", procedureDate, minimalRecoveryDate, null
+            id, "Name", "Description", procedureDate, minimalRecoveryDate, null, fixedClock
         )
 
 }

@@ -13,6 +13,7 @@ import com.pada.medmaster.domain.model.medicament.PharmacyAddress
 import com.pada.medmaster.domain.model.patient.*
 import com.pada.medmaster.domain.model.patient.IntakeForm
 import com.pada.medmaster.domain.model.patient.IntakeFrequency
+import java.time.Clock
 
 // Extension functions for mapping each part
 fun CreateTreatmentRequest.toDomain(): Treatment {
@@ -38,7 +39,18 @@ fun CreateMedicalProcedureRequest.toDomain(): MedicalProcedure = MedicalProcedur
     description = description,
     procedureDate = procedureDate,
     minimalRecoveryDate = minimalRecoveryDate,
-    treatment = null
+    treatment = null,
+    null
+)
+
+fun CreateMedicalProcedureRequest.toDomain(clock: Clock): MedicalProcedure = MedicalProcedure(
+    id = null,
+    name = name,
+    description = description,
+    procedureDate = procedureDate,
+    minimalRecoveryDate = minimalRecoveryDate,
+    treatment = null,
+    clock = clock
 )
 
 fun CreateIntakeRequest.toDomain(): Intake {

@@ -9,14 +9,18 @@ import com.pada.medmaster.domain.service.patient.stubs.UpdatePatientPortStub
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
-import java.time.LocalDateTime
-import java.time.Month
+import java.time.*
 
 class AddMedicalProcedureToTreatmentServiceTest {
 
+    private val fixedClock = Clock.fixed(
+        Instant.parse("2025-01-01T11:45:00Z"), // Fixed "now" in tests
+        ZoneId.systemDefault()
+    )
+
     private val getPatientPort = GetPatientPortStub()
     private val updatePatientPort = UpdatePatientPortStub()
-    private val sut = AddMedicalProcedureToTreatmentService(getPatientPort, updatePatientPort)
+    private val sut = AddMedicalProcedureToTreatmentService(getPatientPort, updatePatientPort, fixedClock)
 
     @Test
     fun shouldAddMedicalProcedureToTreatmentWhenValidationPasses() {
@@ -56,9 +60,11 @@ class AddMedicalProcedureToTreatmentServiceTest {
         )
     }
 
+
     @Test
     fun shouldThrowMedicalProcedureScheduledOnExpectedRecoveryTimeExceptionWhenPatientHasOtherMedicalProcedureScheduledInRecoverTime() {
         //given
+
         val createMedicalProcedureRequest =
             createMedicalProcedureRequest(
                 LocalDateTime.of(2025, Month.MARCH, 10, 11, 45),

@@ -29,8 +29,6 @@ class PatientControllerIT : MedMasterApplicationTests() {
     @Autowired
     private lateinit var patientRepository: PatientRepository
 
-    private val fixedClock = Clock.fixed(Instant.parse("2025-02-25T00:00:00Z"), ZoneId.of("UTC"))
-
     @Test
     fun should_createPatient_when_newPatientDataProvided() {
         // given

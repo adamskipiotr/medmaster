@@ -10,7 +10,7 @@ class MedicalProcedure(
     val procedureDate: LocalDateTime,
     val minimalRecoveryDate: LocalDateTime,
     val treatment: Treatment?,
-    clock: Clock = Clock.systemDefaultZone()
+    clock: Clock?
 ) {
     init {
         val now = LocalDateTime.now(clock)
