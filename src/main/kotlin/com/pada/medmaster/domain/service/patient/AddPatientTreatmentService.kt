@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service
 
 // Future refactoring target: Separate Services to handle defined Use Case
 // see: https://raatiniemi.se/thoughts/use-case-driven-development/
+// Future refactoring targets: Services should probably be moved to
+// application.port.in as they are more of a Application Services
+// rather than Domain Services
 @Service
 class AddPatientTreatmentService(
     val getPatientPort: GetPatientPort,
