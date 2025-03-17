@@ -8,7 +8,6 @@ import com.pada.medmaster.domain.service.patient.stubs.GetPatientPortStub
 import com.pada.medmaster.domain.service.patient.stubs.UpdatePatientPortStub
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
-import java.time.Clock
 import java.time.LocalDateTime
 import java.time.Month
 

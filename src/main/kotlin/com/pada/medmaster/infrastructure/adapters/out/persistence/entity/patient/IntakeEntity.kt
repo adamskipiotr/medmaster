@@ -3,7 +3,6 @@ package com.pada.medmaster.infrastructure.adapters.out.persistence.entity.patien
 import com.pada.medmaster.domain.model.patient.Intake
 import com.pada.medmaster.domain.model.patient.Treatment
 import jakarta.persistence.*
-import java.time.Clock
 
 @Entity
 @Table(schema = "patient_schema", name = "intake")

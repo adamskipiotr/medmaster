@@ -3,7 +3,6 @@ package com.pada.medmaster.domain.service.patient.stubs
 import com.pada.medmaster.application.ports.out.patient.GetPatientsPort
 import com.pada.medmaster.domain.model.patient.*
 import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.patient.Gender
-import java.time.Clock
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.Month

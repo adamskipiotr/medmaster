@@ -1,6 +1,5 @@
 package com.pada.medmaster.application.ports.`in`.patient
 
-import com.pada.medmaster.application.dto.request.patient.ReportIntakeRequest
 import com.pada.medmaster.domain.events.MissedIntakeEvent
 import org.springframework.context.event.EventListener
 import org.springframework.stereotype.Service
