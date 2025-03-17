@@ -1,8 +1,10 @@
 package com.pada.medmaster.domain.model.patient
 
 import com.pada.medmaster.application.dto.request.patient.ReportIntakeRequest
+import com.pada.medmaster.domain.events.MissedIntakeEvent
 import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.patient.Gender
 import com.pada.medmaster.infrastructure.adapters.out.persistence.entity.patient.SpecialHealthConditions
+import java.time.Clock
 import java.time.LocalDate
 
 // About bidirectional relationship:
@@ -54,5 +56,15 @@ class Patient(
     fun reportIntake(treatmentId: Long, intakeId: Long, reportIntakeRequest: ReportIntakeRequest) {
         val treatment = getTreatment(treatmentId)
         treatment.reportIntake(intakeId, reportIntakeRequest)
+    }
+
+
+    fun validateIntakes(clock: Clock): List<MissedIntakeEvent>{
+        val missedIntakesEvents = treatments
+            .flatMap { a -> a.intakes }
+            .mapNotNull { it.validateIntakeRegularity(clock) }
+
+       // val missedIntakesEvents = mutableListOf<MissedIntakeEvent?>() // to learn why <> needed here
+        return missedIntakesEvents
     }
 }

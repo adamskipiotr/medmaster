@@ -10,11 +10,11 @@ class MedicalProcedure(
     val procedureDate: LocalDateTime,
     val minimalRecoveryDate: LocalDateTime,
     val treatment: Treatment?,
-    clock: Clock = Clock.systemDefaultZone()
+    clock: Clock?
 ) {
     init {
         val now = LocalDateTime.now(clock)
-        require(procedureDate.isAfter(now)) { "Medical Procedure must be scheduled for a future" } // refactor now()
+        require(procedureDate.isAfter(now)) { "Medical Procedure must be scheduled for a future" } // use sth else than init due to clock?
         require(minimalRecoveryDate.isAfter(procedureDate)) { "Minimal recovery date must be after procedure date" }
     }
 }

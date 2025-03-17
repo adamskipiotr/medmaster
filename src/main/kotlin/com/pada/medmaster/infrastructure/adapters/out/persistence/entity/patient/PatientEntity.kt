@@ -1,9 +1,9 @@
 package com.pada.medmaster.infrastructure.adapters.out.persistence.entity.patient
 
 import com.pada.medmaster.domain.model.patient.Patient
+import com.pada.medmaster.infrastructure.adapters.out.persistence.adapter.of
 import jakarta.persistence.*
 import java.time.LocalDate
-import com.pada.medmaster.infrastructure.adapters.out.persistence.adapter.of
 
 // Aggregate Root: Patient
 // Relations with other Aggregates - by Id, no Reference (both entities and domain): https://medium.com/@aforank/domain-driven-design-aggregates-in-practice-bcced7d21ae5
