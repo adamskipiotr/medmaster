@@ -2,6 +2,7 @@ package com.pada.medmaster.infrastructure.adapters.out.persistence.entity.patien
 
 import com.pada.medmaster.domain.model.patient.IntakeDate
 import jakarta.persistence.*
+import java.time.Clock
 import java.time.LocalDateTime
 
 @Entity

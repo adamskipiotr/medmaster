@@ -2,6 +2,7 @@ package com.pada.medmaster.domain.model.patient
 
 import com.pada.medmaster.application.dto.request.patient.ReportIntakeRequest
 import com.pada.medmaster.domain.events.MissedIntakeEvent
+import java.time.Clock
 import java.time.LocalDateTime
 
 class Intake(
@@ -12,7 +13,7 @@ class Intake(
     val intakeFrequency: IntakeFrequency?,
     val intakeDates: MutableList<IntakeDate> = mutableListOf(),  // Initialize the list
     val intakeLimit: Int,
-    var treatment: Treatment?
+    var treatment: Treatment?,
 ) {
 
     fun reportIntake(reportIntakeRequest: ReportIntakeRequest) { // refactor - can ReportIntakeRequest be ued inside domain?
@@ -35,11 +36,11 @@ class Intake(
         return IntakeDate(null, newIntakeDate, minGap, maxGap, inTimeGap, overdose, this)
     }
 
-    fun validateIntakeRegularity(): MissedIntakeEvent? {
+    fun validateIntakeRegularity(clock: Clock): MissedIntakeEvent? {
         val lastIntake = intakeDates.last().date
 
         val (_, maxGap) = getIntakeTimeGap (lastIntake) ?: return null
-        val currentDate = LocalDateTime.now()
+        val currentDate = LocalDateTime.now(clock)
         if (currentDate.isAfter(maxGap)) {
             return MissedIntakeEvent(treatment!!.patient!!.id!!, treatment!!.id!!, id!!, maxGap)
         }

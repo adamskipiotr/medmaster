@@ -61,7 +61,7 @@ fun CreateIntakeRequest.toDomain(): Intake {
         dosage = dosage,
         intakeFrequency = IntakeFrequency.valueOf(intakeFrequency.name),
         treatment = null,
-        intakeLimit = intakeLimit,
+        intakeLimit = intakeLimit
     )
     return intake
 }

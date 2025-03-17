@@ -6,6 +6,6 @@ import com.pada.medmaster.domain.events.MissedIntakeEvent
 class PublishIntakeMissedEventPortStub : PublishIntakeMissedEventPort {
 
     override fun publish(missedIntakes: List<MissedIntakeEvent>) {
-        TODO("Not yet implemented")
+        println("Publish Intake Missed Event Stub")
     }
 }
