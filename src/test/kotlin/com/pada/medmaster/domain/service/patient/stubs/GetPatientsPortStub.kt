@@ -7,6 +7,9 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.Month
 
+// Refactoring idea for a future - delegate creating objects from this place
+// To factory classes. Here inject required objects for every test in //Given section
+// Benefits: Better separation of concerns, cleaner code, more flexibility in tests
 class GetPatientsPortStub : GetPatientsPort {
 
     private val patientAddress = createStubPatientAddress()
